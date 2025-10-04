@@ -1,0 +1,16 @@
+{
+  "name": "prd-cat-database-init",
+  "version": "1.0.0",
+  "description": "CloudBase database initialization for product catalog",
+  "main": "init-db-local.js",
+  "scripts": {
+    "init-db": "node init-db-local.js"
+  },
+  "dependencies": {
+    "@cloudbase/node-sdk": "^2.4.1"
+  },
+  "devDependencies": {},
+  "keywords": ["cloudbase", "database", "initialization"],
+  "author": "",
+  "license": "MIT"
+}

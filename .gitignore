@@ -1,0 +1,37 @@
+# General
+.DS_Store
+Thumbs.db
+*.log
+*.tmp
+*.swp
+
+# Node
+node_modules/
+**/node_modules/
+dist/
+**/dist/
+build/
+**/build/
+.cache/
+
+# Environment and secrets
+.env
+.env.local
+.env.*
+
+# OS / IDE
+.vscode/
+*.code-workspace
+
+# Large binary data (exclude from initial commit)
+docs/**/*.xlsx
+static-assets/**
+prd-cat/data/photos/**
+prd-cat/data/banners/**
+shared/data/photos/**
+shared/data/banners/**
+miniprogram/static/images/**
+
+# Generated or backups
+**/*.bak
+**/*.backup

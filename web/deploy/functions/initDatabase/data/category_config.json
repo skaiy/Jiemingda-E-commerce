@@ -1,0 +1,136 @@
+{
+  "categories": [
+    {
+      "id": "all-products",
+      "name": "全部商品",
+      "shortName": "全部",
+      "slug": "all-products"
+    },
+    {
+      "id": "frozen-pastries-semi-finished",
+      "name": "冷冻点心/速冻半成品",
+      "shortName": "冷冻半成品",
+      "slug": "frozen-pastries-semi-finished"
+    },
+    {
+      "id": "whipping-cream",
+      "name": "奶油/淡稀奶油",
+      "shortName": "奶油",
+      "slug": "whipping-cream"
+    },
+    {
+      "id": "chocolate-cocoa",
+      "name": "巧克力/可可",
+      "shortName": "巧克力",
+      "slug": "chocolate-cocoa"
+    },
+    {
+      "id": "cheese-mozzarella",
+      "name": "干酪/芝士/马苏里拉",
+      "shortName": "干酪/芝士",
+      "slug": "cheese-mozzarella"
+    },
+    {
+      "id": "fruit-filling-puree-jam",
+      "name": "果馅/果干/果酱",
+      "shortName": "果馅/果酱",
+      "slug": "fruit-filling-puree-jam"
+    },
+    {
+      "id": "milk-dairy-drinks",
+      "name": "牛奶/乳饮",
+      "shortName": "乳饮",
+      "slug": "milk-dairy-drinks"
+    },
+    {
+      "id": "sugars-sweeteners",
+      "name": "糖类/甜味剂",
+      "shortName": "糖/甜味",
+      "slug": "sugars-sweeteners"
+    },
+    {
+      "id": "canned-preserves",
+      "name": "罐头/蜜饯",
+      "shortName": "罐头/蜜饯",
+      "slug": "canned-preserves"
+    },
+    {
+      "id": "meat-sausage-bacon",
+      "name": "肉制品/香肠/培根",
+      "shortName": "肉制品",
+      "slug": "meat-sausage-bacon"
+    },
+    {
+      "id": "decorations-toppers-fondant",
+      "name": "装饰/插件/翻糖",
+      "shortName": "装饰/翻糖",
+      "slug": "decorations-toppers-fondant"
+    },
+    {
+      "id": "sauces-salad-dressing",
+      "name": "调味酱/沙拉酱",
+      "shortName": "调味/沙拉",
+      "slug": "sauces-salad-dressing"
+    },
+    {
+      "id": "additives",
+      "name": "辅料/添加剂",
+      "shortName": "辅料/添加",
+      "slug": "additives"
+    },
+    {
+      "id": "alcoholic-beverages-liqueurs",
+      "name": "酒饮/风味酒",
+      "shortName": "酒饮",
+      "slug": "alcoholic-beverages-liqueurs"
+    },
+    {
+      "id": "yeast",
+      "name": "酵母",
+      "shortName": "酵母",
+      "slug": "yeast"
+    },
+    {
+      "id": "flour-grain-flours",
+      "name": "面粉/谷物粉",
+      "shortName": "面/谷粉",
+      "slug": "flour-grain-flours"
+    },
+    {
+      "id": "premix",
+      "name": "预拌粉/预混粉",
+      "shortName": "预拌粉",
+      "slug": "premix"
+    },
+    {
+      "id": "biscuits-oreo",
+      "name": "饼干/奥利奥",
+      "shortName": "饼干",
+      "slug": "biscuits-oreo"
+    },
+    {
+      "id": "butter-dairy-fats",
+      "name": "黄油/乳制油脂",
+      "shortName": "黄油/乳脂",
+      "slug": "butter-dairy-fats"
+    },
+    {
+      "id": "filling-custard",
+      "name": "馅料/卡仕达",
+      "shortName": "馅料/卡仕达",
+      "slug": "filling-custard"
+    },
+    {
+      "id": "edible-plant-shortening-oils",
+      "name": "食用油/植物油/起酥油",
+      "shortName": "食用油/起酥油",
+      "slug": "edible-plant-shortening-oils"
+    },
+    {
+      "id": "others",
+      "name": "其他",
+      "shortName": "其他",
+      "slug": "others"
+    }
+  ]
+}

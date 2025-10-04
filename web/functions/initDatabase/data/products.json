@@ -1,0 +1,3592 @@
+{
+  "categories": [
+    {
+      "name": "调味酱/沙拉酱",
+      "items": [
+        {
+          "name": "片状可丝达蛋黄（不二）",
+          "spec": "1*10*0.6kg",
+          "unit": "箱",
+          "brand": "不二（中国）投资有限公司",
+          "description": "规格: 1*10*0.6kg / 单位: 箱",
+          "price": "",
+          "image": ""
+        },
+        {
+          "name": "可丝达酱（蛋奶味）（不二）",
+          "spec": "1*6*1kg",
+          "unit": "箱",
+          "brand": "不二（中国）投资有限公司",
+          "description": "规格: 1*6*1kg / 单位: 箱",
+          "price": "",
+          "image": ""
+        },
+        {
+          "name": "可丝达酱（酸奶味）（不二）",
+          "spec": "1*6*1kg",
+          "unit": "箱",
+          "brand": "不二（中国）投资有限公司",
+          "description": "规格: 1*6*1kg / 单位: 箱",
+          "price": "",
+          "image": ""
+        },
+        {
+          "name": "可丝达酱（劲爽青柠味）（不二）",
+          "spec": "1*6*1kg",
+          "unit": "箱",
+          "brand": "不二（中国）投资有限公司",
+          "description": "规格: 1*6*1kg / 单位: 箱",
+          "price": "",
+          "image": ""
+        },
+        {
+          "name": "倍腾夹心奶油酱（维益）21608",
+          "spec": "1*12*907g",
+          "unit": "箱",
+          "brand": "维益烘焙（天津）有限公司",
+          "description": "规格: 1*12*907g / 单位: 箱",
+          "price": "",
+          "image": ""
+        },
+        {
+          "name": "巴伐利亚克林姆牛奶味（英士顿）",
+          "spec": "6*1kg",
+          "unit": "箱",
+          "brand": "",
+          "description": "规格: 6*1kg / 单位: 箱",
+          "price": "",
+          "image": ""
+        },
+        {
+          "name": "巴伐利亚克林姆（切达乳酪味）（英士顿）",
+          "spec": "1*6*1kg",
+          "unit": "箱",
+          "brand": "",
+          "description": "规格: 1*6*1kg / 单位: 箱",
+          "price": "",
+          "image": ""
+        },
+        {
+          "name": "巴伐利亚克林姆（酸奶味）（英士顿）",
+          "spec": "1*6*1kg",
+          "unit": "箱",
+          "brand": "",
+          "description": "规格: 1*6*1kg / 单位: 箱",
+          "price": "",
+          "image": ""
+        },
+        {
+          "name": "巴伐利亚克林姆（椰子味）（英士顿）",
+          "spec": "1*6*1kg",
+          "unit": "箱",
+          "brand": "",
+          "description": "规格: 1*6*1kg / 单位: 箱",
+          "price": "",
+          "image": ""
+        },
+        {
+          "name": "巴伐利亚克林姆（香芋）（英士顿）",
+          "spec": "1*6*1kg",
+          "unit": "箱",
+          "brand": "",
+          "description": "规格: 1*6*1kg / 单位: 箱",
+          "price": "",
+          "image": ""
+        },
+        {
+          "name": "巴伐利亚克林姆（经典奶茶味）（英士顿）",
+          "spec": "1*6*1kg",
+          "unit": "箱",
+          "brand": "",
+          "description": "规格: 1*6*1kg / 单位: 箱",
+          "price": "",
+          "image": ""
+        },
+        {
+          "name": "巴伐利亚克林姆（生椰拿铁）英士顿",
+          "spec": "1*6*1kg",
+          "unit": "箱",
+          "brand": "",
+          "description": "规格: 1*6*1kg / 单位: 箱",
+          "price": "",
+          "image": ""
+        },
+        {
+          "name": "巴伐利亚克林姆（开心果味）（英士顿）",
+          "spec": "1*6*1kg",
+          "unit": "箱",
+          "brand": "",
+          "description": "规格: 1*6*1kg / 单位: 箱",
+          "price": "",
+          "image": ""
+        },
+        {
+          "name": "巴伐利亚克林姆（榴莲味）（英士顿）",
+          "spec": "1*6*1kg",
+          "unit": "箱",
+          "brand": "",
+          "description": "规格: 1*6*1kg / 单位: 箱",
+          "price": "",
+          "image": ""
+        },
+        {
+          "name": "乳酪酱（英士顿）",
+          "spec": "1*2*5kg",
+          "unit": "桶",
+          "brand": "",
+          "description": "规格: 1*2*5kg / 单位: 桶",
+          "price": "",
+          "image": ""
+        },
+        {
+          "name": "奶油芝士（干酪制品）1KG（英士顿）",
+          "spec": "12*1KG",
+          "unit": "盒",
+          "brand": "",
+          "description": "规格: 12*1KG / 单位: 盒",
+          "price": "",
+          "image": ""
+        },
+        {
+          "name": "奶油芝士（干酪制品）5kg（英士顿）",
+          "spec": "2*5kg",
+          "unit": "袋",
+          "brand": "",
+          "description": "规格: 2*5kg / 单位: 袋",
+          "price": "",
+          "image": ""
+        },
+        {
+          "name": "丘比烘焙专用沙拉酱（甜味）",
+          "spec": "1*10*1kg",
+          "unit": "箱",
+          "brand": "丘比食品有限公司",
+          "description": "规格: 1*10*1kg / 单位: 箱",
+          "price": "",
+          "image": ""
+        },
+        {
+          "name": "丘比沙拉酱甜口味（22）",
+          "spec": "1*10*1kg",
+          "unit": "箱",
+          "brand": "丘比食品有限公司",
+          "description": "规格: 1*10*1kg / 单位: 箱",
+          "price": "",
+          "image": ""
+        },
+        {
+          "name": "丘比鸡蛋风味酱（金黄型）",
+          "spec": "1*10kg",
+          "unit": "箱",
+          "brand": "丘比食品有限公司",
+          "description": "规格: 1*10kg / 单位: 箱",
+          "price": "",
+          "image": ""
+        },
+        {
+          "name": "丘比土豆沙拉风味酱",
+          "spec": "1*10kg",
+          "unit": "箱",
+          "brand": "丘比食品有限公司",
+          "description": "规格: 1*10kg / 单位: 箱",
+          "price": "",
+          "image": ""
+        },
+        {
+          "name": "焙乐道快味可即溶吉士粉（2）",
+          "spec": "1*2*5kg",
+          "unit": "袋",
+          "brand": "广州焙乐道食品有限公司",
+          "description": "规格: 1*2*5kg / 单位: 袋",
+          "price": "",
+          "image": ""
+        },
+        {
+          "name": "淑女牌水晶光亮膏(香橙味)（焙乐道）",
+          "spec": "1*4*3kg",
+          "unit": "桶",
+          "brand": "广州焙乐道食品有限公司",
+          "description": "规格: 1*4*3kg / 单位: 桶",
+          "price": "",
+          "image": ""
+        },
+        {
+          "name": "淑女牌水晶光亮膏（中性）（焙乐道）",
+          "spec": "1*4*3kg",
+          "unit": "桶",
+          "brand": "广州焙乐道食品有限公司",
+          "description": "规格: 1*4*3kg / 单位: 桶",
+          "price": "",
+          "image": ""
+        },
+        {
+          "name": "百利香甜沙拉酱",
+          "spec": "1*12",
+          "unit": "箱",
+          "brand": "百利",
+          "description": "规格: 1*12 / 单位: 箱",
+          "price": "",
+          "image": ""
+        },
+        {
+          "name": "焙可芯香浓芝士（南侨）",
+          "spec": "1*6*1kg",
+          "unit": "箱",
+          "brand": "",
+          "description": "规格: 1*6*1kg / 单位: 箱",
+          "price": "",
+          "image": ""
+        }
+      ]
+    },
+    {
+      "name": "馅料/卡仕达",
+      "items": [
+        {
+          "name": "焙可诗即用馅料香缇蛋奶（南侨）",
+          "spec": "1*6*750g",
+          "unit": "箱",
+          "brand": "",
+          "description": "规格: 1*6*750g / 单位: 箱",
+          "price": "",
+          "image": ""
+        },
+        {
+          "name": "利好枣泥馅（3）",
+          "spec": "1*3*5kg",
+          "unit": "箱",
+          "brand": "天津市利好公司",
+          "description": "规格: 1*3*5kg / 单位: 箱",
+          "price": "",
+          "image": ""
+        },
+        {
+          "name": "利好山楂馅（3）",
+          "spec": "1*3*5kg",
+          "unit": "箱",
+          "brand": "天津市利好公司",
+          "description": "规格: 1*3*5kg / 单位: 箱",
+          "price": "",
+          "image": ""
+        },
+        {
+          "name": "利好豆沙馅",
+          "spec": "1*3*5kg",
+          "unit": "箱",
+          "brand": "天津市利好公司",
+          "description": "规格: 1*3*5kg / 单位: 箱",
+          "price": "",
+          "image": ""
+        },
+        {
+          "name": "M油豆沙C（DIY）（鲁樱）整箱",
+          "spec": "4*5Kg",
+          "unit": "箱",
+          "brand": "德州鲁樱食品有限公司",
+          "description": "规格: 4*5Kg / 单位: 箱",
+          "price": "",
+          "image": ""
+        },
+        {
+          "name": "粒馅（鲁樱）整箱",
+          "spec": "4*5kg",
+          "unit": "箱",
+          "brand": "德州鲁樱食品有限公司",
+          "description": "规格: 4*5kg / 单位: 箱",
+          "price": "",
+          "image": ""
+        },
+        {
+          "name": "焙可芯香草卡仕达（南侨）",
+          "spec": "1*6*1kg",
+          "unit": "箱",
+          "brand": "",
+          "description": "规格: 1*6*1kg / 单位: 箱",
+          "price": "",
+          "image": ""
+        },
+        {
+          "name": "贝琪1kg法式卡仕达（经典牛奶味）",
+          "spec": "10*1kg",
+          "unit": "袋",
+          "brand": "山东贝琪食品有限公司",
+          "description": "规格: 10*1kg / 单位: 袋",
+          "price": "",
+          "image": ""
+        }
+      ]
+    },
+    {
+      "name": "罐头/蜜饯",
+      "items": [
+        {
+          "name": "蓝钻杏仁粉（扁桃仁粉）",
+          "spec": "1*11.34kg",
+          "unit": "箱",
+          "brand": "进口产品",
+          "description": "规格: 1*11.34kg / 单位: 箱",
+          "price": "",
+          "image": ""
+        },
+        {
+          "name": "蓝钻杏仁粉（扁桃仁粉）",
+          "spec": "1*11.34kg",
+          "unit": "公斤",
+          "brand": "进口产品",
+          "description": "规格: 1*11.34kg / 单位: 公斤",
+          "price": "",
+          "image": ""
+        },
+        {
+          "name": "蓝钻杏仁片（扁桃仁片）",
+          "spec": "1*11.34kg",
+          "unit": "箱",
+          "brand": "进口产品",
+          "description": "规格: 1*11.34kg / 单位: 箱",
+          "price": "",
+          "image": ""
+        },
+        {
+          "name": "蓝钻杏仁片（扁桃仁片）",
+          "spec": "1*11.34kg",
+          "unit": "公斤",
+          "brand": "进口产品",
+          "description": "规格: 1*11.34kg / 单位: 公斤",
+          "price": "",
+          "image": ""
+        },
+        {
+          "name": "烤花生碎（生16）",
+          "spec": "1*8*2.5kg",
+          "unit": "袋",
+          "brand": "进口产品",
+          "description": "规格: 1*8*2.5kg / 单位: 袋",
+          "price": "",
+          "image": ""
+        },
+        {
+          "name": "煌牌全脂椰蓉（印尼）",
+          "spec": "1*9.071kg",
+          "unit": "袋",
+          "brand": "进口产品",
+          "description": "规格: 1*9.071kg / 单位: 袋",
+          "price": "",
+          "image": ""
+        }
+      ]
+    },
+    {
+      "name": "果馅/果干/果酱",
+      "items": [
+        {
+          "name": "高师傅菠萝果肉馅",
+          "spec": "1*4*3kg",
+          "unit": "桶",
+          "brand": "﻿广州高师傅食品有限公司",
+          "description": "规格: 1*4*3kg / 单位: 桶",
+          "price": "",
+          "image": ""
+        },
+        {
+          "name": "高师傅蓝莓果肉馅",
+          "spec": "1*4*3kg",
+          "unit": "桶",
+          "brand": "﻿广州高师傅食品有限公司",
+          "description": "规格: 1*4*3kg / 单位: 桶",
+          "price": "",
+          "image": ""
+        },
+        {
+          "name": "高师傅草莓果肉馅",
+          "spec": "1*4*3kg",
+          "unit": "桶",
+          "brand": "﻿广州高师傅食品有限公司",
+          "description": "规格: 1*4*3kg / 单位: 桶",
+          "price": "",
+          "image": ""
+        },
+        {
+          "name": "高师傅芒果果肉馅",
+          "spec": "1*4*3kg",
+          "unit": "桶",
+          "brand": "﻿广州高师傅食品有限公司",
+          "description": "规格: 1*4*3kg / 单位: 桶",
+          "price": "",
+          "image": ""
+        },
+        {
+          "name": "高师傅芒果果茸",
+          "spec": "1*6*1kg",
+          "unit": "桶",
+          "brand": "﻿广州高师傅食品有限公司",
+          "description": "规格: 1*6*1kg / 单位: 桶",
+          "price": "",
+          "image": ""
+        },
+        {
+          "name": "高师傅蓝莓果茸",
+          "spec": "1*6*1kg",
+          "unit": "桶",
+          "brand": "﻿广州高师傅食品有限公司",
+          "description": "规格: 1*6*1kg / 单位: 桶",
+          "price": "",
+          "image": ""
+        },
+        {
+          "name": "高师傅草莓果茸",
+          "spec": "1*6*1kg",
+          "unit": "桶",
+          "brand": "﻿广州高师傅食品有限公司",
+          "description": "规格: 1*6*1kg / 单位: 桶",
+          "price": "",
+          "image": ""
+        },
+        {
+          "name": "高师傅覆盆子果茸",
+          "spec": "1*6*1kg",
+          "unit": "桶",
+          "brand": "﻿广州高师傅食品有限公司",
+          "description": "规格: 1*6*1kg / 单位: 桶",
+          "price": "",
+          "image": ""
+        },
+        {
+          "name": "高师傅芒果果粒馅",
+          "spec": "1*4*3kg",
+          "unit": "桶",
+          "brand": "﻿广州高师傅食品有限公司",
+          "description": "规格: 1*4*3kg / 单位: 桶",
+          "price": "",
+          "image": ""
+        },
+        {
+          "name": "糖纳红小豆馅料（鲁樱整箱）",
+          "spec": "1*6*3kg",
+          "unit": "箱",
+          "brand": "德州鲁樱食品有限公司",
+          "description": "规格: 1*6*3kg / 单位: 箱",
+          "price": "",
+          "image": ""
+        },
+        {
+          "name": "可可琳纳代可可脂草莓味巧克力",
+          "spec": "1*10块*1kg",
+          "unit": "袋",
+          "brand": "可可琳纳食品贸易（上海）股份有限公司",
+          "description": "规格: 1*10块*1kg / 单位: 袋",
+          "price": "",
+          "image": ""
+        },
+        {
+          "name": "日式乳酸风味（馅料）（不二）",
+          "spec": "1*6*1kg",
+          "unit": "箱",
+          "brand": "不二（中国）投资有限公司",
+          "description": "规格: 1*6*1kg / 单位: 箱",
+          "price": "",
+          "image": ""
+        },
+        {
+          "name": "双莓库利果冻（维益）",
+          "spec": "1*24*480g",
+          "unit": "盒",
+          "brand": "维益烘焙（天津）有限公司",
+          "description": "规格: 1*24*480g / 单位: 盒",
+          "price": "",
+          "image": ""
+        },
+        {
+          "name": "850g黑甜樱桃罐头（兴雅）",
+          "spec": "1*24*850g",
+          "unit": "听",
+          "brand": "烟台兴雅食品有限公司",
+          "description": "规格: 1*24*850g / 单位: 听",
+          "price": "",
+          "image": ""
+        },
+        {
+          "name": "822G黄桃罐头(兴雅)",
+          "spec": "1*24*822g",
+          "unit": "听",
+          "brand": "烟台兴雅食品有限公司",
+          "description": "规格: 1*24*822g / 单位: 听",
+          "price": "",
+          "image": ""
+        },
+        {
+          "name": "850G红鲜樱桃罐头(兴雅)",
+          "spec": "1*24*850g",
+          "unit": "听",
+          "brand": "烟台兴雅食品有限公司",
+          "description": "规格: 1*24*850g / 单位: 听",
+          "price": "",
+          "image": ""
+        },
+        {
+          "name": "850G草莓罐头L(兴雅)",
+          "spec": "1*12*850G",
+          "unit": "听",
+          "brand": "烟台兴雅食品有限公司",
+          "description": "规格: 1*12*850G / 单位: 听",
+          "price": "",
+          "image": ""
+        },
+        {
+          "name": "金宝丽黄桃罐头（6-8）",
+          "spec": "1*24*820g",
+          "unit": "听",
+          "brand": "金宝丽",
+          "description": "规格: 1*24*820g / 单位: 听",
+          "price": "",
+          "image": ""
+        },
+        {
+          "name": "淑女牌水晶光亮膏(蓝莓味)（焙乐道）",
+          "spec": "1*4*3kg",
+          "unit": "桶",
+          "brand": "广州焙乐道食品有限公司",
+          "description": "规格: 1*4*3kg / 单位: 桶",
+          "price": "",
+          "image": ""
+        },
+        {
+          "name": "淑女牌水晶光亮膏(草莓味)（焙乐道）",
+          "spec": "1*4*3kg",
+          "unit": "桶",
+          "brand": "广州焙乐道食品有限公司",
+          "description": "规格: 1*4*3kg / 单位: 桶",
+          "price": "",
+          "image": ""
+        },
+        {
+          "name": "淑女牌耐热果占（香橙）（焙乐道）",
+          "spec": "1*4*5kg",
+          "unit": "桶",
+          "brand": "广州焙乐道食品有限公司",
+          "description": "规格: 1*4*5kg / 单位: 桶",
+          "price": "",
+          "image": ""
+        },
+        {
+          "name": "优鲜沛鲜红蔓越莓干1/4切片",
+          "spec": "1*10kg",
+          "unit": "袋",
+          "brand": "进口产品",
+          "description": "规格: 1*10kg / 单位: 袋",
+          "price": "",
+          "image": ""
+        },
+        {
+          "name": "优鲜沛原味蔓越莓干907g",
+          "spec": "1*16*907g",
+          "unit": "袋",
+          "brand": "进口产品",
+          "description": "规格: 1*16*907g / 单位: 袋",
+          "price": "",
+          "image": ""
+        },
+        {
+          "name": "蔓吉4寸酸奶草莓慕斯",
+          "spec": "1*8盒*6个",
+          "unit": "盒",
+          "brand": "扬州和华食品有限公司",
+          "description": "规格: 1*8盒*6个 / 单位: 盒",
+          "price": "",
+          "image": ""
+        },
+        {
+          "name": "北美红宝石切片蔓越莓干",
+          "spec": "1*11.34kg",
+          "unit": "箱",
+          "brand": "其它品类",
+          "description": "规格: 1*11.34kg / 单位: 箱",
+          "price": "",
+          "image": ""
+        },
+        {
+          "name": "IW冷冻蓝莓果泥（英士顿）",
+          "spec": "1*6*1kg",
+          "unit": "盒",
+          "brand": "",
+          "description": "规格: 1*6*1kg / 单位: 盒",
+          "price": "",
+          "image": ""
+        },
+        {
+          "name": "IW冷冻草莓果泥（英士顿）",
+          "spec": "1*6*1kg",
+          "unit": "盒",
+          "brand": "",
+          "description": "规格: 1*6*1kg / 单位: 盒",
+          "price": "",
+          "image": ""
+        },
+        {
+          "name": "IW冷冻覆盆子果泥（英士顿）",
+          "spec": "1*6*1kg",
+          "unit": "盒",
+          "brand": "",
+          "description": "规格: 1*6*1kg / 单位: 盒",
+          "price": "",
+          "image": ""
+        },
+        {
+          "name": "IW冷冻芒果果泥（英士顿）",
+          "spec": "1*6*1kg",
+          "unit": "盒",
+          "brand": "",
+          "description": "规格: 1*6*1kg / 单位: 盒",
+          "price": "",
+          "image": ""
+        },
+        {
+          "name": "英士顿现烤用镜面果胶（果酱味）",
+          "spec": "1*6*2.5kg",
+          "unit": "桶",
+          "brand": "",
+          "description": "规格: 1*6*2.5kg / 单位: 桶",
+          "price": "",
+          "image": ""
+        }
+      ]
+    },
+    {
+      "name": "冷冻点心/速冻半成品",
+      "items": [
+        {
+          "name": "思醇 彩虹慕斯蛋糕 8寸",
+          "spec": "1*8盒*1.3kg",
+          "unit": "盒",
+          "brand": "",
+          "description": "规格: 1*8盒*1.3kg / 单位: 盒",
+          "price": "",
+          "image": ""
+        },
+        {
+          "name": "思醇 榴莲千层（8寸）",
+          "spec": "1*10盒*1.05kg",
+          "unit": "盒",
+          "brand": "",
+          "description": "规格: 1*10盒*1.05kg / 单位: 盒",
+          "price": "",
+          "image": ""
+        },
+        {
+          "name": "思醇黑森林小方",
+          "spec": "1*6盒/8个*840g",
+          "unit": "盒",
+          "brand": "",
+          "description": "规格: 1*6盒/8个*840g / 单位: 盒",
+          "price": "",
+          "image": ""
+        },
+        {
+          "name": "约翰丹尼咸奶油风味慕斯蛋糕",
+          "spec": "1*9盒*1.15kg",
+          "unit": "盒",
+          "brand": "维益食品（苏州）-约翰丹尼",
+          "description": "规格: 1*9盒*1.15kg / 单位: 盒",
+          "price": "",
+          "image": ""
+        },
+        {
+          "name": "约翰丹尼玫瑰荔枝慕斯蛋糕",
+          "spec": "1*9盒*1.1kg",
+          "unit": "盒",
+          "brand": "维益食品（苏州）-约翰丹尼",
+          "description": "规格: 1*9盒*1.1kg / 单位: 盒",
+          "price": "",
+          "image": ""
+        },
+        {
+          "name": "约翰丹尼白桃乌龙慕斯蛋糕（8寸10切）",
+          "spec": "1*9盒*880g",
+          "unit": "盒",
+          "brand": "维益食品（苏州）-约翰丹尼",
+          "description": "规格: 1*9盒*880g / 单位: 盒",
+          "price": "",
+          "image": ""
+        },
+        {
+          "name": "约翰丹尼皇家丝滑巧克力蛋糕",
+          "spec": "1*9盒*1.05kg",
+          "unit": "盒",
+          "brand": "维益食品（苏州）-约翰丹尼",
+          "description": "规格: 1*9盒*1.05kg / 单位: 盒",
+          "price": "",
+          "image": ""
+        },
+        {
+          "name": "约翰丹尼麦香牛油果慕斯蛋糕",
+          "spec": "1*9盒*1.2kg",
+          "unit": "盒",
+          "brand": "维益食品（苏州）-约翰丹尼",
+          "description": "规格: 1*9盒*1.2kg / 单位: 盒",
+          "price": "",
+          "image": ""
+        },
+        {
+          "name": "约翰丹尼提拉米苏蛋糕",
+          "spec": "1*9盒*1.25kg",
+          "unit": "盒",
+          "brand": "维益食品（苏州）-约翰丹尼",
+          "description": "规格: 1*9盒*1.25kg / 单位: 盒",
+          "price": "",
+          "image": ""
+        },
+        {
+          "name": "约翰丹尼咸奶油红丝绒蛋糕（整只）22145",
+          "spec": "1*9盒*1.2kg",
+          "unit": "盒",
+          "brand": "维益食品（苏州）-约翰丹尼",
+          "description": "规格: 1*9盒*1.2kg / 单位: 盒",
+          "price": "",
+          "image": ""
+        },
+        {
+          "name": "约翰丹尼抹茶凝乳蛋糕（8寸10切）",
+          "spec": "1*9*1000g",
+          "unit": "盒",
+          "brand": "维益食品（苏州）-约翰丹尼",
+          "description": "规格: 1*9*1000g / 单位: 盒",
+          "price": "",
+          "image": ""
+        },
+        {
+          "name": "约翰丹尼覆盆子凝乳蛋糕（8寸10切）",
+          "spec": "1*9盒*1000g",
+          "unit": "盒",
+          "brand": "维益食品（苏州）-约翰丹尼",
+          "description": "规格: 1*9盒*1000g / 单位: 盒",
+          "price": "",
+          "image": ""
+        },
+        {
+          "name": "约翰丹尼橙香凝乳蛋糕",
+          "spec": "1*9*1kg",
+          "unit": "盒",
+          "brand": "维益食品（苏州）-约翰丹尼",
+          "description": "规格: 1*9*1kg / 单位: 盒",
+          "price": "",
+          "image": ""
+        },
+        {
+          "name": "约翰丹尼黑芝麻牛乳大孔慕斯蛋糕",
+          "spec": "1*9*800g",
+          "unit": "盒",
+          "brand": "维益食品（苏州）-约翰丹尼",
+          "description": "规格: 1*9*800g / 单位: 盒",
+          "price": "",
+          "image": ""
+        },
+        {
+          "name": "约翰丹尼橙香巧克力大孔慕斯蛋糕",
+          "spec": "1*9*780g",
+          "unit": "盒",
+          "brand": "维益食品（苏州）-约翰丹尼",
+          "description": "规格: 1*9*780g / 单位: 盒",
+          "price": "",
+          "image": ""
+        },
+        {
+          "name": "约翰丹尼栗子伯爵红茶凝乳蛋糕",
+          "spec": "1*9*1kg",
+          "unit": "盒",
+          "brand": "维益食品（苏州）-约翰丹尼",
+          "description": "规格: 1*9*1kg / 单位: 盒",
+          "price": "",
+          "image": ""
+        },
+        {
+          "name": "约翰丹尼芋泥芝士巴斯克蛋糕",
+          "spec": "1*60*120g",
+          "unit": "盒",
+          "brand": "维益食品（苏州）-约翰丹尼",
+          "description": "规格: 1*60*120g / 单位: 盒",
+          "price": "",
+          "image": ""
+        },
+        {
+          "name": "约翰丹尼榴莲芝士巴斯克蛋糕",
+          "spec": "1*60*120g",
+          "unit": "盒",
+          "brand": "维益食品（苏州）-约翰丹尼",
+          "description": "规格: 1*60*120g / 单位: 盒",
+          "price": "",
+          "image": ""
+        },
+        {
+          "name": "约翰丹尼咸奶油红丝绒慕斯蛋糕（1*6组*36盒）",
+          "spec": "1*6*0.99kg",
+          "unit": "组",
+          "brand": "维益食品（苏州）-约翰丹尼",
+          "description": "规格: 1*6*0.99kg / 单位: 组",
+          "price": "",
+          "image": ""
+        },
+        {
+          "name": "约翰丹尼提拉米苏慕斯蛋糕（1*6组*36盒）",
+          "spec": "1*6*1.08kg",
+          "unit": "组",
+          "brand": "维益食品（苏州）-约翰丹尼",
+          "description": "规格: 1*6*1.08kg / 单位: 组",
+          "price": "",
+          "image": ""
+        },
+        {
+          "name": "约翰丹尼牛油果慕斯蛋糕（1*6组*36盒）",
+          "spec": "1*6*1.08kg",
+          "unit": "组",
+          "brand": "维益食品（苏州）-约翰丹尼",
+          "description": "规格: 1*6*1.08kg / 单位: 组",
+          "price": "",
+          "image": ""
+        },
+        {
+          "name": "约翰丹尼皇家丝滑巧克力慕斯蛋糕（1*6组*36盒）",
+          "spec": "1*6*1.02kg",
+          "unit": "组",
+          "brand": "维益食品（苏州）-约翰丹尼",
+          "description": "规格: 1*6*1.02kg / 单位: 组",
+          "price": "",
+          "image": ""
+        },
+        {
+          "name": "高贝葡式蛋挞皮207（6.3kg）",
+          "spec": "1*6*50个",
+          "unit": "箱",
+          "brand": "",
+          "description": "规格: 1*6*50个 / 单位: 箱",
+          "price": "",
+          "image": ""
+        },
+        {
+          "name": "高贝台式软酥老婆饼8.4kg",
+          "spec": "14托*15个*40g",
+          "unit": "箱",
+          "brand": "",
+          "description": "规格: 14托*15个*40g / 单位: 箱",
+          "price": "",
+          "image": ""
+        },
+        {
+          "name": "高贝42g速冻花边挞（5.04kg）",
+          "spec": "1*6袋*20个",
+          "unit": "箱",
+          "brand": "",
+          "description": "规格: 1*6袋*20个 / 单位: 箱",
+          "price": "",
+          "image": ""
+        },
+        {
+          "name": "奥昆50g速冻甜甜圈（90个/4.5kg）",
+          "spec": "1*6袋*15个",
+          "unit": "箱",
+          "brand": "",
+          "description": "规格: 1*6袋*15个 / 单位: 箱",
+          "price": "",
+          "image": ""
+        },
+        {
+          "name": "奥昆草莓果馅甜甜圈（90个/4.5kg）",
+          "spec": "1*6袋*15个",
+          "unit": "箱",
+          "brand": "",
+          "description": "规格: 1*6袋*15个 / 单位: 箱",
+          "price": "",
+          "image": ""
+        },
+        {
+          "name": "奥昆蓝莓果馅甜甜圈（90个/4.5kg）",
+          "spec": "1*6袋*15个",
+          "unit": "箱",
+          "brand": "",
+          "description": "规格: 1*6袋*15个 / 单位: 箱",
+          "price": "",
+          "image": ""
+        },
+        {
+          "name": "朋宗大太阳花挞（手工）",
+          "spec": "13包*7个*40g",
+          "unit": "箱",
+          "brand": "朋宗",
+          "description": "规格: 13包*7个*40g / 单位: 箱",
+          "price": "",
+          "image": ""
+        },
+        {
+          "name": "维德手工蛋挞皮",
+          "spec": "1*10*30只",
+          "unit": "箱",
+          "brand": "济南维德食品有限公司",
+          "description": "规格: 1*10*30只 / 单位: 箱",
+          "price": "",
+          "image": ""
+        },
+        {
+          "name": "蔓吉4寸彩虹慕斯",
+          "spec": "1*8盒*6个",
+          "unit": "盒",
+          "brand": "扬州和华食品有限公司",
+          "description": "规格: 1*8盒*6个 / 单位: 盒",
+          "price": "",
+          "image": ""
+        },
+        {
+          "name": "蔓吉4寸小丑慕斯",
+          "spec": "1*8盒*6个",
+          "unit": "盒",
+          "brand": "扬州和华食品有限公司",
+          "description": "规格: 1*8盒*6个 / 单位: 盒",
+          "price": "",
+          "image": ""
+        },
+        {
+          "name": "蔓吉4寸白天鹅慕斯",
+          "spec": "1*8盒*6个",
+          "unit": "盒",
+          "brand": "扬州和华食品有限公司",
+          "description": "规格: 1*8盒*6个 / 单位: 盒",
+          "price": "",
+          "image": ""
+        },
+        {
+          "name": "蔓吉4寸黑天鹅慕斯",
+          "spec": "1*8盒*6个",
+          "unit": "盒",
+          "brand": "扬州和华食品有限公司",
+          "description": "规格: 1*8盒*6个 / 单位: 盒",
+          "price": "",
+          "image": ""
+        },
+        {
+          "name": "蔓吉4寸焦糖玛奇朵慕斯",
+          "spec": "1*8盒*6个",
+          "unit": "盒",
+          "brand": "扬州和华食品有限公司",
+          "description": "规格: 1*8盒*6个 / 单位: 盒",
+          "price": "",
+          "image": ""
+        },
+        {
+          "name": "蔓吉4寸萌小兔慕斯",
+          "spec": "1*8盒*6个",
+          "unit": "盒",
+          "brand": "扬州和华食品有限公司",
+          "description": "规格: 1*8盒*6个 / 单位: 盒",
+          "price": "",
+          "image": ""
+        },
+        {
+          "name": "蔓吉4寸多肉葡萄慕斯",
+          "spec": "1*8盒*6个",
+          "unit": "盒",
+          "brand": "扬州和华食品有限公司",
+          "description": "规格: 1*8盒*6个 / 单位: 盒",
+          "price": "",
+          "image": ""
+        },
+        {
+          "name": "蔓吉8英寸原味巴斯克",
+          "spec": "12盒*1100g",
+          "unit": "盒",
+          "brand": "扬州和华食品有限公司",
+          "description": "规格: 12盒*1100g / 单位: 盒",
+          "price": "",
+          "image": ""
+        },
+        {
+          "name": "蔓吉8英寸青柠巴斯克",
+          "spec": "12盒*1100g",
+          "unit": "盒",
+          "brand": "扬州和华食品有限公司",
+          "description": "规格: 12盒*1100g / 单位: 盒",
+          "price": "",
+          "image": ""
+        },
+        {
+          "name": "蔓吉8英寸伯爵红茶巴斯克",
+          "spec": "12盒*1100g",
+          "unit": "盒",
+          "brand": "扬州和华食品有限公司",
+          "description": "规格: 12盒*1100g / 单位: 盒",
+          "price": "",
+          "image": ""
+        },
+        {
+          "name": "蔓吉8英寸奧巧熔岩巴斯克",
+          "spec": "12盒*1100g",
+          "unit": "盒",
+          "brand": "扬州和华食品有限公司",
+          "description": "规格: 12盒*1100g / 单位: 盒",
+          "price": "",
+          "image": ""
+        },
+        {
+          "name": "蔓吉3.5英寸原味巴斯克",
+          "spec": "48盒*130g",
+          "unit": "盒",
+          "brand": "扬州和华食品有限公司",
+          "description": "规格: 48盒*130g / 单位: 盒",
+          "price": "",
+          "image": ""
+        },
+        {
+          "name": "蔓吉3.5英寸芋泥巴斯克",
+          "spec": "48盒*130g",
+          "unit": "盒",
+          "brand": "扬州和华食品有限公司",
+          "description": "规格: 48盒*130g / 单位: 盒",
+          "price": "",
+          "image": ""
+        },
+        {
+          "name": "蔓吉3.5英寸榴莲巴斯克",
+          "spec": "48盒*130g",
+          "unit": "盒",
+          "brand": "扬州和华食品有限公司",
+          "description": "规格: 48盒*130g / 单位: 盒",
+          "price": "",
+          "image": ""
+        },
+        {
+          "name": "蔓吉3.5英寸栗子巴斯克",
+          "spec": "48盒*130g",
+          "unit": "盒",
+          "brand": "扬州和华食品有限公司",
+          "description": "规格: 48盒*130g / 单位: 盒",
+          "price": "",
+          "image": ""
+        },
+        {
+          "name": "蔓吉3.5英寸蜂蜜柚子巴斯克",
+          "spec": "48盒*130g",
+          "unit": "盒",
+          "brand": "扬州和华食品有限公司",
+          "description": "规格: 48盒*130g / 单位: 盒",
+          "price": "",
+          "image": ""
+        },
+        {
+          "name": "蔓吉4寸酸奶提子慕斯",
+          "spec": "1*8盒*6个",
+          "unit": "盒",
+          "brand": "扬州和华食品有限公司",
+          "description": "规格: 1*8盒*6个 / 单位: 盒",
+          "price": "",
+          "image": ""
+        },
+        {
+          "name": "蔓吉两颗山竹慕斯蛋糕",
+          "spec": "48盒*100g",
+          "unit": "盒",
+          "brand": "扬州和华食品有限公司",
+          "description": "规格: 48盒*100g / 单位: 盒",
+          "price": "",
+          "image": ""
+        }
+      ]
+    },
+    {
+      "name": "奶油/淡稀奶油",
+      "items": [
+        {
+          "name": "西点奶油夹心（奶酪味）（不二）",
+          "spec": "1*6*1kg",
+          "unit": "箱",
+          "brand": "不二（中国）投资有限公司",
+          "description": "规格: 1*6*1kg / 单位: 箱",
+          "price": "",
+          "image": ""
+        },
+        {
+          "name": "乐奇含乳脂植脂奶油（不二）",
+          "spec": "1*12*1",
+          "unit": "箱",
+          "brand": "不二（中国）投资有限公司",
+          "description": "规格: 1*12*1 / 单位: 箱",
+          "price": "",
+          "image": ""
+        },
+        {
+          "name": "液态奶油（牛奶味）（不二）",
+          "spec": "1*16kg",
+          "unit": "桶",
+          "brand": "不二（中国）投资有限公司",
+          "description": "规格: 1*16kg / 单位: 桶",
+          "price": "",
+          "image": ""
+        },
+        {
+          "name": "乐奇#淡奶油奶油（脂肪乳化制品）（不二）",
+          "spec": "1*12*1L",
+          "unit": "箱",
+          "brand": "不二（中国）投资有限公司",
+          "description": "规格: 1*12*1L / 单位: 箱",
+          "price": "",
+          "image": ""
+        },
+        {
+          "name": "维益金钻牌甜点植脂奶油（21652）",
+          "spec": "1*12*907g",
+          "unit": "箱",
+          "brand": "维益烘焙（天津）有限公司",
+          "description": "规格: 1*12*907g / 单位: 箱",
+          "price": "",
+          "image": ""
+        },
+        {
+          "name": "金钻含乳脂混合脂奶油(维益)14325",
+          "spec": "1*12*907g",
+          "unit": "箱",
+          "brand": "维益烘焙（天津）有限公司",
+          "description": "规格: 1*12*907g / 单位: 箱",
+          "price": "",
+          "image": ""
+        },
+        {
+          "name": "金钻清恬植脂奶油(维益)06985",
+          "spec": "1*12*907g",
+          "unit": "箱",
+          "brand": "维益烘焙（天津）有限公司",
+          "description": "规格: 1*12*907g / 单位: 箱",
+          "price": "",
+          "image": ""
+        },
+        {
+          "name": "凝白甜点植脂奶油（维益）07474",
+          "spec": "1*12*907g",
+          "unit": "箱",
+          "brand": "维益烘焙（天津）有限公司",
+          "description": "规格: 1*12*907g / 单位: 箱",
+          "price": "",
+          "image": ""
+        },
+        {
+          "name": "凝白混合脂奶油（维益）21616",
+          "spec": "1*12*907g",
+          "unit": "箱",
+          "brand": "维益烘焙（天津）有限公司",
+          "description": "规格: 1*12*907g / 单位: 箱",
+          "price": "",
+          "image": ""
+        },
+        {
+          "name": "爱护牌植脂甜奶油00906（维益）",
+          "spec": "1*12*907g",
+          "unit": "箱",
+          "brand": "维益烘焙（天津）有限公司",
+          "description": "规格: 1*12*907g / 单位: 箱",
+          "price": "",
+          "image": ""
+        },
+        {
+          "name": "葡挞专用奶油(维益)",
+          "spec": "1*12*907g",
+          "unit": "箱",
+          "brand": "维益烘焙（天津）有限公司",
+          "description": "规格: 1*12*907g / 单位: 箱",
+          "price": "",
+          "image": ""
+        },
+        {
+          "name": "爱真牧场稀奶油（维益）",
+          "spec": "1*12*1L",
+          "unit": "箱",
+          "brand": "维益烘焙（天津）有限公司",
+          "description": "规格: 1*12*1L / 单位: 箱",
+          "price": "",
+          "image": ""
+        },
+        {
+          "name": "爱真稀奶油（38%）（维益）整箱",
+          "spec": "1*12*1L",
+          "unit": "箱",
+          "brand": "维益烘焙（天津）有限公司",
+          "description": "规格: 1*12*1L / 单位: 箱",
+          "price": "",
+          "image": ""
+        },
+        {
+          "name": "爱真稀奶油300+ (维益）",
+          "spec": "1*12*1KG",
+          "unit": "箱",
+          "brand": "维益烘焙（天津）有限公司",
+          "description": "规格: 1*12*1KG / 单位: 箱",
+          "price": "",
+          "image": ""
+        },
+        {
+          "name": "爱真稀奶油Pro(维益）",
+          "spec": "1*12*1KG",
+          "unit": "箱",
+          "brand": "维益烘焙（天津）有限公司",
+          "description": "规格: 1*12*1KG / 单位: 箱",
+          "price": "",
+          "image": ""
+        },
+        {
+          "name": "牛奶奶油（脂肪乳化制品）(维益）16392",
+          "spec": "1*12*907g",
+          "unit": "箱",
+          "brand": "维益烘焙（天津）有限公司",
+          "description": "规格: 1*12*907g / 单位: 箱",
+          "price": "",
+          "image": ""
+        },
+        {
+          "name": "和牧动植物混合脂奶油1(维益)05442",
+          "spec": "1*12*907g",
+          "unit": "箱",
+          "brand": "维益烘焙（天津）有限公司",
+          "description": "规格: 1*12*907g / 单位: 箱",
+          "price": "",
+          "image": ""
+        },
+        {
+          "name": "领优混合脂奶油（维益）（21651）",
+          "spec": "1*12*907g",
+          "unit": "箱",
+          "brand": "维益烘焙（天津）有限公司",
+          "description": "规格: 1*12*907g / 单位: 箱",
+          "price": "",
+          "image": ""
+        },
+        {
+          "name": "维益奶油布蕾布丁05454",
+          "spec": "1*24*420g",
+          "unit": "盒",
+          "brand": "维益烘焙（天津）有限公司",
+          "description": "规格: 1*24*420g / 单位: 盒",
+          "price": "",
+          "image": ""
+        },
+        {
+          "name": "倍盛混合脂奶油（维益）（21656）",
+          "spec": "12*907g",
+          "unit": "箱",
+          "brand": "维益烘焙（天津）有限公司",
+          "description": "规格: 12*907g / 单位: 箱",
+          "price": "",
+          "image": ""
+        },
+        {
+          "name": "马斯卡彭风味淡奶油（维益）",
+          "spec": "12*1kg",
+          "unit": "箱",
+          "brand": "维益烘焙（天津）有限公司",
+          "description": "规格: 12*1kg / 单位: 箱",
+          "price": "",
+          "image": ""
+        },
+        {
+          "name": "生牛乳淡奶油（维益）",
+          "spec": "12*1kg",
+          "unit": "箱",
+          "brand": "维益烘焙（天津）有限公司",
+          "description": "规格: 12*1kg / 单位: 箱",
+          "price": "",
+          "image": ""
+        },
+        {
+          "name": "严选牛奶奶油（维益）",
+          "spec": "1*12*907g",
+          "unit": "箱",
+          "brand": "维益烘焙（天津）有限公司",
+          "description": "规格: 1*12*907g / 单位: 箱",
+          "price": "",
+          "image": ""
+        },
+        {
+          "name": "维益稀奶油挞缇（24734）",
+          "spec": "1*12*907g",
+          "unit": "箱",
+          "brand": "维益烘焙（天津）有限公司",
+          "description": "规格: 1*12*907g / 单位: 箱",
+          "price": "",
+          "image": ""
+        },
+        {
+          "name": "维益稀奶油风味蛋挞液",
+          "spec": "12*907g",
+          "unit": "箱",
+          "brand": "维益烘焙（天津）有限公司",
+          "description": "规格: 12*907g / 单位: 箱",
+          "price": "",
+          "image": ""
+        },
+        {
+          "name": "爱真®稀奶油（36%）维益",
+          "spec": "1*12*1L",
+          "unit": "箱",
+          "brand": "维益烘焙（天津）有限公司",
+          "description": "规格: 1*12*1L / 单位: 箱",
+          "price": "",
+          "image": ""
+        },
+        {
+          "name": "安佳超高温灭菌搅打稀奶油（淡奶）",
+          "spec": "1*12*1L",
+          "unit": "箱",
+          "brand": "恒天然商贸（上海）有限公司",
+          "description": "规格: 1*12*1L / 单位: 箱",
+          "price": "",
+          "image": ""
+        },
+        {
+          "name": "安佳多效稀奶油",
+          "spec": "1*12*1L",
+          "unit": "箱",
+          "brand": "恒天然商贸（上海）有限公司",
+          "description": "规格: 1*12*1L / 单位: 箱",
+          "price": "",
+          "image": ""
+        },
+        {
+          "name": "安佳芝易奶油干酪",
+          "spec": "1*20kg",
+          "unit": "箱",
+          "brand": "恒天然商贸（上海）有限公司",
+          "description": "规格: 1*20kg / 单位: 箱",
+          "price": "",
+          "image": ""
+        },
+        {
+          "name": "嘉品多胜高奶油干酪OEM10KG",
+          "spec": "1*10kg",
+          "unit": "箱",
+          "brand": "福基",
+          "description": "规格: 1*10kg / 单位: 箱",
+          "price": "",
+          "image": ""
+        },
+        {
+          "name": "伊利Pro东方灵感淡奶油（伊利淡奶油）",
+          "spec": "6*1L",
+          "unit": "箱",
+          "brand": "内蒙伊利实业集团股份有限公司",
+          "description": "规格: 6*1L / 单位: 箱",
+          "price": "",
+          "image": ""
+        },
+        {
+          "name": "爱乐薇超高温灭菌稀奶油（铁塔）",
+          "spec": "1*12L",
+          "unit": "箱",
+          "brand": "西诺迪斯食品（上海）有限公司",
+          "description": "规格: 1*12L / 单位: 箱",
+          "price": "",
+          "image": ""
+        },
+        {
+          "name": "新悦纯牧超高温灭菌搅打稀奶油35.7%",
+          "spec": "1*12",
+          "unit": "箱",
+          "brand": "西诺迪斯食品（上海）有限公司",
+          "description": "规格: 1*12 / 单位: 箱",
+          "price": "",
+          "image": ""
+        },
+        {
+          "name": "蔻曼纯净稀奶油38%（洁净标签）",
+          "spec": "12*1L",
+          "unit": "箱",
+          "brand": "西诺迪斯食品（上海）有限公司",
+          "description": "规格: 12*1L / 单位: 箱",
+          "price": "",
+          "image": ""
+        },
+        {
+          "name": "迪比克塑性稀奶油",
+          "spec": "6*1L",
+          "unit": "箱",
+          "brand": "菲仕兰",
+          "description": "规格: 6*1L / 单位: 箱",
+          "price": "",
+          "image": ""
+        },
+        {
+          "name": "潍粮乳脂烤焙奶油",
+          "spec": "1*20kg",
+          "unit": "箱",
+          "brand": "潍坊兴达油脂有限公司",
+          "description": "规格: 1*20kg / 单位: 箱",
+          "price": "",
+          "image": ""
+        },
+        {
+          "name": "蓝米勒（蓝米吉）稀奶油(南侨)",
+          "spec": "1*12",
+          "unit": "箱",
+          "brand": "",
+          "description": "规格: 1*12 / 单位: 箱",
+          "price": "",
+          "image": ""
+        },
+        {
+          "name": "侨艺800淡奶油(动植物脂混合奶油)（南侨）",
+          "spec": "1*12*1L",
+          "unit": "箱",
+          "brand": "",
+          "description": "规格: 1*12*1L / 单位: 箱",
+          "price": "",
+          "image": ""
+        },
+        {
+          "name": "侨艺淡奶油-蛋糕专用（南侨）",
+          "spec": "1*12*1L",
+          "unit": "箱",
+          "brand": "",
+          "description": "规格: 1*12*1L / 单位: 箱",
+          "price": "",
+          "image": ""
+        },
+        {
+          "name": "南侨澳仕奶油/10kg",
+          "spec": "1*10kg",
+          "unit": "箱",
+          "brand": "",
+          "description": "规格: 1*10kg / 单位: 箱",
+          "price": "",
+          "image": ""
+        },
+        {
+          "name": "南侨澳仕丹麦奶油",
+          "spec": "1*10kg",
+          "unit": "箱",
+          "brand": "",
+          "description": "规格: 1*10kg / 单位: 箱",
+          "price": "",
+          "image": ""
+        },
+        {
+          "name": "南侨欧仕发酵奶油/10kg",
+          "spec": "1*10kg",
+          "unit": "箱",
+          "brand": "",
+          "description": "规格: 1*10kg / 单位: 箱",
+          "price": "",
+          "image": ""
+        },
+        {
+          "name": "南侨欧仕发酵丹麦奶油",
+          "spec": "1*10kg",
+          "unit": "箱",
+          "brand": "",
+          "description": "规格: 1*10kg / 单位: 箱",
+          "price": "",
+          "image": ""
+        },
+        {
+          "name": "南侨片状甜奶油（炼乳味）/10kg",
+          "spec": "1*10kg",
+          "unit": "箱",
+          "brand": "",
+          "description": "规格: 1*10kg / 单位: 箱",
+          "price": "",
+          "image": ""
+        },
+        {
+          "name": "南侨维佳夹心奶油/10kg",
+          "spec": "1*10kg",
+          "unit": "箱",
+          "brand": "",
+          "description": "规格: 1*10kg / 单位: 箱",
+          "price": "",
+          "image": ""
+        },
+        {
+          "name": "南侨维佳烤焙奶油/10kg",
+          "spec": "1*10kg",
+          "unit": "箱",
+          "brand": "",
+          "description": "规格: 1*10kg / 单位: 箱",
+          "price": "",
+          "image": ""
+        },
+        {
+          "name": "南侨鲜牛奶烤焙油",
+          "spec": "1*10kg",
+          "unit": "箱",
+          "brand": "",
+          "description": "规格: 1*10kg / 单位: 箱",
+          "price": "",
+          "image": ""
+        },
+        {
+          "name": "南侨欧仕夹心奶油（蛋黄）",
+          "spec": "1*10kg",
+          "unit": "箱",
+          "brand": "",
+          "description": "规格: 1*10kg / 单位: 箱",
+          "price": "",
+          "image": ""
+        },
+        {
+          "name": "吉悦淡奶油（南侨）",
+          "spec": "1*12.6kg",
+          "unit": "箱",
+          "brand": "",
+          "description": "规格: 1*12.6kg / 单位: 箱",
+          "price": "",
+          "image": ""
+        },
+        {
+          "name": "维特利稀奶油（南侨）",
+          "spec": "12*1L",
+          "unit": "箱",
+          "brand": "",
+          "description": "规格: 12*1L / 单位: 箱",
+          "price": "",
+          "image": ""
+        }
+      ]
+    },
+    {
+      "name": "巧克力/可可",
+      "items": [
+        {
+          "name": "可可琳纳浓郁黑巧克力纽扣58%",
+          "spec": "1*5*1kg",
+          "unit": "袋",
+          "brand": "可可琳纳食品贸易（上海）股份有限公司",
+          "description": "规格: 1*5*1kg / 单位: 袋",
+          "price": "",
+          "image": ""
+        },
+        {
+          "name": "可可琳纳代可可脂巧克力豆（耐烤）",
+          "spec": "1*5*1kg",
+          "unit": "袋",
+          "brand": "可可琳纳食品贸易（上海）股份有限公司",
+          "description": "规格: 1*5*1kg / 单位: 袋",
+          "price": "",
+          "image": ""
+        },
+        {
+          "name": "可可琳纳代可可脂奶香白巧克力",
+          "spec": "1*10块*1kg",
+          "unit": "袋",
+          "brand": "可可琳纳食品贸易（上海）股份有限公司",
+          "description": "规格: 1*10块*1kg / 单位: 袋",
+          "price": "",
+          "image": ""
+        },
+        {
+          "name": "可可琳纳香浓黑巧克力",
+          "spec": "1*10块*1kg",
+          "unit": "袋",
+          "brand": "可可琳纳食品贸易（上海）股份有限公司",
+          "description": "规格: 1*10块*1kg / 单位: 袋",
+          "price": "",
+          "image": ""
+        },
+        {
+          "name": "巧乐尚64%纯脂黑巧克力币",
+          "spec": "1kg*10",
+          "unit": "袋",
+          "brand": "天津翘甜食品有限公司",
+          "description": "规格: 1kg*10 / 单位: 袋",
+          "price": "",
+          "image": ""
+        },
+        {
+          "name": "巧乐尚55%纯脂黑巧克力币",
+          "spec": "1kg*10",
+          "unit": "袋",
+          "brand": "天津翘甜食品有限公司",
+          "description": "规格: 1kg*10 / 单位: 袋",
+          "price": "",
+          "image": ""
+        },
+        {
+          "name": "巧乐尚耐烤巧克力豆（代可可脂）",
+          "spec": "1kg*10",
+          "unit": "袋",
+          "brand": "天津翘甜食品有限公司",
+          "description": "规格: 1kg*10 / 单位: 袋",
+          "price": "",
+          "image": ""
+        },
+        {
+          "name": "巧乐尚纯脂黑巧克力脆脆球",
+          "spec": "1kg*10",
+          "unit": "袋",
+          "brand": "天津翘甜食品有限公司",
+          "description": "规格: 1kg*10 / 单位: 袋",
+          "price": "",
+          "image": ""
+        },
+        {
+          "name": "巧乐尚32%纯脂白巧克力币",
+          "spec": "1kg*10",
+          "unit": "袋",
+          "brand": "天津翘甜食品有限公司",
+          "description": "规格: 1kg*10 / 单位: 袋",
+          "price": "",
+          "image": ""
+        },
+        {
+          "name": "片状巧克力味酱（不二）",
+          "spec": "1*10*0.6kg",
+          "unit": "箱",
+          "brand": "不二（中国）投资有限公司",
+          "description": "规格: 1*10*0.6kg / 单位: 箱",
+          "price": "",
+          "image": ""
+        },
+        {
+          "name": "夹心巧克力-SOFT(不二)",
+          "spec": "1*5kg",
+          "unit": "箱",
+          "brand": "不二（中国）投资有限公司",
+          "description": "规格: 1*5kg / 单位: 箱",
+          "price": "",
+          "image": ""
+        },
+        {
+          "name": "不二便利巧克力（黑）（不二）",
+          "spec": "1*10kg",
+          "unit": "块",
+          "brand": "不二（中国）投资有限公司",
+          "description": "规格: 1*10kg / 单位: 块",
+          "price": "",
+          "image": ""
+        },
+        {
+          "name": "不二便利巧克力（白）（不二）",
+          "spec": "1*10kg",
+          "unit": "块",
+          "brand": "不二（中国）投资有限公司",
+          "description": "规格: 1*10kg / 单位: 块",
+          "price": "",
+          "image": ""
+        },
+        {
+          "name": "巧克力风味植脂奶油（维益）21649",
+          "spec": "1*12*907g",
+          "unit": "箱",
+          "brand": "维益烘焙（天津）有限公司",
+          "description": "规格: 1*12*907g / 单位: 箱",
+          "price": "",
+          "image": ""
+        },
+        {
+          "name": "凯贝防潮可可粉",
+          "spec": "20袋*1kg",
+          "unit": "袋",
+          "brand": "山东凯贝食品有限公司",
+          "description": "规格: 20袋*1kg / 单位: 袋",
+          "price": "",
+          "image": ""
+        },
+        {
+          "name": "凯贝深黑可可粉",
+          "spec": "1*20*1kg",
+          "unit": "袋",
+          "brand": "山东凯贝食品有限公司",
+          "description": "规格: 1*20*1kg / 单位: 袋",
+          "price": "",
+          "image": ""
+        },
+        {
+          "name": "约翰丹尼皇家丝滑巧克力（方盒）",
+          "spec": "1*9盒*1200g",
+          "unit": "盒",
+          "brand": "维益食品（苏州）-约翰丹尼",
+          "description": "规格: 1*9盒*1200g / 单位: 盒",
+          "price": "",
+          "image": ""
+        },
+        {
+          "name": "高脂可可粉(早苗)",
+          "spec": "1*10*1kg",
+          "unit": "袋",
+          "brand": "上海早苗食品有限公司",
+          "description": "规格: 1*10*1kg / 单位: 袋",
+          "price": "",
+          "image": ""
+        },
+        {
+          "name": "代可可脂巧克力豆C10(15KG)(早苗)",
+          "spec": "1*15*1kg",
+          "unit": "袋",
+          "brand": "丘比食品有限公司",
+          "description": "规格: 1*15*1kg / 单位: 袋",
+          "price": "",
+          "image": ""
+        },
+        {
+          "name": "蓝黛高脂可可粉",
+          "spec": "1*10*1kg",
+          "unit": "袋",
+          "brand": "蓝黛",
+          "description": "规格: 1*10*1kg / 单位: 袋",
+          "price": "",
+          "image": ""
+        },
+        {
+          "name": "德馨高脂可可粉",
+          "spec": "10*1kg",
+          "unit": "袋",
+          "brand": "德馨",
+          "description": "规格: 10*1kg / 单位: 袋",
+          "price": "",
+          "image": ""
+        },
+        {
+          "name": "焙乐道贝可拉黑巧克力块",
+          "spec": "1*4*2.5kg",
+          "unit": "块",
+          "brand": "广州焙乐道食品有限公司",
+          "description": "规格: 1*4*2.5kg / 单位: 块",
+          "price": "",
+          "image": ""
+        },
+        {
+          "name": "巧克力色香油（马利美膳）",
+          "spec": "1*20*650ml",
+          "unit": "瓶",
+          "brand": "马利美膳",
+          "description": "规格: 1*20*650ml / 单位: 瓶",
+          "price": "",
+          "image": ""
+        },
+        {
+          "name": "复配着色剂（色水）（至尊牌色素巧克力棕色)",
+          "spec": "1*12*250ml",
+          "unit": "瓶",
+          "brand": "马利美膳",
+          "description": "规格: 1*12*250ml / 单位: 瓶",
+          "price": "",
+          "image": ""
+        },
+        {
+          "name": "味斯美巧克力风味酥脆松",
+          "spec": "1*10*1kg",
+          "unit": "袋",
+          "brand": "浙江味斯美商贸有限公司",
+          "description": "规格: 1*10*1kg / 单位: 袋",
+          "price": "",
+          "image": ""
+        },
+        {
+          "name": "贝琪5kg松软轻戚风巧克力蛋糕预拌粉",
+          "spec": "5kg*4袋/箱",
+          "unit": "袋",
+          "brand": "山东贝琪食品有限公司",
+          "description": "规格: 5kg*4袋/箱 / 单位: 袋",
+          "price": "",
+          "image": ""
+        },
+        {
+          "name": "贝琪5kg巧克力熔岩蛋糕预拌粉",
+          "spec": "5kg*4袋/箱",
+          "unit": "袋",
+          "brand": "山东贝琪食品有限公司",
+          "description": "规格: 5kg*4袋/箱 / 单位: 袋",
+          "price": "",
+          "image": ""
+        },
+        {
+          "name": "蔓吉4寸熔岩黑巧慕斯",
+          "spec": "1*8盒*6个",
+          "unit": "盒",
+          "brand": "扬州和华食品有限公司",
+          "description": "规格: 1*8盒*6个 / 单位: 盒",
+          "price": "",
+          "image": ""
+        },
+        {
+          "name": "蔓吉5英寸巧克力舒芙蕾奶盖",
+          "spec": "48盒*200g",
+          "unit": "盒",
+          "brand": "扬州和华食品有限公司",
+          "description": "规格: 48盒*200g / 单位: 盒",
+          "price": "",
+          "image": ""
+        },
+        {
+          "name": "蔓吉巧克力脏脏杯慕斯蛋糕",
+          "spec": "8盒*12个*85g",
+          "unit": "盒",
+          "brand": "扬州和华食品有限公司",
+          "description": "规格: 8盒*12个*85g / 单位: 盒",
+          "price": "",
+          "image": ""
+        },
+        {
+          "name": "蔓吉新品浓香巧克力魔方",
+          "spec": "1*8盒*6",
+          "unit": "盒",
+          "brand": "扬州和华食品有限公司",
+          "description": "规格: 1*8盒*6 / 单位: 盒",
+          "price": "",
+          "image": ""
+        },
+        {
+          "name": "焙可诗即用馅料榛果巧克力（南侨）",
+          "spec": "1*6*750g",
+          "unit": "箱",
+          "brand": "",
+          "description": "规格: 1*6*750g / 单位: 箱",
+          "price": "",
+          "image": ""
+        },
+        {
+          "name": "焙可芯海盐巧克力（南侨）",
+          "spec": "1*6*1kg",
+          "unit": "箱",
+          "brand": "",
+          "description": "规格: 1*6*1kg / 单位: 箱",
+          "price": "",
+          "image": ""
+        },
+        {
+          "name": "可丝达酱（巧克力味）（不二）",
+          "spec": "1*6*1kg",
+          "unit": "箱",
+          "brand": "不二（中国）投资有限公司",
+          "description": "规格: 1*6*1kg / 单位: 箱",
+          "price": "",
+          "image": ""
+        },
+        {
+          "name": "英士顿巧克力镜面淋酱（复合调味料）",
+          "spec": "1*6*2.3kg",
+          "unit": "桶",
+          "brand": "",
+          "description": "规格: 1*6*2.3kg / 单位: 桶",
+          "price": "",
+          "image": ""
+        },
+        {
+          "name": "榛子巧克力薄脆酱（英士顿）",
+          "spec": "1*6*2.3KG",
+          "unit": "桶",
+          "brand": "",
+          "description": "规格: 1*6*2.3KG / 单位: 桶",
+          "price": "",
+          "image": ""
+        },
+        {
+          "name": "淑女牌水晶光亮膏(巧克力味)（焙乐道）",
+          "spec": "1*4*3kg",
+          "unit": "桶",
+          "brand": "广州焙乐道食品有限公司",
+          "description": "规格: 1*4*3kg / 单位: 桶",
+          "price": "",
+          "image": ""
+        }
+      ]
+    },
+    {
+      "name": "干酪/芝士/马苏里拉",
+      "items": [
+        {
+          "name": "安佳块状马苏里拉干酪",
+          "spec": "1*2*10kg",
+          "unit": "箱",
+          "brand": "恒天然商贸（上海）有限公司",
+          "description": "规格: 1*2*10kg / 单位: 箱",
+          "price": "",
+          "image": ""
+        },
+        {
+          "name": "安佳碎条状马苏里拉干酪",
+          "spec": "1*12kg",
+          "unit": "箱",
+          "brand": "恒天然商贸（上海）有限公司",
+          "description": "规格: 1*12kg / 单位: 箱",
+          "price": "",
+          "image": ""
+        },
+        {
+          "name": "安佳芝易马苏里拉干酪碎（袋）",
+          "spec": "1*12*1kg",
+          "unit": "袋",
+          "brand": "恒天然商贸（上海）有限公司",
+          "description": "规格: 1*12*1kg / 单位: 袋",
+          "price": "",
+          "image": ""
+        },
+        {
+          "name": "安佳芝易马苏里拉干酪碎",
+          "spec": "1*12*1kg",
+          "unit": "箱",
+          "brand": "恒天然商贸（上海）有限公司",
+          "description": "规格: 1*12*1kg / 单位: 箱",
+          "price": "",
+          "image": ""
+        },
+        {
+          "name": "安佳再制切达干酪（橙色）",
+          "spec": "10*1.04kg",
+          "unit": "箱",
+          "brand": "恒天然商贸（上海）有限公司",
+          "description": "规格: 10*1.04kg / 单位: 箱",
+          "price": "",
+          "image": ""
+        },
+        {
+          "name": "安佳再制切达干酪（橙色）",
+          "spec": "10*1.04kg",
+          "unit": "袋",
+          "brand": "恒天然商贸（上海）有限公司",
+          "description": "规格: 10*1.04kg / 单位: 袋",
+          "price": "",
+          "image": ""
+        },
+        {
+          "name": "安佳再制切达干酪（84片）",
+          "spec": "1*10*1.04kg",
+          "unit": "袋",
+          "brand": "恒天然商贸（上海）有限公司",
+          "description": "规格: 1*10*1.04kg / 单位: 袋",
+          "price": "",
+          "image": ""
+        },
+        {
+          "name": "安佳再制切达干酪（84片）（整箱）",
+          "spec": "10*1.04kg",
+          "unit": "箱",
+          "brand": "恒天然商贸（上海）有限公司",
+          "description": "规格: 10*1.04kg / 单位: 箱",
+          "price": "",
+          "image": ""
+        },
+        {
+          "name": "百瑞酪专业餐饮马苏里拉 3千克",
+          "spec": "1*3kg",
+          "unit": "袋",
+          "brand": "西诺迪斯食品（上海）有限公司",
+          "description": "规格: 1*3kg / 单位: 袋",
+          "price": "",
+          "image": ""
+        },
+        {
+          "name": "蔓吉4寸芋泥芝士慕斯",
+          "spec": "1*8盒*6个",
+          "unit": "盒",
+          "brand": "扬州和华食品有限公司",
+          "description": "规格: 1*8盒*6个 / 单位: 盒",
+          "price": "",
+          "image": ""
+        },
+        {
+          "name": "琪雷萨必然干酪",
+          "spec": "1*125g",
+          "unit": "盒",
+          "brand": "其它品类",
+          "description": "规格: 1*125g / 单位: 盒",
+          "price": "",
+          "image": ""
+        },
+        {
+          "name": "琪雷萨金文干酪",
+          "spec": "1*125g",
+          "unit": "盒",
+          "brand": "其它品类",
+          "description": "规格: 1*125g / 单位: 盒",
+          "price": "",
+          "image": ""
+        },
+        {
+          "name": "003乐菲利娜马苏里拉芝士碎",
+          "spec": "1*4袋*3KG",
+          "unit": "袋",
+          "brand": "其它品类",
+          "description": "规格: 1*4袋*3KG / 单位: 袋",
+          "price": "",
+          "image": ""
+        },
+        {
+          "name": "安佳奶油干酪",
+          "spec": "1*12*1kg",
+          "unit": "盒",
+          "brand": "恒天然商贸（上海）有限公司",
+          "description": "规格: 1*12*1kg / 单位: 盒",
+          "price": "",
+          "image": ""
+        },
+        {
+          "name": "安佳奶油干酪1kg（整箱）",
+          "spec": "12*1Kg",
+          "unit": "箱",
+          "brand": "恒天然商贸（上海）有限公司",
+          "description": "规格: 12*1Kg / 单位: 箱",
+          "price": "",
+          "image": ""
+        },
+        {
+          "name": "安佳奶油干酪（4*5）",
+          "spec": "1*4*5kg",
+          "unit": "袋",
+          "brand": "恒天然商贸（上海）有限公司",
+          "description": "规格: 1*4*5kg / 单位: 袋",
+          "price": "",
+          "image": ""
+        },
+        {
+          "name": "安佳奶油干酪20kg（新版）",
+          "spec": "1*20kg",
+          "unit": "箱",
+          "brand": "恒天然商贸（上海）有限公司",
+          "description": "规格: 1*20kg / 单位: 箱",
+          "price": "",
+          "image": ""
+        },
+        {
+          "name": "MG奶油芝士",
+          "spec": "1*6*2kg",
+          "unit": "块",
+          "brand": "福基",
+          "description": "规格: 1*6*2kg / 单位: 块",
+          "price": "",
+          "image": ""
+        },
+        {
+          "name": "瓦伦堡奶油芝士10KG",
+          "spec": "1*10kg",
+          "unit": "箱",
+          "brand": "瑞康品尚（天津）进出口贸易有限公司",
+          "description": "规格: 1*10kg / 单位: 箱",
+          "price": "",
+          "image": ""
+        },
+        {
+          "name": "金太阳奶油干酪2KG",
+          "spec": "1*6*2kg",
+          "unit": "块",
+          "brand": "金太阳",
+          "description": "规格: 1*6*2kg / 单位: 块",
+          "price": "",
+          "image": ""
+        }
+      ]
+    },
+    {
+      "name": "牛奶/乳饮",
+      "items": [
+        {
+          "name": "新西兰奶粉",
+          "spec": "1*25kg",
+          "unit": "袋",
+          "brand": "进口产品",
+          "description": "规格: 1*25kg / 单位: 袋",
+          "price": "",
+          "image": ""
+        },
+        {
+          "name": "波兰大M全脂纯牛奶",
+          "spec": "12*1L",
+          "unit": "箱",
+          "brand": "进口产品",
+          "description": "规格: 12*1L / 单位: 箱",
+          "price": "",
+          "image": ""
+        },
+        {
+          "name": "可培谷全脂纯牛奶",
+          "spec": "12*1L",
+          "unit": "箱",
+          "brand": "",
+          "description": "规格: 12*1L / 单位: 箱",
+          "price": "",
+          "image": ""
+        },
+        {
+          "name": "焙优纯纯牛奶",
+          "spec": "12*1",
+          "unit": "箱",
+          "brand": "",
+          "description": "规格: 12*1 / 单位: 箱",
+          "price": "",
+          "image": ""
+        }
+      ]
+    },
+    {
+      "name": "糖类/甜味剂",
+      "items": [
+        {
+          "name": "凯贝糖粉",
+          "spec": "1*4*5kg",
+          "unit": "袋",
+          "brand": "山东凯贝食品有限公司",
+          "description": "规格: 1*4*5kg / 单位: 袋",
+          "price": "",
+          "image": ""
+        },
+        {
+          "name": "凯贝防潮糖粉",
+          "spec": "20袋*1kg",
+          "unit": "袋",
+          "brand": "山东凯贝食品有限公司",
+          "description": "规格: 20袋*1kg / 单位: 袋",
+          "price": "",
+          "image": ""
+        },
+        {
+          "name": "韩国白砂糖",
+          "spec": "1*30kg",
+          "unit": "袋",
+          "brand": "山东凯贝食品有限公司",
+          "description": "规格: 1*30kg / 单位: 袋",
+          "price": "",
+          "image": ""
+        },
+        {
+          "name": "蜜朋TST精制白砂糖",
+          "spec": "1*30kg",
+          "unit": "袋",
+          "brand": "山东凯贝食品有限公司",
+          "description": "规格: 1*30kg / 单位: 袋",
+          "price": "",
+          "image": ""
+        },
+        {
+          "name": "太古糖粉（蓝标）",
+          "spec": "1*13.62kg",
+          "unit": "桶",
+          "brand": "进口产品",
+          "description": "规格: 1*13.62kg / 单位: 桶",
+          "price": "",
+          "image": ""
+        },
+        {
+          "name": "大卫吉利丁明胶片",
+          "spec": "1*20*1kg",
+          "unit": "盒",
+          "brand": "进口产品",
+          "description": "规格: 1*20*1kg / 单位: 盒",
+          "price": "",
+          "image": ""
+        }
+      ]
+    },
+    {
+      "name": "肉制品/香肠/培根",
+      "items": [
+        {
+          "name": "嘉焙F1烘焙猪肉松（金黄）",
+          "spec": "1*6*2.5",
+          "unit": "袋",
+          "brand": "深圳市嘉焙食品有限公司",
+          "description": "规格: 1*6*2.5 / 单位: 袋",
+          "price": "",
+          "image": ""
+        },
+        {
+          "name": "嘉焙海苔贝贝肉松",
+          "spec": "1*10*1kg",
+          "unit": "袋",
+          "brand": "深圳市嘉焙食品有限公司",
+          "description": "规格: 1*10*1kg / 单位: 袋",
+          "price": "",
+          "image": ""
+        },
+        {
+          "name": "30g德式香肠（烘焙用）安心吗（大成）",
+          "spec": "1*12*1kg",
+          "unit": "袋",
+          "brand": "蚌埠大成食品有限公司",
+          "description": "规格: 1*12*1kg / 单位: 袋",
+          "price": "",
+          "image": ""
+        },
+        {
+          "name": "迷你德式香肠（原味）（大成）",
+          "spec": "1*10*1kg",
+          "unit": "袋",
+          "brand": "蚌埠大成食品有限公司",
+          "description": "规格: 1*10*1kg / 单位: 袋",
+          "price": "",
+          "image": ""
+        },
+        {
+          "name": "50g德式香肠（经典版）（大成）",
+          "spec": "1*12*1kg",
+          "unit": "袋",
+          "brand": "蚌埠大成食品有限公司",
+          "description": "规格: 1*12*1kg / 单位: 袋",
+          "price": "",
+          "image": ""
+        },
+        {
+          "name": "超值培根（安心码）（大成）",
+          "spec": "1*12*1kg",
+          "unit": "袋",
+          "brand": "蚌埠大成食品有限公司",
+          "description": "规格: 1*12*1kg / 单位: 袋",
+          "price": "",
+          "image": ""
+        },
+        {
+          "name": "香薰鸡肉片（大成）",
+          "spec": "1*12*1kg",
+          "unit": "袋",
+          "brand": "蚌埠大成食品有限公司",
+          "description": "规格: 1*12*1kg / 单位: 袋",
+          "price": "",
+          "image": ""
+        },
+        {
+          "name": "切片火腿（安心码）大成",
+          "spec": "1*24*500g",
+          "unit": "袋",
+          "brand": "蚌埠大成食品有限公司",
+          "description": "规格: 1*24*500g / 单位: 袋",
+          "price": "",
+          "image": ""
+        },
+        {
+          "name": "WOW鸡扒奥尔良（大胸）/65-80（大成）",
+          "spec": "1*4*2.2kg",
+          "unit": "袋",
+          "brand": "蚌埠大成食品有限公司",
+          "description": "规格: 1*4*2.2kg / 单位: 袋",
+          "price": "",
+          "image": ""
+        },
+        {
+          "name": "32cm德式香肠Jay（大成）",
+          "spec": "1*12*1kg",
+          "unit": "袋",
+          "brand": "蚌埠大成食品有限公司",
+          "description": "规格: 1*12*1kg / 单位: 袋",
+          "price": "",
+          "image": ""
+        },
+        {
+          "name": "可丽鸡排（奥尔良味）（大成）",
+          "spec": "1*8*1.25kg",
+          "unit": "袋",
+          "brand": "蚌埠大成食品有限公司",
+          "description": "规格: 1*8*1.25kg / 单位: 袋",
+          "price": "",
+          "image": ""
+        },
+        {
+          "name": "烘焙肉扒（大成）",
+          "spec": "1*8*1.3kg",
+          "unit": "袋",
+          "brand": "蚌埠大成食品有限公司",
+          "description": "规格: 1*8*1.3kg / 单位: 袋",
+          "price": "",
+          "image": ""
+        },
+        {
+          "name": "台式地道烤肠（大成）",
+          "spec": "1*12-600G",
+          "unit": "袋",
+          "brand": "蚌埠大成食品有限公司",
+          "description": "规格: 1*12-600G / 单位: 袋",
+          "price": "",
+          "image": ""
+        },
+        {
+          "name": "5A海苔肉松（大成）",
+          "spec": "1*10*1KG",
+          "unit": "袋",
+          "brand": "蚌埠大成食品有限公司",
+          "description": "规格: 1*10*1KG / 单位: 袋",
+          "price": "",
+          "image": ""
+        },
+        {
+          "name": "德式香肠（烘焙21c）大成",
+          "spec": "1*10*1.2KG",
+          "unit": "袋",
+          "brand": "蚌埠大成食品有限公司",
+          "description": "规格: 1*10*1.2KG / 单位: 袋",
+          "price": "",
+          "image": ""
+        },
+        {
+          "name": "日式烘焙肉扒（大成）",
+          "spec": "1*8*1.3kg",
+          "unit": "袋",
+          "brand": "蚌埠大成食品有限公司",
+          "description": "规格: 1*8*1.3kg / 单位: 袋",
+          "price": "",
+          "image": ""
+        },
+        {
+          "name": "烘焙脆鸡排（大成）",
+          "spec": "1*10*1KG",
+          "unit": "袋",
+          "brand": "蚌埠大成食品有限公司",
+          "description": "规格: 1*10*1KG / 单位: 袋",
+          "price": "",
+          "image": ""
+        },
+        {
+          "name": "黑椒牛肉切片（大成）",
+          "spec": "1*10*1KG",
+          "unit": "袋",
+          "brand": "蚌埠大成食品有限公司",
+          "description": "规格: 1*10*1KG / 单位: 袋",
+          "price": "",
+          "image": ""
+        },
+        {
+          "name": "黑椒牛肉馅（大成）",
+          "spec": "1*10*1KG",
+          "unit": "袋",
+          "brand": "蚌埠大成食品有限公司",
+          "description": "规格: 1*10*1KG / 单位: 袋",
+          "price": "",
+          "image": ""
+        },
+        {
+          "name": "烘焙烧烤肉排（大成）",
+          "spec": "1*8*1.25kg",
+          "unit": "袋",
+          "brand": "蚌埠大成食品有限公司",
+          "description": "规格: 1*8*1.25kg / 单位: 袋",
+          "price": "",
+          "image": ""
+        },
+        {
+          "name": "原味牛肉切片（大成）",
+          "spec": "1*10*1kg",
+          "unit": "袋",
+          "brand": "蚌埠大成食品有限公司",
+          "description": "规格: 1*10*1kg / 单位: 袋",
+          "price": "",
+          "image": ""
+        },
+        {
+          "name": "味斯美牛肉味酥脆松",
+          "spec": "1*8*2kg",
+          "unit": "袋",
+          "brand": "浙江味斯美商贸有限公司",
+          "description": "规格: 1*8*2kg / 单位: 袋",
+          "price": "",
+          "image": ""
+        },
+        {
+          "name": "味斯美爆汁热狗棒（速冻风味派（生）",
+          "spec": "900g+16（192根）",
+          "unit": "箱",
+          "brand": "浙江味斯美商贸有限公司",
+          "description": "规格: 900g+16（192根） / 单位: 箱",
+          "price": "",
+          "image": ""
+        },
+        {
+          "name": "早餐腿排（奥尔良味）烘焙（大成）",
+          "spec": "1*10*1kg",
+          "unit": "袋",
+          "brand": "蚌埠大成食品有限公司",
+          "description": "规格: 1*10*1kg / 单位: 袋",
+          "price": "",
+          "image": ""
+        },
+        {
+          "name": "早餐腿排（藤椒味）烘焙版（大成）",
+          "spec": "1*10*1kg",
+          "unit": "袋",
+          "brand": "蚌埠大成食品有限公司",
+          "description": "规格: 1*10*1kg / 单位: 袋",
+          "price": "",
+          "image": ""
+        },
+        {
+          "name": "十三香地道肠（大成）",
+          "spec": "1*10*1kg",
+          "unit": "袋",
+          "brand": "蚌埠大成食品有限公司",
+          "description": "规格: 1*10*1kg / 单位: 袋",
+          "price": "",
+          "image": ""
+        },
+        {
+          "name": "3A+海苔酥脆松（大成）",
+          "spec": "1*10*1KG",
+          "unit": "袋",
+          "brand": "蚌埠大成食品有限公司",
+          "description": "规格: 1*10*1KG / 单位: 袋",
+          "price": "",
+          "image": ""
+        }
+      ]
+    },
+    {
+      "name": "装饰/插件/翻糖",
+      "items": [
+        {
+          "name": "顺祥巧克力配件（黒碎）",
+          "spec": "500g",
+          "unit": "盒",
+          "brand": "",
+          "description": "规格: 500g / 单位: 盒",
+          "price": "",
+          "image": ""
+        },
+        {
+          "name": "顺祥巧克力配件（白碎）",
+          "spec": "500g",
+          "unit": "盒",
+          "brand": "",
+          "description": "规格: 500g / 单位: 盒",
+          "price": "",
+          "image": ""
+        },
+        {
+          "name": "顺祥巧克力配件（仿真麻将万）",
+          "spec": "28个",
+          "unit": "盒",
+          "brand": "",
+          "description": "规格: 28个 / 单位: 盒",
+          "price": "",
+          "image": ""
+        },
+        {
+          "name": "顺祥巧克力配件（仿真麻将十三幺）",
+          "spec": "28个",
+          "unit": "盒",
+          "brand": "",
+          "description": "规格: 28个 / 单位: 盒",
+          "price": "",
+          "image": ""
+        },
+        {
+          "name": "顺祥巧克力配件（叶子立体寿桃5CM）",
+          "spec": "12个",
+          "unit": "盒",
+          "brand": "",
+          "description": "规格: 12个 / 单位: 盒",
+          "price": "",
+          "image": ""
+        },
+        {
+          "name": "顺祥巧克力配件（7CM翻糖叶子立体寿桃）",
+          "spec": "9个",
+          "unit": "盒",
+          "brand": "",
+          "description": "规格: 9个 / 单位: 盒",
+          "price": "",
+          "image": ""
+        },
+        {
+          "name": "顺祥巧克力配件（纯黑长方）",
+          "spec": "90片",
+          "unit": "盒",
+          "brand": "",
+          "description": "规格: 90片 / 单位: 盒",
+          "price": "",
+          "image": ""
+        },
+        {
+          "name": "顺祥巧克力配件（纯白长方）",
+          "spec": "90片",
+          "unit": "盒",
+          "brand": "",
+          "description": "规格: 90片 / 单位: 盒",
+          "price": "",
+          "image": ""
+        },
+        {
+          "name": "顺祥巧克力配件（小生日牌）",
+          "spec": "108片",
+          "unit": "盒",
+          "brand": "",
+          "description": "规格: 108片 / 单位: 盒",
+          "price": "",
+          "image": ""
+        },
+        {
+          "name": "顺祥巧克力配件（皇冠正方黑生日）",
+          "spec": "108片",
+          "unit": "盒",
+          "brand": "",
+          "description": "规格: 108片 / 单位: 盒",
+          "price": "",
+          "image": ""
+        },
+        {
+          "name": "顺祥巧克力配件（仿真麻将万中发）",
+          "spec": "28个",
+          "unit": "盒",
+          "brand": "",
+          "description": "规格: 28个 / 单位: 盒",
+          "price": "",
+          "image": ""
+        },
+        {
+          "name": "顺祥巧克力配件（小爱心大红）",
+          "spec": "132片",
+          "unit": "盒",
+          "brand": "",
+          "description": "规格: 132片 / 单位: 盒",
+          "price": "",
+          "image": ""
+        },
+        {
+          "name": "顺祥巧克力配件（手工翻糖字牌囍字）",
+          "spec": "5大5小",
+          "unit": "盒",
+          "brand": "",
+          "description": "规格: 5大5小 / 单位: 盒",
+          "price": "",
+          "image": ""
+        },
+        {
+          "name": "顺祥巧克力配件（女王翻糖蝴蝶结15cm粉）",
+          "spec": "2套",
+          "unit": "盒",
+          "brand": "",
+          "description": "规格: 2套 / 单位: 盒",
+          "price": "",
+          "image": ""
+        },
+        {
+          "name": "顺祥巧克力配件（15cm翻糖蝴蝶结双囍）",
+          "spec": "15cm",
+          "unit": "盒",
+          "brand": "",
+          "description": "规格: 15cm / 单位: 盒",
+          "price": "",
+          "image": ""
+        },
+        {
+          "name": "顺祥巧克力配件（手工翻糖字牌发财绿色）",
+          "spec": "5大5小",
+          "unit": "盒",
+          "brand": "",
+          "description": "规格: 5大5小 / 单位: 盒",
+          "price": "",
+          "image": ""
+        },
+        {
+          "name": "味斯美装饰松松（原味）",
+          "spec": "1*10*1kg",
+          "unit": "袋",
+          "brand": "浙江味斯美商贸有限公司",
+          "description": "规格: 1*10*1kg / 单位: 袋",
+          "price": "",
+          "image": ""
+        }
+      ]
+    },
+    {
+      "name": "辅料/添加剂",
+      "items": [
+        {
+          "name": "凯贝珠葱",
+          "spec": "1*24桶*110g",
+          "unit": "桶",
+          "brand": "山东凯贝食品有限公司",
+          "description": "规格: 1*24桶*110g / 单位: 桶",
+          "price": "",
+          "image": ""
+        },
+        {
+          "name": "凯贝抹茶粉",
+          "spec": "1*24*500g",
+          "unit": "桶",
+          "brand": "山东凯贝食品有限公司",
+          "description": "规格: 1*24*500g / 单位: 桶",
+          "price": "",
+          "image": ""
+        },
+        {
+          "name": "凯贝植物炭黑",
+          "spec": "1*24*100g",
+          "unit": "桶",
+          "brand": "山东凯贝食品有限公司",
+          "description": "规格: 1*24*100g / 单位: 桶",
+          "price": "",
+          "image": ""
+        },
+        {
+          "name": "复配糕点乳化剂（sp）(早苗）",
+          "spec": "1*4*5kg",
+          "unit": "桶",
+          "brand": "上海早苗食品有限公司",
+          "description": "规格: 1*4*5kg / 单位: 桶",
+          "price": "",
+          "image": ""
+        },
+        {
+          "name": "复配膨松剂（泡打粉）（早苗）",
+          "spec": "1*6*2700g",
+          "unit": "桶",
+          "brand": "上海早苗食品有限公司",
+          "description": "规格: 1*6*2700g / 单位: 桶",
+          "price": "",
+          "image": ""
+        },
+        {
+          "name": "复配酸度调节剂（塔塔粉）（早苗）",
+          "spec": "1*12*1350g",
+          "unit": "桶",
+          "brand": "上海早苗食品有限公司",
+          "description": "规格: 1*12*1350g / 单位: 桶",
+          "price": "",
+          "image": ""
+        },
+        {
+          "name": "使必达双效泡打粉（焙乐道）",
+          "spec": "1*8*1400g",
+          "unit": "桶",
+          "brand": "广州焙乐道食品有限公司",
+          "description": "规格: 1*8*1400g / 单位: 桶",
+          "price": "",
+          "image": ""
+        },
+        {
+          "name": "复配酸度调节剂使必达塔塔粉(焙乐道)",
+          "spec": "1*8*1kg",
+          "unit": "桶",
+          "brand": "广州焙乐道食品有限公司",
+          "description": "规格: 1*8*1kg / 单位: 桶",
+          "price": "",
+          "image": ""
+        },
+        {
+          "name": "马利美膳蛋白起泡稳定剂",
+          "spec": "1*6*1.5kg",
+          "unit": "桶",
+          "brand": "马利美膳",
+          "description": "规格: 1*6*1.5kg / 单位: 桶",
+          "price": "",
+          "image": ""
+        },
+        {
+          "name": "复配着色剂（色水）（至尊牌色素橙黄色)",
+          "spec": "1*12*250ml",
+          "unit": "瓶",
+          "brand": "马利美膳",
+          "description": "规格: 1*12*250ml / 单位: 瓶",
+          "price": "",
+          "image": ""
+        },
+        {
+          "name": "复配着色剂（色水）（至尊牌色素果绿色)",
+          "spec": "1*12*250ml",
+          "unit": "瓶",
+          "brand": "马利美膳",
+          "description": "规格: 1*12*250ml / 单位: 瓶",
+          "price": "",
+          "image": ""
+        },
+        {
+          "name": "复配着色剂（色水）（至尊牌色素粉红色)",
+          "spec": "1*12*250ml",
+          "unit": "瓶",
+          "brand": "马利美膳",
+          "description": "规格: 1*12*250ml / 单位: 瓶",
+          "price": "",
+          "image": ""
+        },
+        {
+          "name": "复配着色剂（色水）（至尊牌色素红色)",
+          "spec": "1*12*250ml",
+          "unit": "瓶",
+          "brand": "马利美膳",
+          "description": "规格: 1*12*250ml / 单位: 瓶",
+          "price": "",
+          "image": ""
+        },
+        {
+          "name": "复配着色剂（色水）（至尊牌色素柠檬黄色)",
+          "spec": "1*12*250ml",
+          "unit": "瓶",
+          "brand": "马利美膳",
+          "description": "规格: 1*12*250ml / 单位: 瓶",
+          "price": "",
+          "image": ""
+        },
+        {
+          "name": "复配着色剂（色水）（至尊牌色素黑色)",
+          "spec": "1*12*250ml",
+          "unit": "瓶",
+          "brand": "马利美膳",
+          "description": "规格: 1*12*250ml / 单位: 瓶",
+          "price": "",
+          "image": ""
+        },
+        {
+          "name": "复配着色剂（色水）（至尊牌色素香芋紫色)",
+          "spec": "1*12*250ml",
+          "unit": "瓶",
+          "brand": "马利美膳",
+          "description": "规格: 1*12*250ml / 单位: 瓶",
+          "price": "",
+          "image": ""
+        },
+        {
+          "name": "复配着色剂（色水）（至尊牌色素蓝色)",
+          "spec": "1*12*250ml",
+          "unit": "瓶",
+          "brand": "马利美膳",
+          "description": "规格: 1*12*250ml / 单位: 瓶",
+          "price": "",
+          "image": ""
+        },
+        {
+          "name": "银谷速发蛋糕油10kg",
+          "spec": "1*10kg",
+          "unit": "桶",
+          "brand": "",
+          "description": "规格: 1*10kg / 单位: 桶",
+          "price": "",
+          "image": ""
+        },
+        {
+          "name": "烘焙配料粉（澳良阳光）",
+          "spec": "1*10袋*2.5kg",
+          "unit": "袋",
+          "brand": "",
+          "description": "规格: 1*10袋*2.5kg / 单位: 袋",
+          "price": "",
+          "image": ""
+        },
+        {
+          "name": "食用玉米淀粉",
+          "spec": "1*25kg",
+          "unit": "袋",
+          "brand": "",
+          "description": "规格: 1*25kg / 单位: 袋",
+          "price": "",
+          "image": ""
+        },
+        {
+          "name": "可宝食品配料用炼奶酱（3.5%）（熊猫炼乳）",
+          "spec": "1*4*5kg",
+          "unit": "桶",
+          "brand": "",
+          "description": "规格: 1*4*5kg / 单位: 桶",
+          "price": "",
+          "image": ""
+        },
+        {
+          "name": "星牌提子干（水洗）",
+          "spec": "1*10kg",
+          "unit": "箱",
+          "brand": "",
+          "description": "规格: 1*10kg / 单位: 箱",
+          "price": "",
+          "image": ""
+        },
+        {
+          "name": "加利Q弹雪莓娘皮（原味）9cm*9cm",
+          "spec": "1*45盒*240g",
+          "unit": "箱",
+          "brand": "",
+          "description": "规格: 1*45盒*240g / 单位: 箱",
+          "price": "",
+          "image": ""
+        },
+        {
+          "name": "食品碳铵（碳酸氢胺）",
+          "spec": "1*25*1kg",
+          "unit": "kg",
+          "brand": "",
+          "description": "规格: 1*25*1kg / 单位: kg",
+          "price": "",
+          "image": ""
+        },
+        {
+          "name": "FD冻干草莓粒（5*5*5）",
+          "spec": "1*10*500g",
+          "unit": "袋",
+          "brand": "",
+          "description": "规格: 1*10*500g / 单位: 袋",
+          "price": "",
+          "image": ""
+        },
+        {
+          "name": "牛奶粉末香精（白脱）（早苗）",
+          "spec": "1*12*1000g",
+          "unit": "罐",
+          "brand": "上海早苗食品有限公司",
+          "description": "规格: 1*12*1000g / 单位: 罐",
+          "price": "",
+          "image": ""
+        }
+      ]
+    },
+    {
+      "name": "酒饮/风味酒",
+      "items": [
+        {
+          "name": "摩根船长（黑标）朗姆酒",
+          "spec": "1*700ml",
+          "unit": "瓶",
+          "brand": "",
+          "description": "规格: 1*700ml / 单位: 瓶",
+          "price": "",
+          "image": ""
+        },
+        {
+          "name": "百加得白朗姆酒",
+          "spec": "1*750ml",
+          "unit": "瓶",
+          "brand": "",
+          "description": "规格: 1*750ml / 单位: 瓶",
+          "price": "",
+          "image": ""
+        },
+        {
+          "name": "君度力娇酒（桔皮味）",
+          "spec": "1*700ml",
+          "unit": "瓶",
+          "brand": "",
+          "description": "规格: 1*700ml / 单位: 瓶",
+          "price": "",
+          "image": ""
+        },
+        {
+          "name": "香草果露风味饮料（浓缩型）（博多家园）",
+          "spec": "1*12*750ml",
+          "unit": "瓶",
+          "brand": "",
+          "description": "规格: 1*12*750ml / 单位: 瓶",
+          "price": "",
+          "image": ""
+        },
+        {
+          "name": "甘露咖啡力娇酒1000ml",
+          "spec": "1*12*1000ml",
+          "unit": "瓶",
+          "brand": "",
+          "description": "规格: 1*12*1000ml / 单位: 瓶",
+          "price": "",
+          "image": ""
+        },
+        {
+          "name": "张裕金奖白兰地",
+          "spec": "1*750ml(6瓶/箱)",
+          "unit": "瓶",
+          "brand": "",
+          "description": "规格: 1*750ml(6瓶/箱) / 单位: 瓶",
+          "price": "",
+          "image": ""
+        }
+      ]
+    },
+    {
+      "name": "酵母",
+      "items": [
+        {
+          "name": "马利500g高糖干酵母（马利干）",
+          "spec": "1*20*500g",
+          "unit": "袋",
+          "brand": "",
+          "description": "规格: 1*20*500g / 单位: 袋",
+          "price": "",
+          "image": ""
+        },
+        {
+          "name": "1210101CN 燕牌酵母（高糖）（燕子）",
+          "spec": "1*20*500g",
+          "unit": "袋",
+          "brand": "",
+          "description": "规格: 1*20*500g / 单位: 袋",
+          "price": "",
+          "image": ""
+        },
+        {
+          "name": "1210101CN 燕牌酵母（高糖）（燕子整箱）",
+          "spec": "1*20*500g",
+          "unit": "箱",
+          "brand": "",
+          "description": "规格: 1*20*500g / 单位: 箱",
+          "price": "",
+          "image": ""
+        },
+        {
+          "name": "BAKERDREAM高糖高活性干酵母（百钻）",
+          "spec": "1*20*500g",
+          "unit": "袋",
+          "brand": "",
+          "description": "规格: 1*20*500g / 单位: 袋",
+          "price": "",
+          "image": ""
+        }
+      ]
+    },
+    {
+      "name": "面粉/谷物粉",
+      "items": [
+        {
+          "name": "华瑞优质低筋粉",
+          "spec": "1*25kg",
+          "unit": "袋",
+          "brand": "菏泽华瑞面粉有限公司",
+          "description": "规格: 1*25kg / 单位: 袋",
+          "price": "",
+          "image": ""
+        },
+        {
+          "name": "华瑞国色面包用小麦粉（纸袋）",
+          "spec": "1*25kg",
+          "unit": "袋",
+          "brand": "菏泽华瑞面粉有限公司",
+          "description": "规格: 1*25kg / 单位: 袋",
+          "price": "",
+          "image": ""
+        },
+        {
+          "name": "金像“B”（PRC）（22.7kg布）（南顺）",
+          "spec": "1*22.7kg",
+          "unit": "袋",
+          "brand": "",
+          "description": "规格: 1*22.7kg / 单位: 袋",
+          "price": "",
+          "image": ""
+        },
+        {
+          "name": "金像牌B面包用小麦粉（PP袋）",
+          "spec": "1*25kg",
+          "unit": "袋",
+          "brand": "",
+          "description": "规格: 1*25kg / 单位: 袋",
+          "price": "",
+          "image": ""
+        },
+        {
+          "name": "金像300面包粉（布）",
+          "spec": "1*25kg",
+          "unit": "袋",
+          "brand": "",
+          "description": "规格: 1*25kg / 单位: 袋",
+          "price": "",
+          "image": ""
+        },
+        {
+          "name": "金像精选面包粉",
+          "spec": "1*22.7kg",
+          "unit": "袋",
+          "brand": "",
+          "description": "规格: 1*22.7kg / 单位: 袋",
+          "price": "",
+          "image": ""
+        },
+        {
+          "name": "金像牌25kg用小麦粉（PP袋）",
+          "spec": "1*25kg",
+          "unit": "袋",
+          "brand": "",
+          "description": "规格: 1*25kg / 单位: 袋",
+          "price": "",
+          "image": ""
+        },
+        {
+          "name": "金像牌25kg用小麦粉（纸袋）",
+          "spec": "1*25kg",
+          "unit": "袋",
+          "brand": "",
+          "description": "规格: 1*25kg / 单位: 袋",
+          "price": "",
+          "image": ""
+        },
+        {
+          "name": "美玫牌600（纸袋）（南顺）",
+          "spec": "1*25kg",
+          "unit": "袋",
+          "brand": "",
+          "description": "规格: 1*25kg / 单位: 袋",
+          "price": "",
+          "image": ""
+        },
+        {
+          "name": "美玫牌糕点用小麦粉",
+          "spec": "1*25kg",
+          "unit": "袋",
+          "brand": "",
+          "description": "规格: 1*25kg / 单位: 袋",
+          "price": "",
+          "image": ""
+        },
+        {
+          "name": "美玫牌糕点用小麦粉",
+          "spec": "1*22.7kg",
+          "unit": "袋",
+          "brand": "",
+          "description": "规格: 1*22.7kg / 单位: 袋",
+          "price": "",
+          "image": ""
+        },
+        {
+          "name": "美玫牌300（22.7kg布袋）（南顺）",
+          "spec": "1*22.7kg",
+          "unit": "袋",
+          "brand": "",
+          "description": "规格: 1*22.7kg / 单位: 袋",
+          "price": "",
+          "image": ""
+        },
+        {
+          "name": "凯旋门300糕点粉",
+          "spec": "1*25kg",
+          "unit": "袋",
+          "brand": "",
+          "description": "规格: 1*25kg / 单位: 袋",
+          "price": "",
+          "image": ""
+        },
+        {
+          "name": "武藏丸味至面包粉（纸）（华创）",
+          "spec": "1*25kg",
+          "unit": "袋",
+          "brand": "东莞华创制粉有限公司",
+          "description": "规格: 1*25kg / 单位: 袋",
+          "price": "",
+          "image": ""
+        },
+        {
+          "name": "柳叶梅全麦高级面包粉（华创）",
+          "spec": "1*5kg",
+          "unit": "袋",
+          "brand": "东莞华创制粉有限公司",
+          "description": "规格: 1*5kg / 单位: 袋",
+          "price": "",
+          "image": ""
+        },
+        {
+          "name": "樱皇精研日式面包小麦粉（25KG纸袋）",
+          "spec": "1*25kg",
+          "unit": "袋",
+          "brand": "东莞华创制粉有限公司",
+          "description": "规格: 1*25kg / 单位: 袋",
+          "price": "",
+          "image": ""
+        }
+      ]
+    },
+    {
+      "name": "预拌粉/预混粉",
+      "items": [
+        {
+          "name": "华瑞月饼专用粉",
+          "spec": "1*25kg",
+          "unit": "袋",
+          "brand": "菏泽华瑞面粉有限公司",
+          "description": "规格: 1*25kg / 单位: 袋",
+          "price": "",
+          "image": ""
+        },
+        {
+          "name": "焙乐道红丝绒蛋糕预拌粉",
+          "spec": "1*2*5kg",
+          "unit": "盒",
+          "brand": "广州焙乐道食品有限公司",
+          "description": "规格: 1*2*5kg / 单位: 盒",
+          "price": "",
+          "image": ""
+        },
+        {
+          "name": "复配酶制剂S500综合面包改良剂(焙乐道)",
+          "spec": "1*20*1kg",
+          "unit": "包",
+          "brand": "广州焙乐道食品有限公司",
+          "description": "规格: 1*20*1kg / 单位: 包",
+          "price": "",
+          "image": ""
+        },
+        {
+          "name": "焙乐道麻薯预拌粉",
+          "spec": "2*5kg",
+          "unit": "袋",
+          "brand": "广州焙乐道食品有限公司",
+          "description": "规格: 2*5kg / 单位: 袋",
+          "price": "",
+          "image": ""
+        },
+        {
+          "name": "贝琪5kg0蔗糖戚风蛋糕预拌粉",
+          "spec": "1*4*5kg",
+          "unit": "袋",
+          "brand": "山东贝琪食品有限公司",
+          "description": "规格: 1*4*5kg / 单位: 袋",
+          "price": "",
+          "image": ""
+        },
+        {
+          "name": "猫唛日式面包专用粉（纸）（华创）",
+          "spec": "1*25kg",
+          "unit": "袋",
+          "brand": "东莞华创制粉有限公司",
+          "description": "规格: 1*25kg / 单位: 袋",
+          "price": "",
+          "image": ""
+        }
+      ]
+    },
+    {
+      "name": "食用油/植物油/起酥油",
+      "items": [
+        {
+          "name": "南侨酥油/16kg纸箱CNO15",
+          "spec": "1*16kg",
+          "unit": "箱",
+          "brand": "",
+          "description": "规格: 1*16kg / 单位: 箱",
+          "price": "",
+          "image": ""
+        },
+        {
+          "name": "南侨酥油/16kg铁桶CNO15",
+          "spec": "1*16kg",
+          "unit": "桶",
+          "brand": "",
+          "description": "规格: 1*16kg / 单位: 桶",
+          "price": "",
+          "image": ""
+        },
+        {
+          "name": "南侨液态酥油/20kg",
+          "spec": "1*20kg",
+          "unit": "桶",
+          "brand": "",
+          "description": "规格: 1*20kg / 单位: 桶",
+          "price": "",
+          "image": ""
+        },
+        {
+          "name": "南侨液态酥油4*5",
+          "spec": "1*4*5",
+          "unit": "桶",
+          "brand": "",
+          "description": "规格: 1*4*5 / 单位: 桶",
+          "price": "",
+          "image": ""
+        },
+        {
+          "name": "南侨维佳液态油/20kg",
+          "spec": "1*20kg",
+          "unit": "桶",
+          "brand": "",
+          "description": "规格: 1*20kg / 单位: 桶",
+          "price": "",
+          "image": ""
+        },
+        {
+          "name": "南侨丹麦面包专用油/10kg",
+          "spec": "1*10kg",
+          "unit": "箱",
+          "brand": "",
+          "description": "规格: 1*10kg / 单位: 箱",
+          "price": "",
+          "image": ""
+        },
+        {
+          "name": "王牌高级玛琪琳/15kg铁桶CNO15(南侨）",
+          "spec": "1*15kg",
+          "unit": "桶",
+          "brand": "",
+          "description": "规格: 1*15kg / 单位: 桶",
+          "price": "",
+          "image": ""
+        },
+        {
+          "name": "王牌酥片玛琪琳/10kg纸箱CNO15（南侨）",
+          "spec": "1*10kg",
+          "unit": "箱",
+          "brand": "",
+          "description": "规格: 1*10kg / 单位: 箱",
+          "price": "",
+          "image": ""
+        },
+        {
+          "name": "玉峰牌高级雪白乳化油/15kg铁桶CNO15(南侨)",
+          "spec": "1*15kg",
+          "unit": "桶",
+          "brand": "",
+          "description": "规格: 1*15kg / 单位: 桶",
+          "price": "",
+          "image": ""
+        },
+        {
+          "name": "金鹂液态酥油",
+          "spec": "1*4*5L",
+          "unit": "桶",
+          "brand": "",
+          "description": "规格: 1*4*5L / 单位: 桶",
+          "price": "",
+          "image": ""
+        },
+        {
+          "name": "金鹂高级酥皮专用油LMP45-01(1KG*10)（金鹂片）",
+          "spec": "1*10kg",
+          "unit": "箱",
+          "brand": "",
+          "description": "规格: 1*10kg / 单位: 箱",
+          "price": "",
+          "image": ""
+        },
+        {
+          "name": "金鹂精品无水酥油LMB42-01(10KG)(金鹂精品)",
+          "spec": "1*10kg",
+          "unit": "箱",
+          "brand": "",
+          "description": "规格: 1*10kg / 单位: 箱",
+          "price": "",
+          "image": ""
+        },
+        {
+          "name": "花旗起酥（F标）",
+          "spec": "1*16kg",
+          "unit": "箱",
+          "brand": "",
+          "description": "规格: 1*16kg / 单位: 箱",
+          "price": "",
+          "image": ""
+        },
+        {
+          "name": "花旗雪白奶油HMF42-01(15KG)(花旗雪白)",
+          "spec": "1*15kg",
+          "unit": "箱",
+          "brand": "",
+          "description": "规格: 1*15kg / 单位: 箱",
+          "price": "",
+          "image": ""
+        },
+        {
+          "name": "大8纯正食用猪油23KG*1(纸桶)（大8）",
+          "spec": "1*23KG",
+          "unit": "桶",
+          "brand": "",
+          "description": "规格: 1*23KG / 单位: 桶",
+          "price": "",
+          "image": ""
+        }
+      ]
+    },
+    {
+      "name": "饼干/奥利奥",
+      "items": [
+        {
+          "name": "奥利奥中号饼干碎",
+          "spec": "1*24*400g",
+          "unit": "袋",
+          "brand": "亿滋",
+          "description": "规格: 1*24*400g / 单位: 袋",
+          "price": "",
+          "image": ""
+        },
+        {
+          "name": "奥利奥中号饼干碎",
+          "spec": "1*24*400g",
+          "unit": "箱",
+          "brand": "亿滋",
+          "description": "规格: 1*24*400g / 单位: 箱",
+          "price": "",
+          "image": ""
+        },
+        {
+          "name": "奥利奥原味夹心饼干家庭装",
+          "spec": "1*12*466g",
+          "unit": "箱",
+          "brand": "亿滋",
+          "description": "规格: 1*12*466g / 单位: 箱",
+          "price": "",
+          "image": ""
+        }
+      ]
+    },
+    {
+      "name": "黄油/乳制油脂",
+      "items": [
+        {
+          "name": "安佳乳酸黄油",
+          "spec": "1*25",
+          "unit": "箱",
+          "brand": "恒天然商贸（上海）有限公司",
+          "description": "规格: 1*25 / 单位: 箱",
+          "price": "",
+          "image": ""
+        },
+        {
+          "name": "安佳片状乳酸黄油",
+          "spec": "1*20",
+          "unit": "箱",
+          "brand": "恒天然商贸（上海）有限公司",
+          "description": "规格: 1*20 / 单位: 箱",
+          "price": "",
+          "image": ""
+        },
+        {
+          "name": "安佳黄油薄片20*1kg",
+          "spec": "20*1kg",
+          "unit": "箱",
+          "brand": "恒天然商贸（上海）有限公司",
+          "description": "规格: 20*1kg / 单位: 箱",
+          "price": "",
+          "image": ""
+        },
+        {
+          "name": "安佳含盐黄油40*227g（方形）",
+          "spec": "40*227g",
+          "unit": "箱",
+          "brand": "恒天然商贸（上海）有限公司",
+          "description": "规格: 40*227g / 单位: 箱",
+          "price": "",
+          "image": ""
+        },
+        {
+          "name": "安佳黄油（无盐）4*5kg",
+          "spec": "1*4*5kg",
+          "unit": "箱",
+          "brand": "恒天然商贸（上海）有限公司",
+          "description": "规格: 1*4*5kg / 单位: 箱",
+          "price": "",
+          "image": ""
+        },
+        {
+          "name": "安佳黄油25kg",
+          "spec": "1*25kg",
+          "unit": "箱",
+          "brand": "恒天然商贸（上海）有限公司",
+          "description": "规格: 1*25kg / 单位: 箱",
+          "price": "",
+          "image": ""
+        },
+        {
+          "name": "瓦伦堡无盐黄油25kg",
+          "spec": "1*25kg",
+          "unit": "箱",
+          "brand": "瑞康品尚（天津）进出口贸易有限公司",
+          "description": "规格: 1*25kg / 单位: 箱",
+          "price": "",
+          "image": ""
+        },
+        {
+          "name": "Butterland无盐黄油25kg（国产）",
+          "spec": "1*25kg",
+          "unit": "箱",
+          "brand": "瑞康品尚（天津）进出口贸易有限公司",
+          "description": "规格: 1*25kg / 单位: 箱",
+          "price": "",
+          "image": ""
+        },
+        {
+          "name": "Butterland乳脂混合黄油",
+          "spec": "1*25kg",
+          "unit": "箱",
+          "brand": "瑞康品尚（天津）进出口贸易有限公司",
+          "description": "规格: 1*25kg / 单位: 箱",
+          "price": "",
+          "image": ""
+        },
+        {
+          "name": "华芙莱黄油（潍粮）",
+          "spec": "1*25kg",
+          "unit": "箱",
+          "brand": "潍坊兴达油脂有限公司",
+          "description": "规格: 1*25kg / 单位: 箱",
+          "price": "",
+          "image": ""
+        },
+        {
+          "name": "潍粮牛乳黄油",
+          "spec": "1*25kg",
+          "unit": "箱",
+          "brand": "潍坊兴达油脂有限公司",
+          "description": "规格: 1*25kg / 单位: 箱",
+          "price": "",
+          "image": ""
+        },
+        {
+          "name": "WLBUETR无盐黄油（潍粮）",
+          "spec": "1*25kg",
+          "unit": "箱",
+          "brand": "潍坊兴达油脂有限公司",
+          "description": "规格: 1*25kg / 单位: 箱",
+          "price": "",
+          "image": ""
+        },
+        {
+          "name": "北海道风味黄奶油（不二）",
+          "spec": "1*10kg",
+          "unit": "箱",
+          "brand": "不二（中国）投资有限公司",
+          "description": "规格: 1*10kg / 单位: 箱",
+          "price": "",
+          "image": ""
+        },
+        {
+          "name": "金鹂高级黄油LMY42-02(15KG)(金鹂黄)",
+          "spec": "1*15kg",
+          "unit": "箱",
+          "brand": "",
+          "description": "规格: 1*15kg / 单位: 箱",
+          "price": "",
+          "image": ""
+        },
+        {
+          "name": "车轮牌人造黄奶油（车轮黄）",
+          "spec": "1*15kg",
+          "unit": "箱",
+          "brand": "",
+          "description": "规格: 1*15kg / 单位: 箱",
+          "price": "",
+          "image": ""
+        }
+      ]
+    },
+    {
+      "name": "其他",
+      "items": [
+        {
+          "name": "焙乐道CPT",
+          "spec": "1*6*1.7kg",
+          "unit": "桶",
+          "brand": "广州焙乐道食品有限公司",
+          "description": "规格: 1*6*1.7kg / 单位: 桶",
+          "price": "",
+          "image": ""
+        },
+        {
+          "name": "朋宗玫瑰花饼",
+          "spec": "16包*16个*45g",
+          "unit": "箱",
+          "brand": "朋宗",
+          "description": "规格: 16包*16个*45g / 单位: 箱",
+          "price": "",
+          "image": ""
+        },
+        {
+          "name": "朋宗椒盐饼（牛舌饼）",
+          "spec": "19包*12个",
+          "unit": "箱",
+          "brand": "朋宗",
+          "description": "规格: 19包*12个 / 单位: 箱",
+          "price": "",
+          "image": ""
+        },
+        {
+          "name": "味斯美海苔酥脆松-3A海苔",
+          "spec": "1*8*2kg",
+          "unit": "袋",
+          "brand": "浙江味斯美商贸有限公司",
+          "description": "规格: 1*8*2kg / 单位: 袋",
+          "price": "",
+          "image": ""
+        },
+        {
+          "name": "味斯美蟹黄味酥脆松",
+          "spec": "1*8*2kg",
+          "unit": "袋",
+          "brand": "浙江味斯美商贸有限公司",
+          "description": "规格: 1*8*2kg / 单位: 袋",
+          "price": "",
+          "image": ""
+        },
+        {
+          "name": "贝琪快客SP蛋糕油",
+          "spec": "1*4*5kg",
+          "unit": "袋",
+          "brand": "山东贝琪食品有限公司",
+          "description": "规格: 1*4*5kg / 单位: 袋",
+          "price": "",
+          "image": ""
+        },
+        {
+          "name": "蔓吉一颗榴莲",
+          "spec": "1*48盒",
+          "unit": "盒",
+          "brand": "扬州和华食品有限公司",
+          "description": "规格: 1*48盒 / 单位: 盒",
+          "price": "",
+          "image": ""
+        },
+        {
+          "name": "蔓吉5英寸原味舒芙蕾奶盖",
+          "spec": "48盒*200g",
+          "unit": "盒",
+          "brand": "扬州和华食品有限公司",
+          "description": "规格: 48盒*200g / 单位: 盒",
+          "price": "",
+          "image": ""
+        },
+        {
+          "name": "蔓吉5英寸抹茶舒芙蕾奶盖",
+          "spec": "48盒*200g",
+          "unit": "盒",
+          "brand": "扬州和华食品有限公司",
+          "description": "规格: 48盒*200g / 单位: 盒",
+          "price": "",
+          "image": ""
+        },
+        {
+          "name": "蔓吉新品提拉米苏魔方",
+          "spec": "1*8盒*6",
+          "unit": "盒",
+          "brand": "扬州和华食品有限公司",
+          "description": "规格: 1*8盒*6 / 单位: 盒",
+          "price": "",
+          "image": ""
+        },
+        {
+          "name": "蔓吉新品香芋芝芝魔方",
+          "spec": "1*8盒*6",
+          "unit": "盒",
+          "brand": "扬州和华食品有限公司",
+          "description": "规格: 1*8盒*6 / 单位: 盒",
+          "price": "",
+          "image": ""
+        },
+        {
+          "name": "蔓吉新品和风抹茶魔方",
+          "spec": "1*8盒*6",
+          "unit": "盒",
+          "brand": "扬州和华食品有限公司",
+          "description": "规格: 1*8盒*6 / 单位: 盒",
+          "price": "",
+          "image": ""
+        },
+        {
+          "name": "蔓吉新品荔枝玫瑰魔方",
+          "spec": "1*8盒*6",
+          "unit": "盒",
+          "brand": "扬州和华食品有限公司",
+          "description": "规格: 1*8盒*6 / 单位: 盒",
+          "price": "",
+          "image": ""
+        },
+        {
+          "name": "琪雷萨马斯卡布尼奶酪",
+          "spec": "500G*6",
+          "unit": "箱",
+          "brand": "其它品类",
+          "description": "规格: 500G*6 / 单位: 箱",
+          "price": "",
+          "image": ""
+        },
+        {
+          "name": "奈特兰马斯卡邦尼(42%脂肪）",
+          "spec": "500G*6",
+          "unit": "箱",
+          "brand": "其它品类",
+          "description": "规格: 500G*6 / 单位: 箱",
+          "price": "",
+          "image": ""
+        },
+        {
+          "name": "乐芙娜西西里黄柠檬汁",
+          "spec": "12*200ML",
+          "unit": "箱",
+          "brand": "其它品类",
+          "description": "规格: 12*200ML / 单位: 箱",
+          "price": "",
+          "image": ""
+        },
+        {
+          "name": "南美宝石火焰提子干",
+          "spec": "1*10kg",
+          "unit": "箱",
+          "brand": "其它品类",
+          "description": "规格: 1*10kg / 单位: 箱",
+          "price": "",
+          "image": ""
+        }
+      ]
+    }
+  ]
+}

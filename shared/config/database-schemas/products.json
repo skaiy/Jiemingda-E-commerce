@@ -1,0 +1,58 @@
+{
+  "name": "products",
+  "description": "产品集合",
+  "fields": [
+    {
+      "name": "name",
+      "type": "String",
+      "description": "产品名称",
+      "required": true
+    },
+    {
+      "name": "specification",
+      "type": "String",
+      "description": "规格型号"
+    },
+    {
+      "name": "unit",
+      "type": "String",
+      "description": "单位"
+    },
+    {
+      "name": "brand",
+      "type": "String",
+      "description": "品牌"
+    },
+    {
+      "name": "description",
+      "type": "String",
+      "description": "产品描述"
+    },
+    {
+      "name": "price",
+      "type": "Number",
+      "description": "价格"
+    },
+    {
+      "name": "image",
+      "type": "String",
+      "description": "产品图片路径"
+    },
+    {
+      "name": "category",
+      "type": "String",
+      "description": "产品分类",
+      "required": true
+    },
+    {
+      "name": "createdAt",
+      "type": "DateTime",
+      "description": "创建时间"
+    },
+    {
+      "name": "updatedAt",
+      "type": "DateTime",
+      "description": "更新时间"
+    }
+  ]
+}

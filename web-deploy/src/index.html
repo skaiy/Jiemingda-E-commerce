@@ -1,0 +1,560 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1">
+  <title>移动端产品目录</title>
+  <!-- CloudBase Web SDK -->
+  <script src="https://static.cloudbase.net/cloudbase-js-sdk/2.17.3/cloudbase.full.js"></script>
+  <!-- CloudBase 配置 -->
+  <script src="./cloudbase.config.js"></script>
+  <style>
+    :root{--bg:#f7f7f8;--card:#fff;--accent:#ff6b6b;--muted:#888;--modal-close-size:56px;--modal-close-bg:var(--accent);--modal-close-color:#fff;--modal-close-bottom:24px}
+    html,body{height:100%;margin:0;font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial; background:var(--bg); color:#222}
+    .app{display:flex;flex-direction:row;height:100vh;max-height:100vh;overflow:hidden}
+    .sidebar{width:24%;min-width:104px;max-width:200px;background:linear-gradient(#fff,#fafafa);border-right:1px solid #eee;overflow:auto;position:sticky;top:0;height:100vh}
+    .sidebar .search{position: sticky; top: 0; z-index: 2; padding:10px; background: linear-gradient(#fff,#fafafa); border-bottom: 1px solid #eee;}
+    .category-list{list-style:none;padding:0;margin:0}
+    .category-item{padding:12px 10px;border-bottom:1px solid #f0f0f0;cursor:pointer;display:flex;align-items:center}
+    .category-item.active{background:linear-gradient(90deg, rgba(255,107,107,0.06), transparent);font-weight:600;color:var(--accent)}
+    .category-item .label{flex:1 1 auto;min-width:0;white-space:normal;word-break:break-word}
+    .category-item .badge{margin-left:auto;background:#eee;padding:4px 8px;border-radius:12px;font-size:12px;color:var(--muted)}
+    .content{flex:1;overflow:auto;padding:8px}
+    .topbar{position: sticky; top: 0; z-index: 20; display:flex;align-items:center;gap:8px;padding:8px; background: linear-gradient(#fff,#fafafa); border-bottom: 1px solid #eee}
+    .topbar.scrolled{ box-shadow: 0 4px 12px rgba(0,0,0,0.08); }
+    .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:8px;padding:8px}
+    .card{background:var(--card);border-radius:12px;padding:8px;box-shadow:0 4px 12px rgba(0,0,0,0.08);display:flex;flex-direction:column;transition: transform .2s cubic-bezier(.2,.8,.2,1), box-shadow .25s ease}
+    .card:hover, .card:active{ box-shadow: 0 8px 24px rgba(0,0,0,0.12); transform: translateY(-1px) scale(1.01); }
+    .card .img{height:110px;border-radius:8px;background:linear-gradient(180deg,#eee,#ddd);display:flex;align-items:center;justify-content:center;font-size:12px;color:#999}
+    .card .name{margin-top:8px;font-size:14px;line-height:1.2;height:2.6em;overflow:hidden}
+    .card .desc{font-size:12px;color:var(--muted);height:1.6em;overflow:hidden;margin-top:6px}
+    .card .price-row{display:flex;align-items:center;justify-content:space-between;margin-top:8px}
+    .price{font-weight:700;color:var(--accent)}
+    .add-btn{background:var(--accent);color:#fff;border:none;padding:6px 10px;border-radius:8px;font-weight:600}
+    @media(max-width:720px){.sidebar{width:30%;min-width:90px}.grid{grid-template-columns:repeat(2,1fr)}}
+    @media(max-width:540px){.grid{grid-template-columns:1fr}}
+    @media(max-width:420px){.app{flex-direction:row}.sidebar{order:1;width:36%;min-width:100px;max-width:160px;border-right:1px solid #eee;border-top:none}.content{order:2}.grid{grid-template-columns:1fr}.category-item{padding:10px 10px}.category-item .label{font-size:13px;line-height:1.25;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}.category-item .badge{font-size:11px;padding:2px 6px}}
+    .empty{padding:30px;text-align:center;color:var(--muted)}
+      /* 分类 Banner 样式 */
+      .category-banner { position: relative; width: 100%; aspect-ratio: 4 / 1; min-height: 90px; border-radius: 12px; overflow: hidden; background: linear-gradient(135deg, #6ea2ff 0%, #46d9a6 100%); margin: 12px 0 16px; }
+      .category-banner .title-overlay { position: absolute; left: 16px; top: 12px; color: #fff; font-size: 18px; font-weight: 700; text-shadow: 0 2px 6px rgba(0,0,0,0.35); }
+      @media(min-width: 768px){ .category-banner { min-height: 130px; } .category-banner .title-overlay { font-size: 22px; } }
+      @media(max-width: 420px){ .category-banner .title-overlay { font-size: 16px; } }
+      /* 隐藏旧的纯文本标题，改用覆盖在 Banner 上的标题 */
+      #categoryTitle { display: none; }
+    
+      /* 详情按钮充满整卡片宽度 */
+      .price-row { display: flex; flex-direction: column; gap: 8px; align-items: stretch; }
+      .add-btn { display: block; width: 100%; box-sizing: border-box; }
+
+      /* 平滑滚动反馈 */
+      .sidebar, .content { scroll-behavior: smooth; }
+      /* 侧栏返回顶部区域与按钮 */
+      .sidebar-actions { position: sticky; bottom: 8px; padding: 8px; background: linear-gradient(#fff,#fafafa); border-top: 1px solid #eee; }
+      .sidebar-actions .backtop-btn { width: 100%; padding: 10px 12px; border-radius: 999px; border: none; background: var(--accent); color: #fff; font-weight: 700; box-shadow: 0 3px 10px rgba(0,0,0,0.12); cursor: pointer; }
+  </style>
+</head>
+<body>
+  <div class="app">
+    <aside class="sidebar">
+      <div class="search">
+        <input id="categorySearch" placeholder="搜索分类" style="width:100%;padding:8px;border-radius:8px;border:1px solid #eee;box-sizing:border-box">
+      </div>
+      <ul class="category-list" id="categoryList"></ul>
+      <!-- 返回顶部容器（JS 会填充按钮） -->
+      <div id="sidebarActions" class="sidebar-actions" style="display:none"></div>
+    </aside>
+
+    <main class="content">
+      <div class="topbar">
+        <div class="title" id="categoryTitle">全部商品</div>
+        <div style="margin-left:auto;display:flex;gap:8px;align-items:center">
+          <input id="productSearch" placeholder="搜索商品" style="padding:6px 8px;border-radius:8px;border:1px solid #eee">
+        </div>
+      </div>
+      <div id="productGrid" class="grid"></div>
+      <div id="emptyState" class="empty" style="display:none">没有找到商品。</div>
+    </main>
+  </div>
+
+  <script>
+    // 仅使用外部 JSON 数据
+    // 可切换为 CloudBase 数据库加载
+    // 本地兜底
+    const FETCH_URL = './data/products.json'; // 本地兜底
+    const BRAND_DICTIONARY_URL = './data/brand_dictionary.json';
+    const CATEGORY_DICTIONARY_URL = './data/category_dictionary.json';
+    
+    // 微信云托管静态资源存储配置
+    const STATIC_STORAGE_BASE_URL = 'https://jiemingda-0g8ddwgk28c2ff66.ap-shanghai.wxcloudrun.com';
+    // CloudBase 环境配置
+    const config = window.CLOUDBASE_CONFIG || {};
+    const CLOUDBASE_ENV = window.CLOUDBASE_ENV || localStorage.getItem('CLOUDBASE_ENV') || config.envId || '';
+    const USE_CLOUDBASE = !!CLOUDBASE_ENV;
+     const CONFIG_URL = './data/category_config.json';
+     let CATEGORY_BANNER_SLUGS = {};
+     let CATEGORY_SHORT_NAMES = {};
+     let CATEGORY_CONFIG = [];
+     let BRAND_DICTIONARY = {};
+     let CATEGORY_DICTIONARY = {};
+
+    let DATA = {categories: []}; let activeCategoryIndex = 0;
+
+    // 详情弹层
+    const modal = document.createElement('div');
+    Object.assign(modal.style, {position:'fixed',inset:'0',background:'rgba(0,0,0,0.35)',display:'none',alignItems:'center',justifyContent:'center',zIndex:'9999'});
+    modal.innerHTML = `<div id="detailCard" style="background:#fff;border-radius:12px;max-width:520px;width:92%;padding:16px;box-shadow:0 6px 24px rgba(0,0,0,0.12)">
+      <div style="display:flex;align-items:center;justify-content:center">
+      <div style="font-weight:700">商品详情</div>
+      </div>
+      <div id="detailBody" style="margin-top:12px;font-size:14px;color:#333"></div>
+    </div>`;
+    document.body.appendChild(modal);
+    // 底部居中圆形关闭按钮（可通过 CSS 变量调整尺寸与颜色）
+    const closeBtn = document.createElement('button');
+    closeBtn.id = 'modalCloseRound';
+    closeBtn.setAttribute('aria-label','关闭详情');
+    closeBtn.textContent = '×';
+    Object.assign(closeBtn.style, {
+      position:'absolute', left:'50%', bottom:'var(--modal-close-bottom)', transform:'translateX(-50%)',
+      width:'var(--modal-close-size)', height:'var(--modal-close-size)', borderRadius:'50%',
+      background:'var(--modal-close-bg)', color:'var(--modal-close-color)', border:'none',
+      display:'flex', alignItems:'center', justifyContent:'center',
+      fontSize:'28px', lineHeight:'1', boxShadow:'0 6px 18px rgba(0,0,0,0.18)', cursor:'pointer'
+    });
+    closeBtn.addEventListener('click', ()=>{ modal.style.display='none'; });
+    modal.appendChild(closeBtn);
+
+    modal.addEventListener('click', (e)=>{ if(e.target===modal) modal.style.display='none'; });
+    document.getElementById('modalClose')?.addEventListener('click', ()=> modal.style.display='none');
+
+    function showDetail(item){
+      const body = modal.querySelector('#detailBody');
+      const specLine = item.spec || extractSpec(item.description);
+      const unitLine = item.unit || extractUnit(item.description);
+      
+      // 获取品牌和品类名称
+      const brandName = getBrandName(item.brandCode || '099');
+      const categoryName = getCategoryName(item.categoryCode || '099');
+      
+      body.innerHTML = `
+        <div style="font-size:16px;font-weight:700">${item.name||''}</div>
+        <div style="margin-top:8px;color:#666">商品编号：${item.productCode||item.id||''}</div>
+        <div style="margin-top:6px;color:#666">品牌/厂商：${brandName}</div>
+        <div style="margin-top:6px;color:#666">商品分类：${categoryName}</div>
+        <div id="detailImageContainer" style="margin-top:10px;height:160px;border-radius:10px;background:linear-gradient(135deg, #f0f2f5, #e4e6ea);display:flex;align-items:center;justify-content:center;font-size:48px;color:#65676b;">📦</div>
+        <div style="margin-top:6px;white-space:pre-line">规格：${specLine||''}</div>
+        <div style="margin-top:4px">单位：${unitLine||''}</div>
+        ${item.price? `<div style="margin-top:6px;color:#d64">价格：¥${item.price}</div>`: ''}
+        ${item.description? `<div style="margin-top:10px;color:#888">备注：${item.description}</div>`: ''}
+      `;
+      
+      // 为详情弹窗加载图片
+      const detailImageContainer = document.getElementById('detailImageContainer');
+      loadProductImage(detailImageContainer, item.id);
+      modal.style.display='flex';
+    }
+
+    // 智能图片加载函数：优先使用云托管存储，失败则显示emoji
+    function loadProductImage(container, productId) {
+      // 清空容器
+      container.innerHTML = '';
+      container.style.background = 'linear-gradient(135deg, #f0f2f5, #e4e6ea)';
+      container.style.display = 'flex';
+      container.style.alignItems = 'center';
+      container.style.justifyContent = 'center';
+      container.style.fontSize = '24px';
+      container.style.color = '#65676b';
+      
+      // 尝试加载云托管存储的图片
+      if (STATIC_STORAGE_BASE_URL && productId) {
+        const imgUrl = `${STATIC_STORAGE_BASE_URL}/photos/prd${productId}.png`;
+        const img = new Image();
+        
+        img.onload = function() {
+          // 图片加载成功，显示真实图片
+          container.style.background = `url('${imgUrl}') center/cover no-repeat`;
+          container.style.backgroundSize = 'cover';
+          container.innerHTML = '';
+        };
+        
+        img.onerror = function() {
+          // 图片加载失败，显示emoji占位符
+          container.innerHTML = '📦';
+        };
+        
+        img.src = imgUrl;
+      } else {
+        // 没有配置存储地址，直接显示emoji
+        container.innerHTML = '📦';
+      }
+    }
+
+    // 从旧的 description 提取规格/单位的兼容方法
+    function extractSpec(desc){
+      if(!desc) return '';
+      const m = desc.match(/规格:([^/]+)/);
+      return m? m[1].trim(): '';
+    }
+    function extractUnit(desc){
+      if(!desc) return '';
+      const m = desc.match(/单位:([^/]+)/);
+      return m? m[1].trim(): '';
+    }
+
+    // 获取品牌名称
+    function getBrandName(brandCode) {
+      if (!brandCode || !BRAND_DICTIONARY.brandDictionary) return '未知品牌';
+      const brand = BRAND_DICTIONARY.brandDictionary.brands.find(b => b.code === brandCode);
+      return brand ? brand.shortName || brand.name : '未知品牌';
+    }
+
+    // 获取品类名称
+    function getCategoryName(categoryCode) {
+      if (!categoryCode || !CATEGORY_DICTIONARY.categoryDictionary) return '未知分类';
+      const category = CATEGORY_DICTIONARY.categoryDictionary.categories.find(c => c.code === categoryCode);
+      return category ? category.shortName || category.name : '未知分类';
+    }
+
+    function renderCategories(categories){
+      const ul = document.getElementById('categoryList'); ul.innerHTML='';
+      // 顶部插入“全部产品”入口
+      const totalCount = categories.reduce((sum,c)=> sum + (Array.isArray(c.items)? c.items.length : 0), 0);
+      const liAll = document.createElement('li'); liAll.className='category-item'; liAll.id='li-all';
+      liAll.innerHTML = `<div class="label">全部产品</div><div class="badge">${totalCount}</div>`;
+      liAll.addEventListener('click', ()=> setActiveAll());
+      if(activeCategoryIndex===-1) liAll.classList.add('active');
+      ul.appendChild(liAll);
+      // 其余分类
+      categories.forEach((c, idx)=>{
+        const li = document.createElement('li'); li.className='category-item';
+        const displayName = (CATEGORY_SHORT_NAMES && CATEGORY_SHORT_NAMES[c.name]) ? CATEGORY_SHORT_NAMES[c.name] : c.name;
+        li.innerHTML = `<div class="label">${displayName}</div><div class="badge">${c.items.length}</div>`;
+        li.addEventListener('click', ()=>{ setActiveCategory(idx) });
+        if(idx===activeCategoryIndex) li.classList.add('active');
+        ul.appendChild(li);
+      });
+    }
+
+    function setActiveCategory(idx){
+      activeCategoryIndex = idx;
+      const lis = document.querySelectorAll('.category-item'); lis.forEach((li,i)=> li.classList.toggle('active', i===idx));
+      renderProducts(DATA.categories[idx]);
+    }
+    function setActiveAll(){
+      activeCategoryIndex = -1;
+      const lis = document.querySelectorAll('.category-item'); lis.forEach(li=> li.classList.remove('active'));
+      document.getElementById('li-all')?.classList.add('active');
+      renderProducts(null);
+    }
+
+    // 中文分类名 -> 英文文件名（slug），用于加载 PNG Banner
+    // 已迁移到外部 JSON（CONFIG_URL），运行时通过异步加载填充 CATEGORY_BANNER_SLUGS
+    // 侧栏展示用短名称，不影响 Banner 与内部逻辑
+    // 已迁移到外部 JSON（CONFIG_URL），运行时通过异步加载填充 CATEGORY_SHORT_NAMES
+// 已迁移到外部 JSON（CONFIG_URL），此处移除
+// 已迁移到外部 JSON（CONFIG_URL），此处移除
+
+    // 只加载 .png：使用英文文件名，未命中或加载失败则保持渐变背景
+    function loadBannerBackground(bannerEl, name){
+      bannerEl.style.background = 'linear-gradient(135deg, #6ea2ff 0%, #46d9a6 100%)';
+      const slug = CATEGORY_BANNER_SLUGS[name] || 'others';
+      const pngUrl = `./data/banners/${slug}.png`;
+      const img = new Image();
+      img.onload = ()=>{
+        bannerEl.style.background = `linear-gradient(180deg, rgba(0,0,0,0.25), rgba(0,0,0,0.15)), url('${pngUrl}') center/cover no-repeat`;
+      };
+      img.onerror = ()=>{/* 若不存在 PNG，保持渐变作为兜底 */};
+      img.src = pngUrl;
+    }
+
+    // 在产品渲染时插入 Banner，标题覆盖在 Banner 上（调用 loadBannerBackground）
+    function renderProducts(category){
+      const grid = document.getElementById('productGrid'); grid.innerHTML='';
+      const titleEl = document.getElementById('categoryTitle'); if(titleEl) titleEl.textContent='';
+      const nameForBanner = category ? category.name : '全部商品';
+      const oldBanner = document.getElementById('categoryBanner'); if(oldBanner) oldBanner.remove();
+      const banner = document.createElement('div'); banner.id='categoryBanner'; banner.className='category-banner';
+      const overlay = document.createElement('div'); overlay.className='title-overlay'; overlay.textContent = nameForBanner;
+      banner.appendChild(overlay);
+      // 动态设置 Banner 的吸顶偏移，避免与搜索框重叠
+      const topbarEl = document.querySelector('.topbar');
+      const topbarHeight = topbarEl ? Math.ceil(topbarEl.getBoundingClientRect().height) : 0;
+      banner.style.position = 'sticky';
+      banner.style.top = ((topbarHeight || 52)) + 'px';
+      banner.style.zIndex = '9';
+      grid.parentNode.insertBefore(banner, grid);
+      // 加载英文文件名的 PNG Banner
+      loadBannerBackground(banner, nameForBanner);
+
+      const title = document.getElementById('categoryTitle'); title.textContent = nameForBanner;
+      const items = category ? category.items : DATA.categories.flatMap(c=>c.items);
+      if(items.length===0){ document.getElementById('emptyState').style.display='block'; return; }
+      document.getElementById('emptyState').style.display='none';
+      items.forEach(it=>{
+        const card = document.createElement('div'); card.className='card';
+        const img = document.createElement('div'); img.className='img';
+        
+        // 使用智能图片加载函数
+        loadProductImage(img, it.id);
+        
+        const name = document.createElement('div'); name.className='name'; name.textContent=it.name||'Unnamed';
+        const productCode = document.createElement('div'); productCode.className='desc'; productCode.textContent = `编号：${it.productCode||it.id||''}`;
+        const brand = document.createElement('div'); brand.className='desc'; 
+        const brandName = getBrandName(it.brandCode || '099');
+        brand.textContent = brandName ? `品牌：${brandName}` : '';
+        const specLine = it.spec || extractSpec(it.description);
+        const unitLine = it.unit || extractUnit(it.description);
+        const spec = document.createElement('div'); spec.className='desc'; spec.textContent = specLine? `规格：${specLine}`: '';
+        const unit = document.createElement('div'); unit.className='desc'; unit.textContent = unitLine? `单位：${unitLine}`: '';
+        const priceRow = document.createElement('div'); priceRow.className='price-row';
+        const price = document.createElement('div'); price.className='price'; price.textContent = it.price ? '¥'+it.price : '';
+        const detailBtn = document.createElement('button'); detailBtn.className='add-btn'; detailBtn.textContent='查看详情';
+        detailBtn.addEventListener('click', ()=> showDetail(it));
+        priceRow.appendChild(price); priceRow.appendChild(detailBtn);
+        card.appendChild(img); card.appendChild(name); card.appendChild(productCode); card.appendChild(brand); card.appendChild(spec); card.appendChild(unit); card.appendChild(priceRow);
+        grid.appendChild(card);
+      });
+    }
+
+    function setActiveCategory(idx){
+      activeCategoryIndex = idx;
+      const lis = document.querySelectorAll('.category-item'); lis.forEach((li,i)=>{
+        const isAll = li.id==='li-all';
+        li.classList.toggle('active', !isAll && (i-1===idx));
+      });
+      renderProducts(DATA.categories[idx]);
+    }
+
+    function applySearch(){
+      const q = document.getElementById('productSearch').value.trim().toLowerCase();
+      const catQ = document.getElementById('categorySearch').value.trim().toLowerCase();
+      // 分类搜索基于当前 DATA（支持短名称匹配）
+      const filteredCats = DATA.categories.filter(c=> {
+        const name = (c.name||'').toLowerCase();
+        const shortName = ((CATEGORY_SHORT_NAMES&&CATEGORY_SHORT_NAMES[c.name])||'').toLowerCase();
+        return name.includes(catQ) || shortName.includes(catQ);
+      });
+      if(catQ){
+        if(filteredCats.length>0){ DATA={categories:filteredCats}; renderCategories(filteredCats); setActiveCategory(0); }
+        else { document.getElementById('categoryList').innerHTML=''; document.getElementById('productGrid').innerHTML=''; document.getElementById('emptyState').style.display='block'; }
+        return;
+      }
+      // 商品搜索基于所有分类合并
+      const all = DATA.categories.flatMap(c=> c.items.map(it=> ({...it, _cat:c.name})));
+      const matched = q? all.filter(it=> (it.name||'').toLowerCase().includes(q) || (it.description||'').toLowerCase().includes(q) || (it.brand||'').toLowerCase().includes(q) || (it.spec||'').toLowerCase().includes(q) || (it.unit||'').toLowerCase().includes(q)) : all;
+      const grid = document.getElementById('productGrid'); grid.innerHTML='';
+      if(matched.length===0){ document.getElementById('emptyState').style.display='block'; return; }
+      document.getElementById('emptyState').style.display='none';
+      matched.forEach(it=>{
+        const card = document.createElement('div'); card.className='card';
+        const img = document.createElement('div'); img.className='img';
+        
+        // 使用智能图片加载函数
+        loadProductImage(img, it.id);
+        
+        const name = document.createElement('div'); name.className='name'; name.textContent=it.name||'Unnamed';
+        const productCode = document.createElement('div'); productCode.className='desc'; productCode.textContent = `编号：${it.productCode||it.id||''}`;
+        const brand = document.createElement('div'); brand.className='desc'; 
+        const brandName = getBrandName(it.brandCode || '099');
+        brand.textContent = brandName ? `品牌：${brandName}` : '';
+        const spec = document.createElement('div'); spec.className='desc'; const specLine = it.spec || extractSpec(it.description); spec.textContent = specLine? `规格：${specLine}`: '';
+        const unit = document.createElement('div'); unit.className='desc'; const unitLine = it.unit || extractUnit(it.description); unit.textContent = unitLine? `单位：${unitLine}`: '';
+        const priceRow = document.createElement('div'); priceRow.className='price-row';
+        const price = document.createElement('div'); price.className='price'; price.textContent = it.price ? '¥'+it.price : '';
+        const detailBtn = document.createElement('button'); detailBtn.className='add-btn'; detailBtn.textContent='查看详情';
+        detailBtn.addEventListener('click', ()=> showDetail(it));
+        priceRow.appendChild(price); priceRow.appendChild(detailBtn);
+        card.appendChild(img); card.appendChild(name); card.appendChild(productCode); card.appendChild(brand); card.appendChild(spec); card.appendChild(unit); card.appendChild(priceRow);
+        grid.appendChild(card);
+      });
+    }
+
+    document.addEventListener('input', (e)=>{
+      if(e.target && e.target.id==='productSearch'){ applySearch(); }
+      if(e.target && e.target.id==='categorySearch'){ applySearch(); }
+    });
+
+    // 侧栏“返回顶部”按钮与滚动反馈
+    function setupBackToTop(){
+      const sidebar = document.querySelector('.sidebar');
+      const content = document.querySelector('.content');
+      const topbar = document.querySelector('.topbar');
+      const actions = document.getElementById('sidebarActions');
+      if(!sidebar || !content || !actions) return;
+      // 填充按钮
+      const btn = document.createElement('button');
+      btn.className = 'backtop-btn';
+      btn.type = 'button';
+      btn.textContent = '↑ 返回顶部';
+      actions.appendChild(btn);
+      btn.addEventListener('click', ()=>{
+        content.scrollTo({top:0, behavior:'smooth'});
+        sidebar.scrollTo({top:0, behavior:'smooth'});
+      });
+      // 根据滚动显示/隐藏，并为顶部栏添加阴影反馈
+      function updateVisibility(){
+        const scrolledContent = content.scrollTop||0;
+        const scrolledSidebar = sidebar.scrollTop||0;
+        actions.style.display = (scrolledContent + scrolledSidebar) > 60 ? 'block' : 'none';
+        if(topbar) topbar.classList.toggle('scrolled', scrolledContent > 0);
+      }
+      content.addEventListener('scroll', updateVisibility, {passive:true});
+      sidebar.addEventListener('scroll', updateVisibility, {passive:true});
+      updateVisibility();
+    }
+    setupBackToTop();
+
+    // 从 CloudBase 数据库优先加载，失败则回退本地 JSON
+    (async ()=>{
+      try{
+        // 加载配置数据 - 支持云端和本地
+        const loadConfigData = async () => {
+          if (USE_CLOUDBASE) {
+            try {
+              const config = window.CLOUDBASE_CONFIG || {};
+              const app = cloudbase.init({ env: CLOUDBASE_ENV });
+              const auth = app.auth();
+              await auth.signInAnonymously();
+              
+              // 尝试从云端获取配置
+              const db = app.database();
+              const configCollection = config.database?.configCollection || 'config';
+              const configDocId = config.database?.configDocId || 'category-config';
+              const configDoc = await db.collection(configCollection).doc(configDocId).get();
+              
+              if (configDoc && configDoc.data) {
+                console.log('从云端获取配置数据成功');
+                return configDoc.data;
+              }
+            } catch (error) {
+              console.warn('云端配置获取失败，回退到本地配置:', error);
+            }
+          }
+          
+          // 回退到本地配置
+          if (CONFIG_URL) {
+            try {
+              const response = await fetch(CONFIG_URL);
+              return await response.json();
+            } catch (error) {
+              console.warn('本地配置获取失败:', error);
+            }
+          }
+          
+          return null;
+        };
+        
+        // 加载产品数据 - 支持云端和本地
+        const loadProductData = async () => {
+          if (USE_CLOUDBASE) {
+            try {
+              const config = window.CLOUDBASE_CONFIG || {};
+              const app = cloudbase.init({ env: CLOUDBASE_ENV });
+              const auth = app.auth();
+              await auth.signInAnonymously();
+                
+              // 尝试使用数据模型方式获取数据
+              try {
+                const models = app.models;
+                const modelName = config.models?.products || 'products';
+                const docId = config.database?.catalogDocId || 'catalog-data';
+                
+                const result = await models[modelName].get({
+                  filter: {
+                    where: {
+                      _id: { $eq: docId }
+                    }
+                  }
+                });
+                if (result && result.records && result.records.length > 0) {
+                  console.log('通过数据模型获取产品数据成功');
+                  return result.records[0];
+                }
+              } catch (modelError) {
+                console.warn('数据模型方式获取失败，尝试集合方式:', modelError);
+              }
+              
+              // 回退到集合操作方式
+              const db = app.database();
+              const collectionName = config.database?.productsCollection || 'products';
+              const docId = config.database?.catalogDocId || 'catalog-data';
+              const doc = await db.collection(collectionName).doc(docId).get();
+              const docData = (doc && doc.data) || null;
+              console.log('通过集合操作获取产品数据:', docData ? '成功' : '失败');
+              return docData;
+            } catch (e) { 
+              console.warn('CloudBase 产品数据获取失败，回退本地 JSON', e); 
+            }
+          }
+          
+          // 回退到本地数据
+          try {
+            const response = await fetch(FETCH_URL);
+            return await response.json();
+          } catch (error) {
+            console.warn('本地产品数据获取失败:', error);
+            return null;
+          }
+        };
+        
+        // 加载字典数据
+        const loadDictionaryData = async (url) => {
+          try {
+            const response = await fetch(url);
+            return await response.json();
+          } catch (error) {
+            console.warn('字典数据获取失败:', error);
+            return null;
+          }
+        };
+        
+        // 并行加载配置、产品数据和字典数据
+        const [configData, productData, brandDict, categoryDict] = await Promise.all([
+          loadConfigData(),
+          loadProductData(),
+          loadDictionaryData(BRAND_DICTIONARY_URL),
+          loadDictionaryData(CATEGORY_DICTIONARY_URL)
+        ]);
+        
+        // 处理字典数据
+        if (brandDict) {
+          BRAND_DICTIONARY = brandDict;
+        }
+        if (categoryDict) {
+          CATEGORY_DICTIONARY = categoryDict;
+        }
+        
+        // 处理配置数据
+        if (configData) {
+          // 支持新的categories数组结构
+          if (configData.categories && Array.isArray(configData.categories)) {
+            CATEGORY_CONFIG = configData.categories;
+            // 转换为旧格式以保持兼容性
+            CATEGORY_BANNER_SLUGS = {};
+            CATEGORY_SHORT_NAMES = {};
+            configData.categories.forEach(cat => {
+              CATEGORY_BANNER_SLUGS[cat.name] = cat.slug;
+              CATEGORY_SHORT_NAMES[cat.name] = cat.shortName;
+            });
+          } else {
+            // 兼容旧格式
+            CATEGORY_BANNER_SLUGS = (configData && configData.banner_slugs) || {};
+            CATEGORY_SHORT_NAMES = (configData && configData.short_names) || {};
+          }
+        }
+        if(productData && Array.isArray(productData.categories)){
+          DATA = productData;
+          renderCategories(DATA.categories);
+          setActiveAll();
+        }else{
+          document.getElementById('emptyState').style.display='block';
+        }
+      }catch(err){
+        document.getElementById('emptyState').style.display='block';
+        console.error('加载数据失败', err);
+      }
+    })();
+  </script>
+</body>
+</html>

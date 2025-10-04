@@ -1,0 +1,39 @@
+# 微信云托管配置文件
+name: jiemingda-product-catalog-web
+region: ap-shanghai
+
+# 服务配置
+service:
+  name: jiemingda-web
+  version: v1.0.0
+  
+# 容器配置
+container:
+  name: jiemingda-product-catalog
+  # 使用nginx作为web服务器
+  image: nginx:alpine
+  port: 80
+  
+  # 资源配置
+  cpu: 0.25
+  memory: 512Mi
+  
+  # 环境变量
+  env:
+    - name: NODE_ENV
+      value: production
+    - name: WX_CLOUD_ENV_ID  
+      value: jiemingda-0g8ddwgk28c2ff66
+
+# 构建配置
+build:
+  # 指定构建上下文
+  context: .
+  dockerfile: Dockerfile
+
+# 部署配置
+deploy:
+  # 自动发布版本
+  auto_release: true
+  # 流量分配
+  traffic_percent: 100

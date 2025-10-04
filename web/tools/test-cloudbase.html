@@ -1,0 +1,440 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CloudBase 集成测试</title>
+    <!-- CloudBase Web SDK -->
+    <script src="https://static.cloudbase.net/cloudbase-js-sdk/2.17.3/cloudbase.full.js"></script>
+    <!-- CloudBase 配置 -->
+    <script src="./cloudbase.config.js"></script>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 20px;
+            background: #f5f5f5;
+        }
+        .container {
+            background: white;
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+        }
+        h1 {
+            color: #333;
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        .test-section {
+            margin-bottom: 30px;
+            padding: 20px;
+            border: 1px solid #eee;
+            border-radius: 8px;
+        }
+        .test-section h3 {
+            margin-top: 0;
+            color: #555;
+        }
+        button {
+            background: #ff6b6b;
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 14px;
+            margin-right: 10px;
+            margin-bottom: 10px;
+        }
+        button:hover {
+            background: #ff5252;
+        }
+        button:disabled {
+            background: #ccc;
+            cursor: not-allowed;
+        }
+        .result {
+            background: #f8f9fa;
+            border: 1px solid #dee2e6;
+            border-radius: 4px;
+            padding: 15px;
+            font-family: monospace;
+            font-size: 12px;
+            max-height: 300px;
+            overflow-y: auto;
+            white-space: pre-wrap;
+            margin-top: 10px;
+        }
+        .status {
+            padding: 10px;
+            border-radius: 4px;
+            margin-bottom: 15px;
+        }
+        .status.success {
+            background: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+        }
+        .status.error {
+            background: #f8d7da;
+            color: #721c24;
+            border: 1px solid #f5c6cb;
+        }
+        .status.info {
+            background: #d1ecf1;
+            color: #0c5460;
+            border: 1px solid #bee5eb;
+        }
+        .config-display {
+            background: #e9ecef;
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+        }
+        .config-display code {
+            background: #f8f9fa;
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-family: monospace;
+        }
+        .data-preview {
+            max-height: 200px;
+            overflow-y: auto;
+            border: 1px solid #ddd;
+            padding: 10px;
+            background: #fafafa;
+            border-radius: 4px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>CloudBase 集成功能测试</h1>
+        
+        <div class="config-display">
+            <h4>当前配置</h4>
+            <p><strong>环境ID:</strong> <code id="envId">加载中...</code></p>
+            <p><strong>产品集合:</strong> <code id="productsCollection">加载中...</code></p>
+            <p><strong>配置集合:</strong> <code id="configCollection">加载中...</code></p>
+            <p><strong>使用CloudBase:</strong> <code id="useCloudbase">加载中...</code></p>
+        </div>
+
+        <div class="test-section">
+            <h3>1. CloudBase 连接测试</h3>
+            <p>测试 CloudBase SDK 初始化和身份验证。</p>
+            <button onclick="testConnection()">测试连接</button>
+            <div id="connectionResult"></div>
+        </div>
+
+        <div class="test-section">
+            <h3>2. 产品数据加载测试</h3>
+            <p>测试从云数据库加载产品数据。</p>
+            <button onclick="testProductData()">测试产品数据</button>
+            <div id="productResult"></div>
+        </div>
+
+        <div class="test-section">
+            <h3>3. 配置数据加载测试</h3>
+            <p>测试从云数据库加载配置数据。</p>
+            <button onclick="testConfigData()">测试配置数据</button>
+            <div id="configResult"></div>
+        </div>
+
+        <div class="test-section">
+            <h3>4. 数据模型测试</h3>
+            <p>测试使用数据模型方式访问数据。</p>
+            <button onclick="testDataModel()">测试数据模型</button>
+            <div id="modelResult"></div>
+        </div>
+
+        <div class="test-section">
+            <h3>5. 完整数据加载流程测试</h3>
+            <p>模拟主应用的完整数据加载流程。</p>
+            <button onclick="testFullFlow()">测试完整流程</button>
+            <div id="fullFlowResult"></div>
+        </div>
+    </div>
+
+    <script>
+        const config = window.CLOUDBASE_CONFIG || {};
+        let app = null;
+        
+        // 显示配置信息
+        document.addEventListener('DOMContentLoaded', () => {
+            document.getElementById('envId').textContent = config.envId || '未配置';
+            document.getElementById('productsCollection').textContent = config.database?.productsCollection || 'products';
+            document.getElementById('configCollection').textContent = config.database?.configCollection || 'config';
+            document.getElementById('useCloudbase').textContent = 'true'; // 测试页面总是使用CloudBase
+        });
+
+        function showResult(elementId, content, type = 'info') {
+            const el = document.getElementById(elementId);
+            const statusClass = type === 'success' ? 'success' : type === 'error' ? 'error' : 'info';
+            el.innerHTML = `<div class="status ${statusClass}">${type === 'success' ? '✅' : type === 'error' ? '❌' : 'ℹ️'} ${content}</div>`;
+        }
+
+        function showResultWithData(elementId, message, data, type = 'info') {
+            const el = document.getElementById(elementId);
+            const statusClass = type === 'success' ? 'success' : type === 'error' ? 'error' : 'info';
+            const icon = type === 'success' ? '✅' : type === 'error' ? '❌' : 'ℹ️';
+            
+            el.innerHTML = `
+                <div class="status ${statusClass}">${icon} ${message}</div>
+                <div class="result">${JSON.stringify(data, null, 2)}</div>
+            `;
+        }
+
+        async function testConnection() {
+            try {
+                showResult('connectionResult', '正在连接 CloudBase...', 'info');
+                
+                if (!config.envId) {
+                    throw new Error('未找到环境ID配置');
+                }
+
+                app = cloudbase.init({ env: config.envId });
+                const auth = app.auth();
+                await auth.signInAnonymously();
+                
+                const user = auth.currentUser;
+                showResultWithData('connectionResult', 'CloudBase 连接成功！', {
+                    envId: config.envId,
+                    userId: user?.uid || 'anonymous',
+                    timestamp: new Date().toISOString()
+                }, 'success');
+                
+            } catch (error) {
+                showResultWithData('connectionResult', '连接失败', {
+                    error: error.message,
+                    timestamp: new Date().toISOString()
+                }, 'error');
+            }
+        }
+
+        async function testProductData() {
+            try {
+                showResult('productResult', '正在加载产品数据...', 'info');
+                
+                if (!app) {
+                    await testConnection();
+                }
+
+                const db = app.database();
+                const collectionName = config.database?.productsCollection || 'products';
+                const docId = config.database?.catalogDocId || 'catalog-data';
+                
+                const doc = await db.collection(collectionName).doc(docId).get();
+                
+                if (doc && doc.data) {
+                    const categoriesCount = doc.data.categories?.length || 0;
+                    const totalProducts = doc.data.categories?.reduce((sum, cat) => sum + (cat.items?.length || 0), 0) || 0;
+                    
+                    showResultWithData('productResult', '产品数据加载成功！', {
+                        categoriesCount,
+                        totalProducts,
+                        sampleCategory: doc.data.categories?.[0]?.name || 'N/A',
+                        dataKeys: Object.keys(doc.data),
+                        timestamp: new Date().toISOString()
+                    }, 'success');
+                } else {
+                    throw new Error('未找到产品数据');
+                }
+                
+            } catch (error) {
+                showResultWithData('productResult', '产品数据加载失败', {
+                    error: error.message,
+                    collection: config.database?.productsCollection || 'products',
+                    docId: config.database?.catalogDocId || 'catalog-data',
+                    timestamp: new Date().toISOString()
+                }, 'error');
+            }
+        }
+
+        async function testConfigData() {
+            try {
+                showResult('configResult', '正在加载配置数据...', 'info');
+                
+                if (!app) {
+                    await testConnection();
+                }
+
+                const db = app.database();
+                const configCollection = config.database?.configCollection || 'config';
+                const configDocId = config.database?.configDocId || 'category-config';
+                
+                const configDoc = await db.collection(configCollection).doc(configDocId).get();
+                
+                if (configDoc && configDoc.data) {
+                    let bannerCount, shortNameCount, sampleBanner;
+                    
+                    // 支持新的categories数组结构
+                    if (configDoc.data.categories && Array.isArray(configDoc.data.categories)) {
+                        bannerCount = configDoc.data.categories.length;
+                        shortNameCount = configDoc.data.categories.length;
+                        sampleBanner = configDoc.data.categories[0]?.name || 'N/A';
+                    } else {
+                        // 兼容旧格式
+                        bannerCount = Object.keys(configDoc.data.banner_slugs || {}).length;
+                        shortNameCount = Object.keys(configDoc.data.short_names || {}).length;
+                        sampleBanner = Object.keys(configDoc.data.banner_slugs || {})[0] || 'N/A';
+                    }
+                    
+                    showResultWithData('configResult', '配置数据加载成功！', {
+                        bannerCount,
+                        shortNameCount,
+                        dataKeys: Object.keys(configDoc.data),
+                        sampleBanner,
+                        timestamp: new Date().toISOString()
+                    }, 'success');
+                } else {
+                    throw new Error('未找到配置数据');
+                }
+                
+            } catch (error) {
+                showResultWithData('configResult', '配置数据加载失败', {
+                    error: error.message,
+                    collection: config.database?.configCollection || 'config',
+                    docId: config.database?.configDocId || 'category-config',
+                    timestamp: new Date().toISOString()
+                }, 'error');
+            }
+        }
+
+        async function testDataModel() {
+            try {
+                showResult('modelResult', '正在测试数据模型...', 'info');
+                
+                if (!app) {
+                    await testConnection();
+                }
+
+                const models = app.models;
+                const modelName = config.models?.products || 'products';
+                const docId = config.database?.catalogDocId || 'catalog-data';
+                
+                const result = await models[modelName].get({
+                    filter: {
+                        where: {
+                            _id: { $eq: docId }
+                        }
+                    }
+                });
+                
+                if (result && result.records && result.records.length > 0) {
+                    const data = result.records[0];
+                    const categoriesCount = data.categories?.length || 0;
+                    
+                    showResultWithData('modelResult', '数据模型测试成功！', {
+                        modelName,
+                        recordsCount: result.records.length,
+                        categoriesCount,
+                        dataKeys: Object.keys(data),
+                        timestamp: new Date().toISOString()
+                    }, 'success');
+                } else {
+                    throw new Error('数据模型未返回数据');
+                }
+                
+            } catch (error) {
+                showResultWithData('modelResult', '数据模型测试失败', {
+                    error: error.message,
+                    modelName: config.models?.products || 'products',
+                    docId: config.database?.catalogDocId || 'catalog-data',
+                    timestamp: new Date().toISOString()
+                }, 'error');
+            }
+        }
+
+        async function testFullFlow() {
+            try {
+                showResult('fullFlowResult', '正在测试完整数据加载流程...', 'info');
+                
+                const startTime = Date.now();
+                
+                // 模拟主应用的数据加载逻辑
+                const loadConfigData = async () => {
+                    const config = window.CLOUDBASE_CONFIG || {};
+                    const app = cloudbase.init({ env: config.envId });
+                    const auth = app.auth();
+                    await auth.signInAnonymously();
+                    
+                    const db = app.database();
+                    const configCollection = config.database?.configCollection || 'config';
+                    const configDocId = config.database?.configDocId || 'category-config';
+                    const configDoc = await db.collection(configCollection).doc(configDocId).get();
+                    
+                    return configDoc?.data || null;
+                };
+                
+                const loadProductData = async () => {
+                    const config = window.CLOUDBASE_CONFIG || {};
+                    const app = cloudbase.init({ env: config.envId });
+                    const auth = app.auth();
+                    await auth.signInAnonymously();
+                    
+                    // 尝试数据模型
+                    try {
+                        const models = app.models;
+                        const modelName = config.models?.products || 'products';
+                        const docId = config.database?.catalogDocId || 'catalog-data';
+                        
+                        const result = await models[modelName].get({
+                            filter: {
+                                where: {
+                                    _id: { $eq: docId }
+                                }
+                            }
+                        });
+                        if (result && result.records && result.records.length > 0) {
+                            return result.records[0];
+                        }
+                    } catch (modelError) {
+                        console.warn('数据模型方式失败，尝试集合方式:', modelError);
+                    }
+                    
+                    // 回退到集合操作
+                    const db = app.database();
+                    const collectionName = config.database?.productsCollection || 'products';
+                    const docId = config.database?.catalogDocId || 'catalog-data';
+                    const doc = await db.collection(collectionName).doc(docId).get();
+                    return doc?.data || null;
+                };
+                
+                // 并行加载
+                const [configData, productData] = await Promise.all([
+                    loadConfigData(),
+                    loadProductData()
+                ]);
+                
+                const endTime = Date.now();
+                const loadTime = endTime - startTime;
+                
+                const result = {
+                    loadTime: `${loadTime}ms`,
+                    configLoaded: !!configData,
+                    productLoaded: !!productData,
+                    categoriesCount: productData?.categories?.length || 0,
+                    totalProducts: productData?.categories?.reduce((sum, cat) => sum + (cat.items?.length || 0), 0) || 0,
+                    bannerCount: configData ? (configData.categories ? configData.categories.length : Object.keys(configData.banner_slugs || {}).length) : 0,
+                    shortNameCount: configData ? (configData.categories ? configData.categories.length : Object.keys(configData.short_names || {}).length) : 0,
+                    timestamp: new Date().toISOString()
+                };
+                
+                if (configData && productData) {
+                    showResultWithData('fullFlowResult', '完整流程测试成功！', result, 'success');
+                } else {
+                    showResultWithData('fullFlowResult', '完整流程测试部分失败', result, 'error');
+                }
+                
+            } catch (error) {
+                showResultWithData('fullFlowResult', '完整流程测试失败', {
+                    error: error.message,
+                    timestamp: new Date().toISOString()
+                }, 'error');
+            }
+        }
+    </script>
+</body>
+</html>

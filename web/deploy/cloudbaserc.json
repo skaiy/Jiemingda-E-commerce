@@ -1,0 +1,53 @@
+{
+  "envId": "cloud1-0gc8cbzg3efd6a99",
+  "version": "2.0",
+  "framework": {
+    "name": "static",
+    "plugins": {
+      "client": {
+        "use": "@cloudbase/framework-plugin-website",
+        "inputs": {
+          "buildCommand": "",
+          "outputPath": "./",
+          "cloudPath": "/",
+          "ignore": [
+            ".git",
+            "node_modules",
+            "cloudbaserc.json",
+            "README.md",
+            "migrate-data.html",
+            "test-cloudbase.html",
+            "DEPLOYMENT.md",
+            "docs/",
+            "script/",
+            "functions/",
+            "images/",
+            "*.png",
+            "*.jpg",
+            "*.jpeg",
+            "*.gif",
+            "*.bmp",
+            "*.webp"
+          ],
+          "envVariables": {},
+          "cloudbaseConfig": {
+            "functionRoot": "./functions",
+            "functions": []
+          }
+        }
+      }
+    }
+  },
+  "region": "ap-shanghai",
+  "functionRoot": "./functions",
+  "functions": [
+    {
+      "name": "initDatabase",
+      "timeout": 60,
+      "envVariables": {},
+      "runtime": "Nodejs12.16",
+      "memorySize": 256,
+      "handler": "index.main"
+    }
+  ]
+}

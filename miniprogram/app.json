@@ -1,0 +1,37 @@
+{
+  "pages": [
+    "pages/index/index",
+    "pages/category/category", 
+    "pages/product/product"
+  ],
+  "window": {
+    "backgroundTextStyle": "light",
+    "navigationBarBackgroundColor": "#fff",
+    "navigationBarTitleText": "捷明达产品目录",
+    "navigationBarTextStyle": "black",
+    "backgroundColor": "#f7f7f8"
+  },
+  "tabBar": {
+    "color": "#888",
+    "selectedColor": "#ff6b6b",
+    "backgroundColor": "#fff",
+    "borderStyle": "black",
+    "list": [
+      {
+        "pagePath": "pages/index/index",
+        "text": "产品目录",
+        "iconPath": "static/images/catalog.png",
+        "selectedIconPath": "static/images/catalog-active.png"
+      },
+      {
+        "pagePath": "pages/category/category",
+        "text": "分类浏览",
+        "iconPath": "static/images/category.png", 
+        "selectedIconPath": "static/images/category-active.png"
+      }
+    ]
+  },
+  "style": "v2",
+  "sitemapLocation": "sitemap.json",
+  "lazyCodeLoading": "requiredComponents"
+}

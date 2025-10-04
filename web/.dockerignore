@@ -1,0 +1,36 @@
+# Docker ignore文件 - 优化版本
+node_modules
+npm-debug.log
+.git
+.gitignore
+README.md
+.env
+.nyc_output
+coverage
+.cache
+.DS_Store
+*.log
+
+# 排除大文件和不必要的目录
+deploy/
+functions/
+tools/
+DEPLOYMENT.md
+database-init-script.js
+init-db-local.js
+package.json
+package-lock.json
+cloudbase.config.js
+
+# 排除大图片文件，只保留小于1MB的图片
+src/data/photos/*.png
+src/data/photos/*.jpg
+src/data/photos/*.jpeg
+
+# 排除文档和脚本文件
+*.md
+*.bat
+*.ps1
+POST_DEPLOY_COMMANDS.md
+DEPLOY_STEPS.md
+EXECUTE_NOW.md

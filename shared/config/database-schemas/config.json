@@ -1,0 +1,28 @@
+{
+  "name": "config",
+  "description": "配置集合",
+  "fields": [
+    {
+      "name": "type",
+      "type": "String",
+      "description": "配置类型",
+      "required": true
+    },
+    {
+      "name": "data",
+      "type": "Object",
+      "description": "配置数据",
+      "required": true
+    },
+    {
+      "name": "createdAt",
+      "type": "DateTime",
+      "description": "创建时间"
+    },
+    {
+      "name": "updatedAt",
+      "type": "DateTime",
+      "description": "更新时间"
+    }
+  ]
+}

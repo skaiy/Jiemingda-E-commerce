@@ -1,0 +1,85 @@
+<!--pages/category/category.wxml-->
+<view class="container">
+  <!-- 搜索框 -->
+  <view class="search-box">
+    <input 
+      class="search-input" 
+      placeholder="搜索分类名称..."
+      value="{{searchKeyword}}"
+      bindinput="onSearchInput"
+      bindconfirm="onSearchConfirm"
+    />
+  </view>
+
+  <!-- 统计信息 -->
+  <view class="statistics-card">
+    <view class="stat-item">
+      <view class="stat-number">{{statistics.totalCategories}}</view>
+      <view class="stat-label">分类数量</view>
+    </view>
+    <view class="stat-divider"></view>
+    <view class="stat-item">
+      <view class="stat-number">{{statistics.totalProducts}}</view>
+      <view class="stat-label">产品总数</view>
+    </view>
+  </view>
+
+  <!-- 分类列表 -->
+  <view wx:if="{{!loading && displayCategories.length > 0}}" class="category-list">
+    <!-- 全部产品入口 -->
+    <view class="category-item" bindtap="onCategoryTap" data-index="-1">
+      <view class="category-info">
+        <view class="category-name">全部产品</view>
+        <view class="category-description">浏览所有产品</view>
+      </view>
+      <view class="category-count">{{statistics.totalProducts}}</view>
+      <view class="category-arrow">></view>
+    </view>
+
+    <!-- 分类项目 -->
+    <view 
+      wx:for="{{displayCategories}}" 
+      wx:key="name"
+      class="category-item"
+      bindtap="onCategoryTap"
+      data-index="{{index}}"
+    >
+      <view class="category-banner-mini" style="background-image: url('{{item.bannerUrl}}')">
+        <view class="category-overlay"></view>
+      </view>
+      <view class="category-info">
+        <view class="category-name">{{item.displayName || item.name}}</view>
+        <view class="category-description">{{item.description || '查看该分类下的所有产品'}}</view>
+      </view>
+      <view class="category-count">{{item.items.length}}</view>
+      <view class="category-arrow">></view>
+    </view>
+  </view>
+
+  <!-- 加载状态 -->
+  <view wx:if="{{loading}}" class="loading-state">
+    <text>加载中...</text>
+  </view>
+
+  <!-- 空状态 -->
+  <view wx:if="{{!loading && displayCategories.length === 0}}" class="empty-state">
+    <text>{{searchKeyword ? '没有找到相关分类' : '暂无分类数据'}}</text>
+  </view>
+
+  <!-- 快速导航 -->
+  <view wx:if="{{!loading && displayCategories.length > 0}}" class="quick-nav">
+    <view class="quick-nav-title">快速导航</view>
+    <view class="quick-nav-grid">
+      <view 
+        wx:for="{{quickNavCategories}}" 
+        wx:key="name"
+        class="quick-nav-item"
+        bindtap="onQuickNavTap"
+        data-category="{{item}}"
+      >
+        <view class="quick-nav-icon">{{item.icon}}</view>
+        <view class="quick-nav-label">{{item.displayName || item.name}}</view>
+      </view>
+    </view>
+  </view>
+</view>

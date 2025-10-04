@@ -1,0 +1,95 @@
+<!--pages/index/index.wxml-->
+<view class="container">
+  <!-- 搜索框 -->
+  <view class="search-box">
+    <input 
+      class="search-input" 
+      placeholder="搜索产品名称、品牌、规格..."
+      value="{{searchKeyword}}"
+      bindinput="onSearchInput"
+      bindconfirm="onSearchConfirm"
+    />
+  </view>
+
+  <!-- 分类导航 -->
+  <view class="category-nav">
+    <scroll-view class="category-scroll" scroll-x="true">
+      <view 
+        class="category-tab {{activeCategoryIndex === -1 ? 'active' : ''}}"
+        bindtap="onSelectCategory"
+        data-index="-1"
+      >
+        全部产品 ({{statistics.totalProducts}})
+      </view>
+      <view 
+        wx:for="{{categories}}" 
+        wx:key="name"
+        class="category-tab {{activeCategoryIndex === index ? 'active' : ''}}"
+        bindtap="onSelectCategory"
+        data-index="{{index}}"
+      >
+        {{item.displayName || item.name}} ({{item.items.length}})
+      </view>
+    </scroll-view>
+  </view>
+
+  <!-- 分类Banner -->
+  <view wx:if="{{activeCategoryIndex !== -1}}" class="category-banner">
+    <image 
+      class="banner-image"
+      src="{{currentBannerUrl}}"
+      mode="aspectFill"
+      style="width: 100%; height: 100%; position: absolute;"
+      binderror="onBannerError"
+    />
+    <view class="banner-title">{{currentCategoryName}}</view>
+  </view>
+
+  <!-- 产品网格 -->
+  <view wx:if="{{!loading && displayProducts.length > 0}}" class="product-grid">
+    <view 
+      wx:for="{{displayProducts}}" 
+      wx:key="id"
+      class="product-card"
+      bindtap="onProductTap"
+      data-product="{{item}}"
+    >
+      <image 
+        class="product-image"
+        src="{{item.imageUrl}}"
+        mode="aspectFill"
+        lazy-load="true"
+        binderror="onImageError"
+        data-index="{{index}}"
+      />
+      <view class="product-name">{{item.name}}</view>
+      <view wx:if="{{item.productCode || item.id}}" class="product-code">编号：{{item.productCode || item.id}}</view>
+      <view wx:if="{{item.brandName}}" class="product-brand">品牌：{{item.brandName}}</view>
+      <view wx:if="{{item.spec}}" class="product-spec">规格：{{item.spec}}</view>
+      <view wx:if="{{item.unit}}" class="product-spec">单位：{{item.unit}}</view>
+      <view wx:if="{{item.price}}" class="product-price">¥{{item.price}}</view>
+      <button class="btn btn-primary btn-block" bindtap="onViewDetail" data-product="{{item}}">
+        查看详情
+      </button>
+    </view>
+  </view>
+
+  <!-- 加载状态 -->
+  <view wx:if="{{loading}}" class="loading-state">
+    <text>加载中...</text>
+  </view>
+
+  <!-- 空状态 -->
+  <view wx:if="{{!loading && displayProducts.length === 0}}" class="empty-state">
+    <text>{{searchKeyword ? '没有找到相关产品' : '暂无产品数据'}}</text>
+  </view>
+
+  <!-- 返回顶部悬浮按钮 -->
+  <view 
+    wx:if="{{showBackToTop}}" 
+    class="floating-btn flex-center"
+    bindtap="onBackToTop"
+  >
+    ↑
+  </view>
+</view>

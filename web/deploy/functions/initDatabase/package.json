@@ -1,0 +1,12 @@
+{
+  "name": "init-database",
+  "version": "1.0.0",
+  "description": "CloudBase数据库初始化云函数",
+  "main": "index.js",
+  "dependencies": {
+    "@cloudbase/node-sdk": "^2.17.0"
+  },
+  "engines": {
+    "node": ">=12.0.0"
+  }
+}
