@@ -18,9 +18,7 @@ web/
 ├── deploy/                # 部署配置
 │   ├── cloudbaserc.json   # CloudBase配置
 │   └── deploy-scripts/    # 部署脚本
-├── tools/                 # 开发工具
-│   ├── init-database.html # 数据库管理
-│   └── migrate-data.html  # 数据迁移
+├── tools/                 # （已废弃）开发工具页面，改用云函数
 ├── package.json           # 依赖配置
 └── README.md             # 说明文档
 ```
@@ -61,14 +59,17 @@ cloudbase framework deploy
 ### 分步部署
 
 ```bash
-# 仅部署静态文件
-tcb hosting deploy src/
+# 仅部署静态文件（以 web/deploy 为源）
+cd web/deploy
+/Users/momohome/.npm-global/bin/tcb framework deploy
 
-# 部署云函数
+# 部署云函数（数据库同步）
 tcb functions deploy initDatabase
+tcb functions deploy seedCatalog
 
-# 部署特定页面
-tcb hosting deploy tools/init-database.html
+# 调用云函数执行数据同步
+tcb functions invoke initDatabase
+tcb functions invoke seedCatalog
 ```
 
 ### 数据库管理
@@ -97,7 +98,7 @@ tcb functions invoke initDatabase
 ## 注意事项
 
 1. **数据权限**：生产环境数据库为只读权限
-2. **数据更新**：需通过云函数或管理员权限操作
+2. **数据更新**：仅通过云函数或管理员权限操作（已禁用网页工具）
 3. **CDN加速**：静态资源自动启用CDN加速
 4. **HTTPS**：默认启用HTTPS访问
 
