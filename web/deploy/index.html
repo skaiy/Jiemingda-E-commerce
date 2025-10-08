@@ -149,6 +149,11 @@
       return m? m[1].trim(): '';
     }
 
+    // 辅助：按产品数量降序排序分类（不改动原数组）
+    function sortCategoriesByProductCountDescending(categories){
+      return [...categories].sort((a,b)=> (Array.isArray(b.items)? b.items.length:0) - (Array.isArray(a.items)? a.items.length:0));
+    }
+
     function renderCategories(categories){
       const ul = document.getElementById('categoryList'); ul.innerHTML='';
       // 顶部插入“全部产品”入口
@@ -158,13 +163,15 @@
       liAll.addEventListener('click', ()=> setActiveAll());
       if(activeCategoryIndex===-1) liAll.classList.add('active');
       ul.appendChild(liAll);
-      // 其余分类
-      categories.forEach((c, idx)=>{
+      // 其余分类：按产品数量降序展示，但点击映射到原始索引
+      const sorted = sortCategoriesByProductCountDescending(categories);
+      sorted.forEach((c)=>{
         const li = document.createElement('li'); li.className='category-item';
         const displayName = (CATEGORY_SHORT_NAMES && CATEGORY_SHORT_NAMES[c.name]) ? CATEGORY_SHORT_NAMES[c.name] : c.name;
-        li.innerHTML = `<div class="label">${displayName}</div><div class="badge">${c.items.length}</div>`;
-        li.addEventListener('click', ()=>{ setActiveCategory(idx) });
-        if(idx===activeCategoryIndex) li.classList.add('active');
+        li.innerHTML = `<div class="label">${displayName}</div><div class="badge">${Array.isArray(c.items)? c.items.length:0}</div>`;
+        const origIdx = categories.indexOf(c);
+        li.addEventListener('click', ()=>{ setActiveCategory(origIdx) });
+        if(origIdx===activeCategoryIndex) li.classList.add('active');
         ul.appendChild(li);
       });
     }
