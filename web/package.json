@@ -4,12 +4,20 @@
   "description": "CloudBase database initialization for product catalog",
   "main": "init-db-local.js",
   "scripts": {
-    "init-db": "node init-db-local.js"
+    "init-db": "node init-db-local.js",
+    "prisma:generate": "prisma generate --schema ../prisma/schema.prisma",
+    "prisma:migrate:dev": "prisma migrate dev --name init --schema ../prisma/schema.prisma",
+    "prisma:migrate:deploy": "prisma migrate deploy --schema ../prisma/schema.prisma",
+    "db:seed": "node ../scripts/seed-mysql.js"
   },
   "dependencies": {
-    "@cloudbase/node-sdk": "^2.4.1"
+    "@cloudbase/node-sdk": "^2.4.1",
+    "@prisma/client": "^5.17.0",
+    "dotenv": "^16.4.5"
   },
-  "devDependencies": {},
+  "devDependencies": {
+    "prisma": "^5.17.0"
+  },
   "keywords": ["cloudbase", "database", "initialization"],
   "author": "",
   "license": "MIT"

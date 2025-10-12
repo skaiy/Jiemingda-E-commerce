@@ -115,13 +115,15 @@
         <div style="text-align: center; margin: 20px 0;">
             <button id="initBtn" onclick="initDatabase()">开始初始化数据库</button>
             <button id="checkBtn" onclick="checkDatabase()">检查数据库状态</button>
+            <button id="inspectBtn" onclick="runInspectData()">调用inspectData诊断</button>
             <button id="clearBtn" onclick="clearLog()">清空日志</button>
         </div>
 
         <div id="log"></div>
     </div>
 
-    <script src="./cloudbase.full.js"></script>
+    <!-- 使用官方 CDN 版本的 CloudBase Web SDK，避免本地空脚本问题 -->
+    <script src="https://static.cloudbase.net/cloudbase-js-sdk/2.17.3/cloudbase.full.js"></script>
     <script>
         let app;
         let db;
@@ -176,6 +178,31 @@
                     }, 100);
                 }
             });
+        }
+
+        // 调用 inspectData 云函数进行诊断
+        async function runInspectData() {
+            try {
+                updateProgress(5, '准备调用 inspectData...');
+                const ok = await initCloudBase();
+                if (!ok) { throw new Error('CloudBase 初始化失败'); }
+
+                log('调用云函数 inspectData ...');
+                const res = await app.callFunction({ name: 'inspectData', data: { action: 'diagnose' } });
+                updateProgress(50, 'inspectData 调用成功，解析结果...');
+                const out = (res && res.result) ? res.result : res;
+                log('inspectData 返回: ' + JSON.stringify(out, null, 2));
+
+                // 简要汇总
+                if (out && out.checks && out.checks.products) {
+                    const p = out.checks.products;
+                    log(`产品集合: 存在=${p.exists}, 数量=${p.count}, 缺编号=${p.missingCode}, 缺品牌码=${p.missingBrandCode}`);
+                }
+                updateProgress(100, 'inspectData 诊断完成');
+            } catch (err) {
+                log('inspectData 调用失败: ' + err.message, 'error');
+                updateProgress(0, 'inspectData 失败');
+            }
         }
 
         // 初始化CloudBase

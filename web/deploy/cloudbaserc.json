@@ -21,18 +21,76 @@
             "docs/",
             "script/",
             "functions/",
-            "images/",
-            "*.png",
-            "*.jpg",
-            "*.jpeg",
-            "*.gif",
-            "*.bmp",
-            "*.webp"
+            "images/"
           ],
           "envVariables": {},
           "cloudbaseConfig": {
             "functionRoot": "./functions",
-            "functions": []
+            "functions": [
+              {
+                "name": "initDatabase",
+                "timeout": 60,
+                "envVariables": {},
+                "runtime": "Nodejs16.13",
+                "memorySize": 256,
+                "handler": "index.main",
+                "installDependency": true
+              },
+              {
+                "name": "mysqlSeed",
+                "timeout": 120,
+                "envVariables": {},
+                "runtime": "Nodejs16.13",
+                "memorySize": 512,
+                "handler": "index.main",
+                "installDependency": true
+              },
+              {
+                "name": "mysqlSeed2",
+                "timeout": 120,
+                "envVariables": {},
+                "runtime": "Nodejs16.13",
+                "memorySize": 512,
+                "handler": "index.main",
+                "installDependency": true
+              },
+              {
+                "name": "seedCatalog",
+                "timeout": 60,
+                "envVariables": {},
+                "runtime": "Nodejs16.13",
+                "memorySize": 256,
+                "handler": "index.main",
+                "installDependency": true
+              },
+              {
+                "name": "seedProducts",
+                "timeout": 60,
+                "envVariables": {},
+                "runtime": "Nodejs16.13",
+                "memorySize": 256,
+                "handler": "index.main",
+                "installDependency": true
+              },
+              {
+                "name": "inspectData",
+                "timeout": 60,
+                "envVariables": {},
+                "runtime": "Nodejs16.13",
+                "memorySize": 256,
+                "handler": "index.main",
+                "installDependency": true
+              },
+              {
+                "name": "seedConfig",
+                "timeout": 60,
+                "envVariables": {},
+                "runtime": "Nodejs16.13",
+                "memorySize": 256,
+                "handler": "index.main",
+                "installDependency": true
+              }
+            ]
           }
         }
       }
@@ -45,9 +103,64 @@
       "name": "initDatabase",
       "timeout": 60,
       "envVariables": {},
-      "runtime": "Nodejs12.16",
+      "runtime": "Nodejs16.13",
       "memorySize": 256,
-      "handler": "index.main"
+      "handler": "index.main",
+      "installDependency": true
+    },
+    {
+      "name": "mysqlSeed",
+      "timeout": 120,
+      "envVariables": {},
+      "runtime": "Nodejs16.13",
+      "memorySize": 512,
+      "handler": "index.main",
+      "installDependency": true
+    },
+    {
+      "name": "mysqlSeed2",
+      "timeout": 120,
+      "envVariables": {},
+      "runtime": "Nodejs16.13",
+      "memorySize": 512,
+      "handler": "index.main",
+      "installDependency": true
+    },
+    {
+      "name": "seedCatalog",
+      "timeout": 60,
+      "envVariables": {},
+      "runtime": "Nodejs16.13",
+      "memorySize": 256,
+      "handler": "index.main",
+      "installDependency": true
+    },
+    {
+      "name": "seedProducts",
+      "timeout": 60,
+      "envVariables": {},
+      "runtime": "Nodejs16.13",
+      "memorySize": 256,
+      "handler": "index.main",
+      "installDependency": true
+    },
+    {
+      "name": "inspectData",
+      "timeout": 60,
+      "envVariables": {},
+      "runtime": "Nodejs16.13",
+      "memorySize": 256,
+      "handler": "index.main",
+      "installDependency": true
+    },
+    {
+      "name": "seedConfig",
+      "timeout": 60,
+      "envVariables": {},
+      "runtime": "Nodejs16.13",
+      "memorySize": 256,
+      "handler": "index.main",
+      "installDependency": true
     }
   ]
 }

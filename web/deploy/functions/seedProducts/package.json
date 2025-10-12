@@ -1,0 +1,13 @@
+{
+  "name": "seed-products",
+  "version": "1.0.0",
+  "description": "Seed products collection from catalog/default",
+  "main": "index.js",
+  "license": "MIT",
+  "dependencies": {
+    "@cloudbase/node-sdk": "^2.10.0"
+  },
+  "engines": {
+    "node": ">=16.13.0"
+  }
+}

@@ -1,0 +1,339 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>数据库工具 - 一致性修复</title>
+  <style>
+    body{font-family:-apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Helvetica Neue,Arial;max-width:900px;margin:0 auto;padding:20px;background:#f5f7fa;color:#222}
+    .card{background:#fff;border-radius:12px;padding:20px;box-shadow:0 4px 16px rgba(0,0,0,0.08);margin-bottom:16px}
+    h1{margin:0 0 12px}
+    .btn{background:#216ae0;color:#fff;border:none;padding:10px 16px;border-radius:8px;cursor:pointer;font-weight:600;margin-right:8px}
+    .btn.secondary{background:#0f9d58}
+    .btn.warn{background:#ff6b6b}
+    .btn:disabled{opacity:.6;cursor:not-allowed}
+    #log{white-space:pre-wrap;background:#f8f9fb;border:1px solid #e5e7eb;border-radius:8px;padding:12px;height:320px;overflow:auto;font-family:ui-monospace, SFMono-Regular;}
+    .status{padding:10px;border-radius:8px;background:#eef2ff;border:1px solid #dbe2ff;margin-bottom:12px}
+  </style>
+  <script src="./cloudbase.full.js"></script>
+</head>
+<body>
+  <div class="card">
+    <h1>数据库一致性修复工具</h1>
+    <div class="status" id="status">环境ID: cloud1-0gc8cbzg3efd6a99 · 区域: ap-shanghai</div>
+    <div>
+      <button class="btn" id="btnSeed" onclick="seedDictionaries()">生成品牌/分类字典</button>
+      <button class="btn secondary" id="btnNormalize" onclick="normalizeProducts()">规范化产品缺失字段</button>
+      <button class="btn secondary" id="btnFixCat" onclick="fixCategoryCodes()">批量修复分类编码</button>
+      <button class="btn" id="btnSyncCsv" onclick="syncCsv()">对比并同步 CSV 原始数据</button>
+      <button class="btn warn" onclick="clearLog()">清空日志</button>
+    </div>
+  </div>
+
+  <div class="card">
+    <h2>执行日志</h2>
+    <div id="log"></div>
+  </div>
+
+  <script>
+    let app, db; const ENV_ID = 'cloud1-0gc8cbzg3efd6a99'; const REGION = 'ap-shanghai';
+    const logEl = document.getElementById('log');
+    function log(msg){ const ts = new Date().toLocaleTimeString(); logEl.textContent += `[${ts}] ${msg}\n`; logEl.scrollTop = logEl.scrollHeight; console.log(msg); }
+    function clearLog(){ logEl.textContent=''; }
+    async function initCB(){
+      if (app && db) return true;
+      if (typeof cloudbase === 'undefined'){ log('CloudBase SDK 未加载'); return false; }
+      app = cloudbase.init({ env: ENV_ID, region: REGION });
+      try { await app.auth().signInAnonymously(); log('匿名登录成功'); } catch(e){ log('匿名登录失败: '+ e.message + '，继续尝试数据库'); }
+      db = app.database();
+      log('CloudBase 初始化完成');
+      return true;
+    }
+    function slugify(s){ return (String(s||'').toLowerCase().replace(/[\s]+/g,'-').replace(/[^a-z0-9\-]/g,'').slice(0,24)) || 'unknown'; }
+    function norm(s){ return String(s||'').trim().replace(/\s+/g,''); }
+
+    // 数字分类字典加载与匹配
+    const CAT_DICT_URL = './functions/seedProducts/category_dictionary.json';
+    function isNumericCode(code){ return /^\d{3}$/.test(String(code||'')); }
+    function normalizeText(s){
+      return String(s||'').toLowerCase().replace(/[\s]+/g,'').replace(/[、|]/g,'/').replace(/[（）()]/g,'');
+    }
+    async function loadCategoryDictionary(){
+      try{
+        const res = await fetch(CAT_DICT_URL);
+        if(!res.ok) throw new Error('字典加载失败: ' + res.status);
+        const json = await res.json();
+        const arr = (json && json.categoryDictionary && Array.isArray(json.categoryDictionary.categories))? json.categoryDictionary.categories: [];
+        const byCode = new Map(); const bySlug = new Map(); const byName = new Map(); const byShort = new Map();
+        for(const c of arr){
+          if(c.code) byCode.set(c.code, c);
+          if(c.slug) bySlug.set(String(c.slug).toLowerCase(), c);
+          if(c.id) bySlug.set(String(c.id).toLowerCase(), c);
+          if(c.name) byName.set(normalizeText(c.name), c);
+          if(c.shortName) byShort.set(normalizeText(c.shortName), c);
+        }
+        return { arr, byCode, bySlug, byName, byShort };
+      } catch(e){ log('分类字典加载错误: ' + e.message); return { arr: [], byCode: new Map(), bySlug: new Map(), byName: new Map(), byShort: new Map() }; }
+    }
+    function resolveCategoryCode(p, dict){
+      const rawCode = String(p.categoryCode||'').toLowerCase();
+      if(isNumericCode(rawCode)) return rawCode;
+      // 先按 slug/id 匹配
+      if(rawCode){ const bys = dict.bySlug.get(rawCode); if(bys && bys.code) return bys.code; }
+      // 再按中文名/短名匹配
+      const text = normalizeText(p.categoryName || p.category || '');
+      if(text){ const byn = dict.byName.get(text) || dict.byShort.get(text); if(byn && byn.code) return byn.code; }
+      // 回退 others
+      return '099';
+    }
+
+    async function fixCategoryCodes(){
+      try{
+        const btn = document.getElementById('btnFixCat'); btn.disabled = true;
+        if(!await initCB()) throw new Error('CloudBase 初始化失败');
+        log('开始加载规范化分类字典...');
+        const dict = await loadCategoryDictionary();
+        if(!dict.arr.length) throw new Error('规范化分类字典为空');
+        const coll = db.collection('products');
+        const cntRes = await coll.count();
+        const total = (cntRes && typeof cntRes.total==='number')? cntRes.total : (typeof cntRes==='number'? cntRes: 0);
+        const page = 100; let updated = 0, skipped = 0;
+        for(let skip=0; skip<total; skip+=page){
+          const b = await coll.limit(page).skip(skip).get();
+          const list = (b && Array.isArray(b.data))? b.data: [];
+          for(const p of list){
+            const targetCode = resolveCategoryCode(p, dict);
+            const need = targetCode && targetCode !== p.categoryCode && isNumericCode(targetCode);
+            if(need){
+              try{
+                await coll.doc(p._id || p.id).update({ categoryCode: targetCode });
+                updated++;
+              } catch(e){ log(`更新失败(${p._id||p.id}): ${e.message}`); skipped++; }
+            } else { skipped++; }
+          }
+          log(`批次处理: skip=${skip}，累计更新=${updated}，跳过=${skipped}`);
+        }
+        log(`products 集合修复完成：更新 ${updated}，跳过 ${skipped}`);
+
+        // 同步修复 products/catalog-data 文档
+        try{
+          const docRes = await coll.doc('catalog-data').get();
+          const doc = (docRes && docRes.data && docRes.data[0]) || {};
+          const arr = Array.isArray(doc.products)? doc.products: [];
+          let cUpdated = 0;
+          for(const it of arr){
+            const targetCode = resolveCategoryCode(it, dict);
+            if(targetCode && targetCode !== it.categoryCode && isNumericCode(targetCode)){
+              it.categoryCode = targetCode; cUpdated++;
+            }
+          }
+          if(cUpdated>0){
+            await coll.doc('catalog-data').update({ products: arr, updatedAt: Date.now() });
+            log(`catalog-data 同步完成：修复 ${cUpdated} 条`);
+          } else {
+            log('catalog-data 无需修复或未读取到产品数组');
+          }
+        } catch(e){ log('修复 catalog-data 失败: ' + e.message); }
+
+      } catch(err){ log('批量修复分类编码失败: ' + err.message); }
+      finally{ const btn = document.getElementById('btnFixCat'); if(btn) btn.disabled = false; }
+    }
+
+    async function readProductsAll(){
+      // 1) 尝试 products/catalog-data
+      try {
+        const r = await db.collection('products').doc('catalog-data').get();
+        if (r && r.data && r.data.length){ const doc = r.data[0]||{}; const arr = Array.isArray(doc.products)? doc.products: []; log(`catalog-data 提供 ${arr.length} 条产品`); if(arr.length) return arr; }
+      } catch(e){ log('读取 catalog-data 失败: ' + e.message); }
+      // 2) 遍历 products 集合
+      try {
+        const coll = db.collection('products');
+        const cntRes = await coll.count();
+        const total = (cntRes && typeof cntRes.total==='number')? cntRes.total : (typeof cntRes==='number'? cntRes: 0);
+        const page = 100; const out = [];
+        for(let skip=0; skip<total; skip+=page){ const b = await coll.limit(page).skip(skip).get(); const list = (b && Array.isArray(b.data))? b.data: []; out.push(...list); log(`遍历 products: ${skip + list.length}/${total}`); }
+        log(`遍历完成，共 ${out.length} 条产品`);
+        return out;
+      } catch(e){ log('遍历 products 集合失败: ' + e.message); return []; }
+    }
+
+    async function seedDictionaries(){
+      try {
+        document.getElementById('btnSeed').disabled = true;
+        if(!await initCB()) throw new Error('CloudBase 初始化失败');
+        const products = await readProductsAll();
+        if(!products.length) throw new Error('未读取到产品数据');
+        // 品牌字典
+        const bmap = new Map();
+        products.forEach(p=>{ const code = p.brandCode || slugify(p.brand||''); const name = p.brand || p.brandName || '未知品牌'; if(!code) return; if(!bmap.has(code)) bmap.set(code,{code,name,shortName: name.length>6? name.slice(0,6): name}); });
+        const brands = Array.from(bmap.values()).sort((a,b)=> a.name.localeCompare(b.name,'zh'));
+        // 分类字典
+        const cmap = new Map();
+        products.forEach(p=>{ const name = p.categoryName || p.category || '未命名分类'; const code = p.categoryCode || slugify(name); const shortName = name.length>6? name.slice(0,6): name; if(!cmap.has(code)) cmap.set(code,{code,name,shortName}); });
+        const categories = Array.from(cmap.values()).sort((a,b)=> a.name.localeCompare(b.name,'zh'));
+        // 写入（避免重复键：存在则更新，不存在则创建）
+        try { await db.createCollection('config'); } catch(e){}
+        const coll = db.collection('config'); const now = Date.now();
+        async function upsertDoc(collection, id, data){
+          try {
+            const existing = await collection.doc(id).get();
+            if (existing && existing.data && existing.data.length){
+              return await collection.doc(id).update(data);
+            } else {
+              return await collection.doc(id).set(data);
+            }
+          } catch(getErr){
+            try { return await collection.doc(id).set(data); } catch(setErr){ throw setErr; }
+          }
+        }
+        const br = await upsertDoc(coll, 'brand-dictionary', { brandDictionary: { brands }, updatedAt: now });
+        const cr = await upsertDoc(coll, 'category-dictionary', { categoryDictionary: { categories }, updatedAt: now });
+        log(`字典写入/更新完成：品牌 ${brands.length}，分类 ${categories.length}`);
+        log('brand-dictionary 返回: ' + JSON.stringify(br));
+        log('category-dictionary 返回: ' + JSON.stringify(cr));
+      } catch(err){ log('生成字典失败: ' + err.message); }
+      finally { document.getElementById('btnSeed').disabled = false; }
+    }
+
+    async function normalizeProducts(){
+      try {
+        document.getElementById('btnNormalize').disabled = true;
+        if(!await initCB()) throw new Error('CloudBase 初始化失败');
+        const coll = db.collection('products');
+        const cntRes = await coll.count();
+        const total = (cntRes && typeof cntRes.total==='number')? cntRes.total : (typeof cntRes==='number'? cntRes: 0);
+        const page = 100; let updated = 0, skipped = 0;
+        for(let skip=0; skip<total; skip+=page){
+          const b = await coll.limit(page).skip(skip).get();
+          const list = (b && Array.isArray(b.data))? b.data: [];
+          for(const p of list){
+            const brandCode = p.brandCode || slugify(p.brand||'');
+            const categoryName = p.categoryName || p.category || '';
+            const categoryCode = p.categoryCode || (categoryName? slugify(categoryName): 'others');
+            const needUpdate = (!p.brandCode && brandCode) || (!p.categoryCode && categoryCode);
+            if(needUpdate){
+              try {
+                await coll.doc(p._id || p.id).update({ brandCode, categoryCode });
+                updated++;
+              } catch(e){ log(`更新失败(${p._id||p.id}): ` + e.message); skipped++; }
+            } else { skipped++; }
+          }
+          log(`处理批次: skip=${skip}，累计更新=${updated}，跳过=${skipped}`);
+        }
+        log(`规范化完成：更新 ${updated} 条，跳过 ${skipped} 条`);
+      } catch(err){ log('规范化失败: ' + err.message); }
+      finally { document.getElementById('btnNormalize').disabled = false; }
+    }
+
+    async function loadCsvText(){
+      // CSV 由根目录 8000 端口提供
+      const url = 'http://localhost:8000/docs/%E4%BA%A7%E5%93%81%E5%88%97%E8%A1%A8.csv';
+      const res = await fetch(url, { headers: { 'Accept': 'text/plain' } });
+      if (!res.ok) throw new Error('无法加载 CSV: ' + res.status);
+      const txt = await res.text();
+      return txt;
+    }
+
+    function parseCsvToItems(csvText){
+      const lines = csvText.split(/\r?\n/);
+      let currentBrand = '';
+      const items = [];
+      for (const raw of lines){
+        const line = raw.trim();
+        if (!line) continue;
+        // 品牌/供应商行：以 品牌名,,, 形式出现
+        const brandMatch = line.match(/^([^,]+),,,\s*$/);
+        if (brandMatch){ currentBrand = brandMatch[1].trim(); continue; }
+        // 表头行：序号,产品名称,规格(或规格型号),单位
+        if (/^序号,/.test(line)) continue;
+        // 数据行：序号,产品名称,规格,单位
+        const rowMatch = line.match(/^\s*(\d+),(.*?),(.*?),(.*?)\s*$/);
+        if (rowMatch){
+          const name = rowMatch[2].trim();
+          const spec = rowMatch[3].trim();
+          const unit = rowMatch[4].trim();
+          if (!name) continue;
+          items.push({ brand: currentBrand || '未知品牌', name, spec, unit });
+        }
+      }
+      return items;
+    }
+
+    async function readAllProductsMap(){
+      const coll = db.collection('products');
+      const cntRes = await coll.count();
+      const total = (cntRes && typeof cntRes.total==='number')? cntRes.total : (typeof cntRes==='number'? cntRes: 0);
+      const page = 100;
+      const map = new Map();
+      for(let skip=0; skip<total; skip+=page){
+        const b = await coll.limit(page).skip(skip).get();
+        const list = (b && Array.isArray(b.data))? b.data: [];
+        for(const p of list){
+          const key = norm(p.name || p.productName || '') + '|' + norm(p.spec || p.specification || '');
+          if (!map.has(key)) map.set(key, p);
+        }
+      }
+      return { total, map };
+    }
+
+    async function syncCsv(){
+      try{
+        document.getElementById('btnSyncCsv').disabled = true;
+        if(!await initCB()) throw new Error('CloudBase 初始化失败');
+        log('开始加载并解析 CSV 原始数据...');
+        const csv = await loadCsvText();
+        const items = parseCsvToItems(csv);
+        log(`CSV 解析得到 ${items.length} 条产品`);
+
+        const coll = db.collection('products');
+        const { total, map } = await readAllProductsMap();
+        log(`数据库当前产品 ${total} 条，开始对比...`);
+
+        let created = 0, updated = 0, unchanged = 0;
+        for(const it of items){
+          const key = norm(it.name) + '|' + norm(it.spec);
+          const found = map.get(key);
+          if (found){
+            // 需要更新的字段：brand/brandCode/spec/unit（如差异）
+            const target = {
+              brand: it.brand,
+              brandCode: slugify(it.brand),
+              name: found.name || it.name,
+              spec: it.spec,
+              unit: it.unit || found.unit || ''
+            };
+            const diff = (
+              (found.brand !== target.brand) ||
+              (found.brandCode !== target.brandCode) ||
+              (found.spec !== target.spec) ||
+              (found.unit !== target.unit)
+            );
+            if (diff){
+              try { await coll.doc(found._id || found.id).update(target); updated++; }
+              catch(e){ log(`更新失败(${found._id||found.id}): ${e.message}`); }
+            } else { unchanged++; }
+          } else {
+            // 创建最小产品信息
+            const doc = {
+              name: it.name,
+              spec: it.spec,
+              unit: it.unit,
+              brand: it.brand,
+              brandCode: slugify(it.brand),
+              category: '其他',
+              categoryCode: 'others'
+            };
+            try { await coll.add(doc); created++; }
+            catch(e){ log(`创建失败(${it.name}): ${e.message}`); }
+          }
+        }
+        log(`CSV 同步完成：创建 ${created}，更新 ${updated}，保持不变 ${unchanged}`);
+      } catch(err){
+        log('CSV 同步失败: ' + err.message);
+      } finally {
+        document.getElementById('btnSyncCsv').disabled = false;
+      }
+    }
+  </script>
+</body>
+</html>
