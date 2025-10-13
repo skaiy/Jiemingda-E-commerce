@@ -25,8 +25,8 @@ const CLOUDBASE_CONFIG = {
   mysql: {
     // 数据库连接URL - 请替换YOUR_PASSWORD和YOUR_DATABASE_NAME为实际值
     // 格式: mysql://username:password@host:port/database
-    // 示例: mysql://skaiy_diao:your_actual_password@sh-cynosdbmysql-grp-94slsv2s.sql.tencentcdb.com:21976/your_database_name
-    databaseUrl: 'mysql://skaiy_diao:Skaiy.290823@sh-cynosdbmysql-grp-94slsv2s.sql.tencentcdb.com:21976/cloud1-0gc8cbzg3efd6a99',
+    // 示例: mysql://<username>:<password>@sh-cynosdbmysql-grp-94slsv2s.sql.tencentcdb.com:21976/<database_name>
+    databaseUrl: '', // 生产环境不要在前端保存连接串；本地开发可临时填入，线上通过云函数环境变量 DATABASE_URL
 
     // 云函数名称
     queryFunction: 'mysqlQuery',
@@ -51,7 +51,10 @@ const CLOUDBASE_CONFIG = {
     persistence: 'local',
 
     // 是否使用匿名登录
-    anonymousAuth: true
+    anonymousAuth: false,
+
+    // 可选：ClientId（控制台获取后再填，前端只用于默认登录页跳转场景）
+    // clientId: ''
   }
 };
 

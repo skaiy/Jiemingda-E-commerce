@@ -220,6 +220,46 @@
         .page-btn:hover:not(.active) {
             background: #f0f2f5;
         }
+        
+        /* 新增：模态登录样式 */
+        .modal-overlay {
+            position: fixed;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: rgba(0, 0, 0, 0.45);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 9999;
+            animation: fadeIn 0.2s ease-out;
+        }
+        .modal {
+            width: 420px;
+            max-width: 92vw;
+            background: #fff;
+            border-radius: 12px;
+            box-shadow: 0 12px 30px rgba(0,0,0,0.18);
+            overflow: hidden;
+            animation: slideUp 0.24s ease-out;
+        }
+        .modal-header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: #fff;
+            padding: 16px 18px;
+        }
+        .modal-header h3 { font-weight: 600; }
+        .modal-body { padding: 18px; }
+        .modal-actions {
+            display: flex;
+            justify-content: flex-end;
+            gap: 10px;
+            padding: 0 18px 16px;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; } to { opacity: 1; }
+        }
+        @keyframes slideUp {
+            from { transform: translateY(8px); } to { transform: translateY(0); }
+        }
     </style>
 </head>
 <body>
@@ -234,18 +274,8 @@
                 </div>
             </div>
             
-            <div v-if="!isAuthenticated" class="content-panel" style="margin-bottom:20px;">
-                <h2>🔐 登录后台</h2>
-                <p style="margin:10px 0 20px; color:#555;">请输入用户名或邮箱，以及密码进行登录。</p>
-                <div style="display:flex; gap:10px; margin-bottom:10px;">
-                    <input v-model="loginUsername" class="search-box" placeholder="用户名或邮箱" style="flex:1;" />
-                    <input v-model="loginPassword" type="password" class="search-box" placeholder="密码" style="flex:1;" />
-                </div>
-                <div v-if="loginError" style="color:#dc3545; margin-bottom:10px;">{{ loginError }}</div>
-                <button class="btn btn-primary" @click="login">登录</button>
-                <button class="btn btn-success" style="margin-left:10px;" @click="goToLoginPage">去登录页</button>
-                <div style="margin-top:8px; font-size:12px; color:#666;">若账号未开通或需要更换登录方式，请点击“去登录页”进入 CloudBase 官方登录页面</div>
-            </div>
+            <!-- 已改为模态登录弹窗，隐藏原未登录内嵌面板 -->
+            <div v-if="!isAuthenticated" class="content-panel" style="margin-bottom:20px; display:none;"></div>
             
             <div class="nav-tabs" v-if="isAuthenticated">
                 <div class="nav-tab" :class="{ active: activeTab === 'dashboard' }" @click="activeTab = 'dashboard'">
@@ -466,6 +496,7 @@
                     auth: null,
                     isAuthenticated: false,
                     user: null,
+                    showLoginModal: false,
                     loginUsername: '',
                     loginPassword: '',
                     loginError: '',
@@ -509,8 +540,12 @@
                     if (window.CLOUDBASE_CONFIG?.auth?.clientId) {
                         this.config.clientId = window.CLOUDBASE_CONFIG.auth.clientId;
                     }
+                    // 新增：本地开发时允许通过外部配置注入 databaseUrl
+                    if (window.CLOUDBASE_CONFIG?.mysql?.databaseUrl) {
+                        this.config.mysql.databaseUrl = window.CLOUDBASE_CONFIG.mysql.databaseUrl;
+                    }
                 }
-
+            
                 // 初始化 SDK 与认证
                 const initOptions = { env: this.config.envId };
                 if (this.config.clientId) initOptions.clientId = this.config.clientId;
@@ -522,6 +557,7 @@
                 this.auth.onLoginStateChanged((state) => {
                     this.isAuthenticated = !!state && !!state.user;
                     this.user = state?.user || null;
+                    this.showLoginModal = !this.isAuthenticated; // 登录成功后关闭模态
                     if (this.isAuthenticated && this.activeTab === 'dashboard') {
                         this.loadDashboardData();
                     }
@@ -531,6 +567,7 @@
                 const state = await this.auth.getLoginState();
                 this.isAuthenticated = !!state && !!state.user;
                 this.user = state?.user || null;
+                this.showLoginModal = !this.isAuthenticated; // 首次进入按状态显示模态
                 if (this.isAuthenticated) {
                     await this.loadDashboardData();
                 }

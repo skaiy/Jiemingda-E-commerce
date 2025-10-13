@@ -36,15 +36,7 @@
                 "handler": "index.main",
                 "installDependency": true
               },
-              {
-                "name": "mysqlSeed",
-                "timeout": 120,
-                "envVariables": {},
-                "runtime": "Nodejs16.13",
-                "memorySize": 512,
-                "handler": "index.main",
-                "installDependency": true
-              },
+
               {
                 "name": "mysqlSeed2",
                 "timeout": 120,
@@ -63,24 +55,8 @@
                 "handler": "index.main",
                 "installDependency": true
               },
-              {
-                "name": "seedCatalog",
-                "timeout": 60,
-                "envVariables": {},
-                "runtime": "Nodejs16.13",
-                "memorySize": 256,
-                "handler": "index.main",
-                "installDependency": true
-              },
-              {
-                "name": "seedProducts",
-                "timeout": 60,
-                "envVariables": {},
-                "runtime": "Nodejs16.13",
-                "memorySize": 256,
-                "handler": "index.main",
-                "installDependency": true
-              },
+
+
               {
                 "name": "inspectData",
                 "timeout": 60,
@@ -90,15 +66,7 @@
                 "handler": "index.main",
                 "installDependency": true
               },
-              {
-                "name": "seedConfig",
-                "timeout": 60,
-                "envVariables": {},
-                "runtime": "Nodejs16.13",
-                "memorySize": 256,
-                "handler": "index.main",
-                "installDependency": true
-              },
+
               {
                 "name": "validateDatabase",
                 "timeout": 60,
@@ -126,15 +94,7 @@
       "handler": "index.main",
       "installDependency": true
     },
-    {
-      "name": "mysqlSeed",
-      "timeout": 120,
-      "envVariables": {},
-      "runtime": "Nodejs16.13",
-      "memorySize": 512,
-      "handler": "index.main",
-      "installDependency": true
-    },
+
     {
       "name": "mysqlSeed2",
       "timeout": 120,
@@ -153,24 +113,8 @@
       "handler": "index.main",
       "installDependency": true
     },
-    {
-      "name": "seedCatalog",
-      "timeout": 60,
-      "envVariables": {},
-      "runtime": "Nodejs16.13",
-      "memorySize": 256,
-      "handler": "index.main",
-      "installDependency": true
-    },
-    {
-      "name": "seedProducts",
-      "timeout": 60,
-      "envVariables": {},
-      "runtime": "Nodejs16.13",
-      "memorySize": 256,
-      "handler": "index.main",
-      "installDependency": true
-    },
+
+
     {
       "name": "inspectData",
       "timeout": 60,
@@ -180,15 +124,7 @@
       "handler": "index.main",
       "installDependency": true
     },
-    {
-      "name": "seedConfig",
-      "timeout": 60,
-      "envVariables": {},
-      "runtime": "Nodejs16.13",
-      "memorySize": 256,
-      "handler": "index.main",
-      "installDependency": true
-    },
+
     {
       "name": "validateDatabase",
       "timeout": 60,
