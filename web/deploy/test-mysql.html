@@ -1,0 +1,303 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MySQL连接测试</title>
+    <script src="https://static.cloudbase.net/cloudbase-js-sdk/2.17.3/cloudbase.full.js"></script>
+    <script src="./cloudbase.config.js"></script>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            max-width: 600px;
+            margin: 50px auto;
+            padding: 20px;
+            background: #f5f5f5;
+        }
+        .container {
+            background: white;
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+        }
+        h1 {
+            color: #333;
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        button {
+            background: #007bff;
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 14px;
+            margin: 10px 5px;
+            min-width: 120px;
+        }
+        button:hover {
+            background: #0056b3;
+        }
+        button:disabled {
+            background: #ccc;
+            cursor: not-allowed;
+        }
+        .result {
+            margin-top: 20px;
+            padding: 15px;
+            border-radius: 8px;
+            white-space: pre-wrap;
+            font-family: monospace;
+            font-size: 12px;
+            max-height: 400px;
+            overflow-y: auto;
+        }
+        .success {
+            background: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+        }
+        .error {
+            background: #f8d7da;
+            color: #721c24;
+            border: 1px solid #f5c6cb;
+        }
+        .info {
+            background: #d1ecf1;
+            color: #0c5460;
+            border: 1px solid #bee5eb;
+        }
+        .test-section {
+            margin: 20px 0;
+            padding: 20px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+        }
+        .test-section h3 {
+            margin-top: 0;
+            color: #555;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>MySQL数据库连接测试</h1>
+        
+        <div class="test-section">
+            <h3>1. 基础连接测试</h3>
+            <button onclick="testConnection()">测试数据库连接</button>
+            <button onclick="initSchema()">初始化表结构</button>
+        </div>
+
+        <div class="test-section">
+            <h3>2. 数据操作测试</h3>
+            <button onclick="seedData()">导入测试数据</button>
+            <button onclick="queryProducts()">查询产品数据</button>
+            <button onclick="queryCategories()">查询分类数据</button>
+            <button onclick="queryBrands()">查询品牌数据</button>
+        </div>
+
+        <div class="test-section">
+            <h3>3. 前端集成测试</h3>
+            <button onclick="testFrontendIntegration()">测试前端数据加载</button>
+            <button onclick="openMainApp()">打开主应用</button>
+        </div>
+
+        <div id="result"></div>
+    </div>
+
+    <script>
+        const config = window.CLOUDBASE_CONFIG || {};
+        
+        async function callFunction(functionName, data = {}) {
+            try {
+                showResult('正在调用云函数...', 'info');
+                
+                const app = cloudbase.init({ env: config.envId });
+                await app.auth({ persistence: 'local' }).signInAnonymously();
+                
+                const result = await app.callFunction({
+                    name: functionName,
+                    data: {
+                        ...data,
+                        databaseUrl: config.mysql?.databaseUrl
+                    }
+                });
+                
+                return result.result;
+            } catch (error) {
+                showResult(`云函数调用失败: ${error.message}`, 'error');
+                return null;
+            }
+        }
+        
+        async function testConnection() {
+            const result = await callFunction('mysqlSeed2', { action: 'test' });
+            if (result) {
+                if (result.ok) {
+                    showResult('✅ 数据库连接成功！', 'success');
+                } else {
+                    showResult(`❌ 连接失败: ${result.error}`, 'error');
+                }
+            }
+        }
+        
+        async function initSchema() {
+            const result = await callFunction('mysqlSeed2', { action: 'init' });
+            if (result) {
+                if (result.ok) {
+                    showResult('✅ 数据库表结构初始化成功！', 'success');
+                } else {
+                    showResult(`❌ 初始化失败: ${result.error}`, 'error');
+                }
+            }
+        }
+        
+        async function seedData() {
+            const result = await callFunction('mysqlSeed2', { action: 'seed' });
+            if (result) {
+                if (result.ok) {
+                    showResult(`✅ 数据导入成功！
+📊 统计信息:
+   - 品牌: ${result.brands} 个
+   - 分类: ${result.categories} 个
+   - 产品: ${result.products} 个
+   - 图片: ${result.images} 个`, 'success');
+                } else {
+                    showResult(`❌ 数据导入失败: ${result.error}`, 'error');
+                }
+            }
+        }
+        
+        async function queryProducts() {
+            const result = await callFunction('mysqlQuery', { action: 'products' });
+            if (result) {
+                if (result.ok) {
+                    const data = result.data;
+                    showResult(`✅ 产品数据查询成功！
+📊 数据统计:
+   - 分类数量: ${data.categories?.length || 0}
+   - 产品总数: ${data.count || 0}
+   - 数据版本: ${data.version || 'unknown'}
+   - 更新时间: ${data.updatedAt ? new Date(data.updatedAt).toLocaleString() : 'unknown'}
+
+📋 分类列表:
+${data.categories?.map(cat => `   - ${cat.name}: ${cat.items?.length || 0} 个产品`).join('\n') || '   无数据'}`, 'success');
+                } else {
+                    showResult(`❌ 产品查询失败: ${result.error}`, 'error');
+                }
+            }
+        }
+        
+        async function queryCategories() {
+            const result = await callFunction('mysqlQuery', { action: 'categories' });
+            if (result) {
+                if (result.ok) {
+                    const data = result.data;
+                    showResult(`✅ 分类数据查询成功！
+📊 分类统计: ${data.categoryDictionary?.categories?.length || 0} 个分类
+
+📋 分类列表:
+${data.categoryDictionary?.categories?.map(cat => `   - ${cat.name} (${cat.productCount} 个产品)`).join('\n') || '   无数据'}`, 'success');
+                } else {
+                    showResult(`❌ 分类查询失败: ${result.error}`, 'error');
+                }
+            }
+        }
+        
+        async function queryBrands() {
+            const result = await callFunction('mysqlQuery', { action: 'brands' });
+            if (result) {
+                if (result.ok) {
+                    const data = result.data;
+                    showResult(`✅ 品牌数据查询成功！
+📊 品牌统计: ${data.brandDictionary?.brands?.length || 0} 个品牌
+
+📋 品牌列表:
+${data.brandDictionary?.brands?.map(brand => `   - ${brand.name} (${brand.productCount} 个产品)`).join('\n') || '   无数据'}`, 'success');
+                } else {
+                    showResult(`❌ 品牌查询失败: ${result.error}`, 'error');
+                }
+            }
+        }
+        
+        async function testFrontendIntegration() {
+            showResult('🔄 测试前端数据加载集成...', 'info');
+            
+            try {
+                // 模拟前端数据加载流程
+                const [productsData, configData, brandData, categoryData] = await Promise.all([
+                    callFunction('mysqlQuery', { action: 'products' }),
+                    callFunction('mysqlQuery', { action: 'config' }),
+                    callFunction('mysqlQuery', { action: 'brands' }),
+                    callFunction('mysqlQuery', { action: 'categories' })
+                ]);
+                
+                let success = true;
+                let errors = [];
+                
+                if (!productsData?.ok) {
+                    success = false;
+                    errors.push('产品数据加载失败');
+                }
+                
+                if (!configData?.ok) {
+                    success = false;
+                    errors.push('配置数据加载失败');
+                }
+                
+                if (!brandData?.ok) {
+                    success = false;
+                    errors.push('品牌数据加载失败');
+                }
+                
+                if (!categoryData?.ok) {
+                    success = false;
+                    errors.push('分类数据加载失败');
+                }
+                
+                if (success) {
+                    showResult(`✅ 前端集成测试成功！
+🎯 所有数据源都能正常加载
+📱 应用可以正常使用MySQL数据库
+
+🔧 配置状态:
+   - 数据源: MySQL
+   - 环境ID: ${config.envId}
+   - 查询函数: ${config.mysql?.queryFunction}
+   - 种子函数: ${config.mysql?.seedFunction}`, 'success');
+                } else {
+                    showResult(`❌ 前端集成测试失败！
+错误列表:
+${errors.map(err => `   - ${err}`).join('\n')}`, 'error');
+                }
+                
+            } catch (error) {
+                showResult(`❌ 前端集成测试异常: ${error.message}`, 'error');
+            }
+        }
+        
+        function openMainApp() {
+            window.open('./index.html', '_blank');
+        }
+        
+        function showResult(message, type = 'info') {
+            const resultDiv = document.getElementById('result');
+            resultDiv.textContent = message;
+            resultDiv.className = `result ${type}`;
+        }
+        
+        // 页面加载时显示配置信息
+        window.onload = function() {
+            showResult(`🔧 当前配置信息:
+环境ID: ${config.envId || '未配置'}
+数据源: ${config.dataSource || '未配置'}
+MySQL URL: ${config.mysql?.databaseUrl ? '已配置' : '未配置'}
+查询函数: ${config.mysql?.queryFunction || '未配置'}
+
+💡 请确保已正确配置数据库连接信息`, 'info');
+        };
+    </script>
+</body>
+</html>

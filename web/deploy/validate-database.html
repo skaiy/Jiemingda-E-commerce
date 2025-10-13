@@ -1,0 +1,343 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>数据库验证工具</title>
+    <script src="https://static.cloudbase.net/cloudbase-js-sdk/2.17.3/cloudbase.full.js"></script>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #f5f5f5;
+        }
+        .container {
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        h1 {
+            color: #333;
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        .button-group {
+            display: flex;
+            gap: 15px;
+            margin-bottom: 30px;
+            flex-wrap: wrap;
+        }
+        button {
+            padding: 12px 24px;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 16px;
+            transition: all 0.3s;
+        }
+        .btn-primary {
+            background-color: #007bff;
+            color: white;
+        }
+        .btn-primary:hover {
+            background-color: #0056b3;
+        }
+        .btn-success {
+            background-color: #28a745;
+            color: white;
+        }
+        .btn-success:hover {
+            background-color: #1e7e34;
+        }
+        .result {
+            margin-top: 20px;
+            padding: 20px;
+            border-radius: 6px;
+            white-space: pre-wrap;
+            font-family: 'Courier New', monospace;
+            font-size: 14px;
+            line-height: 1.5;
+            max-height: 600px;
+            overflow-y: auto;
+        }
+        .result.success {
+            background-color: #d4edda;
+            border: 1px solid #c3e6cb;
+            color: #155724;
+        }
+        .result.error {
+            background-color: #f8d7da;
+            border: 1px solid #f5c6cb;
+            color: #721c24;
+        }
+        .result.info {
+            background-color: #d1ecf1;
+            border: 1px solid #bee5eb;
+            color: #0c5460;
+        }
+        .loading {
+            display: none;
+            text-align: center;
+            margin: 20px 0;
+        }
+        .spinner {
+            border: 4px solid #f3f3f3;
+            border-top: 4px solid #3498db;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            animation: spin 2s linear infinite;
+            margin: 0 auto;
+        }
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin: 20px 0;
+        }
+        .stat-card {
+            background: #f8f9fa;
+            padding: 15px;
+            border-radius: 6px;
+            border-left: 4px solid #007bff;
+        }
+        .stat-title {
+            font-weight: bold;
+            color: #333;
+            margin-bottom: 10px;
+        }
+        .stat-value {
+            font-size: 24px;
+            color: #007bff;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🔍 数据库验证工具</h1>
+        
+        <div class="button-group">
+            <button class="btn-primary" onclick="testConnection()">测试连接</button>
+            <button class="btn-success" onclick="validateDatabase()">验证数据库</button>
+            <button class="btn-primary" onclick="queryProducts()">查询产品数据</button>
+            <button class="btn-primary" onclick="queryBrands()">查询品牌数据</button>
+            <button class="btn-primary" onclick="queryCategories()">查询分类数据</button>
+        </div>
+
+        <div class="loading" id="loading">
+            <div class="spinner"></div>
+            <p>正在处理请求...</p>
+        </div>
+
+        <div id="result"></div>
+    </div>
+
+    <script>
+        // CloudBase配置
+        const config = {
+            envId: 'cloud1-0gc8cbzg3efd6a99',
+            mysql: {
+                databaseUrl: 'mysql://skaiy_diao:Skaiy.290823@sh-cynosdbmysql-grp-94slsv2s.sql.tencentcdb.com:21976/cloud1-0gc8cbzg3efd6a99',
+                queryFunction: 'mysqlQuery'
+            }
+        };
+        
+        function showLoading(show) {
+            document.getElementById('loading').style.display = show ? 'block' : 'none';
+        }
+        
+        function showResult(message, type = 'info') {
+            const resultDiv = document.getElementById('result');
+            resultDiv.className = `result ${type}`;
+            resultDiv.textContent = message;
+            showLoading(false);
+        }
+        
+        function formatValidationResult(data) {
+            let output = '📊 数据库验证报告\n';
+            output += '=' .repeat(50) + '\n\n';
+            
+            // 摘要信息
+            if (data.summary) {
+                output += '📋 摘要信息:\n';
+                output += `  • 发现表数量: ${data.summary.tablesFound}\n`;
+                output += `  • 总产品数: ${data.summary.totalProducts}\n`;
+                output += `  • 活跃产品数: ${data.summary.activeProducts}\n`;
+                output += `  • 上架产品数: ${data.summary.onShelfProducts}\n`;
+                output += `  • 品牌数量: ${data.summary.totalBrands}\n`;
+                output += `  • 分类数量: ${data.summary.totalCategories}\n`;
+                
+                if (data.summary.missingTables.length > 0) {
+                    output += `  ⚠️  缺失表: ${data.summary.missingTables.join(', ')}\n`;
+                }
+                output += '\n';
+            }
+            
+            // 表结构信息
+            if (data.tables) {
+                output += '🗂️  表结构信息:\n';
+                Object.keys(data.tables).forEach(tableName => {
+                    if (tableName === 'list' || tableName === 'count') return;
+                    
+                    const table = data.tables[tableName];
+                    if (table.error) {
+                        output += `  ❌ ${tableName}: ${table.error}\n`;
+                    } else {
+                        output += `  ✅ ${tableName}: ${table.rowCount} 行数据\n`;
+                        if (table.columns) {
+                            output += `     字段: ${table.columns.map(c => c.field).join(', ')}\n`;
+                        }
+                    }
+                });
+                output += '\n';
+            }
+            
+            // 数据完整性
+            if (data.dataIntegrity) {
+                output += '🔍 数据完整性检查:\n';
+                Object.keys(data.dataIntegrity).forEach(key => {
+                    const integrity = data.dataIntegrity[key];
+                    output += `  ${key}:\n`;
+                    Object.keys(integrity).forEach(stat => {
+                        output += `    ${stat}: ${integrity[stat]}\n`;
+                    });
+                });
+            }
+            
+            return output;
+        }
+        
+        async function callFunction(functionName, data = {}) {
+            try {
+                showLoading(true);
+
+                const app = cloudbase.init({ env: config.envId });
+                await app.auth({ persistence: 'local' }).signInAnonymously();
+
+                const result = await app.callFunction({
+                    name: functionName,
+                    data: {
+                        ...data,
+                        databaseUrl: config.mysql?.databaseUrl
+                    }
+                });
+
+                return result.result;
+            } catch (error) {
+                console.error('云函数调用错误:', error);
+                showResult(`云函数调用失败: ${error.message}`, 'error');
+                return null;
+            }
+        }
+        
+        async function testConnection() {
+            const result = await callFunction('validateDatabase', { action: 'test' });
+            if (result) {
+                if (result.ok) {
+                    showResult(`✅ ${result.data.message}`, 'success');
+                } else {
+                    showResult(`❌ ${result.error}`, 'error');
+                }
+            }
+        }
+        
+        async function validateDatabase() {
+            const result = await callFunction('validateDatabase', { action: 'validate' });
+            if (result) {
+                if (result.ok) {
+                    const formatted = formatValidationResult(result.data);
+                    showResult(formatted, 'success');
+                } else {
+                    showResult(`❌ 验证失败: ${result.error}`, 'error');
+                }
+            }
+        }
+        
+        async function queryProducts() {
+            const result = await callFunction('mysqlQuery', { action: 'products' });
+            if (result) {
+                if (result.ok) {
+                    const data = result.data;
+                    let output = '📦 产品数据查询结果\n';
+                    output += '=' .repeat(30) + '\n';
+                    output += `分类数量: ${data.categories?.length || 0}\n`;
+                    output += `产品总数: ${data.count || 0}\n`;
+                    output += `数据版本: ${data.version || 'unknown'}\n`;
+                    output += `更新时间: ${data.updatedAt ? new Date(data.updatedAt).toLocaleString() : 'unknown'}\n\n`;
+                    
+                    if (data.categories && data.categories.length > 0) {
+                        output += '分类详情:\n';
+                        data.categories.slice(0, 5).forEach(cat => {
+                            output += `  • ${cat.name}: ${cat.items?.length || 0} 个产品\n`;
+                        });
+                        if (data.categories.length > 5) {
+                            output += `  ... 还有 ${data.categories.length - 5} 个分类\n`;
+                        }
+                    }
+                    
+                    showResult(output, 'success');
+                } else {
+                    showResult(`❌ 查询失败: ${result.error}`, 'error');
+                }
+            }
+        }
+        
+        async function queryBrands() {
+            const result = await callFunction('mysqlQuery', { action: 'brands' });
+            if (result) {
+                if (result.ok) {
+                    const data = result.data;
+                    let output = '🏷️  品牌数据查询结果\n';
+                    output += '=' .repeat(30) + '\n';
+                    output += `品牌总数: ${data.brandDictionary?.brands?.length || 0}\n\n`;
+                    
+                    if (data.brandDictionary?.brands) {
+                        output += '品牌列表:\n';
+                        data.brandDictionary.brands.slice(0, 10).forEach(brand => {
+                            output += `  • ${brand.name} (${brand.shortName || 'N/A'}): ${brand.productCount} 个产品\n`;
+                        });
+                        if (data.brandDictionary.brands.length > 10) {
+                            output += `  ... 还有 ${data.brandDictionary.brands.length - 10} 个品牌\n`;
+                        }
+                    }
+                    
+                    showResult(output, 'success');
+                } else {
+                    showResult(`❌ 查询失败: ${result.error}`, 'error');
+                }
+            }
+        }
+        
+        async function queryCategories() {
+            const result = await callFunction('mysqlQuery', { action: 'categories' });
+            if (result) {
+                if (result.ok) {
+                    const data = result.data;
+                    let output = '📂 分类数据查询结果\n';
+                    output += '=' .repeat(30) + '\n';
+                    output += `分类总数: ${data.categoryDictionary?.categories?.length || 0}\n\n`;
+                    
+                    if (data.categoryDictionary?.categories) {
+                        output += '分类列表:\n';
+                        data.categoryDictionary.categories.forEach(cat => {
+                            output += `  • ${cat.name} (${cat.shortName || 'N/A'}): ${cat.productCount} 个产品\n`;
+                        });
+                    }
+                    
+                    showResult(output, 'success');
+                } else {
+                    showResult(`❌ 查询失败: ${result.error}`, 'error');
+                }
+            }
+        }
+    </script>
+</body>
+</html>

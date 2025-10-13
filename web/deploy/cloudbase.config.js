@@ -7,34 +7,49 @@
 const CLOUDBASE_CONFIG = {
   // 环境ID - 替换为您的实际环境ID
   envId: 'cloud1-0gc8cbzg3efd6a99',
-  
+
   // 数据库配置
   database: {
     // 产品数据集合名称
     productsCollection: 'products',
-    
-    // 配置数据集合名称  
+
+    // 配置数据集合名称
     configCollection: 'config',
-    
+
     // 默认文档ID
     catalogDocId: 'catalog-data',
     configDocId: 'category-config'
   },
-  
+
+  // MySQL数据库配置
+  mysql: {
+    // 数据库连接URL - 请替换YOUR_PASSWORD和YOUR_DATABASE_NAME为实际值
+    // 格式: mysql://username:password@host:port/database
+    // 示例: mysql://skaiy_diao:your_actual_password@sh-cynosdbmysql-grp-94slsv2s.sql.tencentcdb.com:21976/your_database_name
+    databaseUrl: 'mysql://skaiy_diao:Skaiy.290823@sh-cynosdbmysql-grp-94slsv2s.sql.tencentcdb.com:21976/cloud1-0gc8cbzg3efd6a99',
+
+    // 云函数名称
+    queryFunction: 'mysqlQuery',
+    seedFunction: 'mysqlSeed2'
+  },
+
+  // 数据源配置 - 'cloudbase' 或 'mysql'
+  dataSource: 'mysql',
+
   // 数据模型配置
   models: {
     // 产品数据模型名称
     products: 'products',
-    
+
     // 配置数据模型名称
     config: 'config'
   },
-  
+
   // 认证配置
   auth: {
     // 持久化方式: 'local' | 'session' | 'none'
     persistence: 'local',
-    
+
     // 是否使用匿名登录
     anonymousAuth: true
   }

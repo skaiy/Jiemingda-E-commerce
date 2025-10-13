@@ -150,8 +150,81 @@ async function ensureSchema(conn) {
   ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;`);
 }
 
+// 查询产品数据的函数
+async function queryProducts(conn, event) {
+  const { categorySlug, brandName, searchTerm, limit = 1000, offset = 0 } = event || {};
+
+  let query = `
+    SELECT
+      p.id, p.productCode, p.name, p.itemNo, p.spec, p.unit, p.price, p.imageUrl, p.remark, p.isOnShelf,
+      b.name as brandName, b.shortName as brandShortName,
+      c.name as categoryName, c.bannerSlug as categorySlug, c.shortName as categoryShortName
+    FROM Product p
+    LEFT JOIN Brand b ON p.brandId = b.id
+    LEFT JOIN Category c ON p.categoryId = c.id
+    WHERE p.isDeleted = 0 AND p.isOnShelf = 1
+  `;
+
+  const params = [];
+
+  if (categorySlug) {
+    query += ' AND c.bannerSlug = ?';
+    params.push(categorySlug);
+  }
+
+  if (brandName) {
+    query += ' AND (b.name = ? OR b.shortName = ?)';
+    params.push(brandName, brandName);
+  }
+
+  if (searchTerm) {
+    query += ' AND (p.name LIKE ? OR p.itemNo LIKE ? OR p.spec LIKE ?)';
+    const searchPattern = `%${searchTerm}%`;
+    params.push(searchPattern, searchPattern, searchPattern);
+  }
+
+  query += ' ORDER BY p.updatedAt DESC LIMIT ? OFFSET ?';
+  params.push(limit, offset);
+
+  const [rows] = await conn.execute(query, params);
+  return rows;
+}
+
+// 查询分类数据的函数
+async function queryCategories(conn) {
+  const [rows] = await conn.execute(`
+    SELECT
+      c.id, c.code, c.name, c.shortName, c.bannerSlug, c.bannerUrl, c.sortIndex,
+      COUNT(p.id) as productCount
+    FROM Category c
+    LEFT JOIN Product p ON c.id = p.categoryId AND p.isDeleted = 0 AND p.isOnShelf = 1
+    WHERE c.isDeleted = 0
+    GROUP BY c.id, c.code, c.name, c.shortName, c.bannerSlug, c.bannerUrl, c.sortIndex
+    ORDER BY productCount DESC, c.sortIndex ASC, c.name ASC
+  `);
+  return rows;
+}
+
+// 查询品牌数据的函数
+async function queryBrands(conn) {
+  const [rows] = await conn.execute(`
+    SELECT
+      b.id, b.code, b.name, b.shortName, b.description,
+      COUNT(p.id) as productCount
+    FROM Brand b
+    LEFT JOIN Product p ON b.id = p.brandId AND p.isDeleted = 0 AND p.isOnShelf = 1
+    WHERE b.isDeleted = 0
+    GROUP BY b.id, b.code, b.name, b.shortName, b.description
+    HAVING productCount > 0
+    ORDER BY productCount DESC, b.name ASC
+  `);
+  return rows;
+}
+
 exports.main = async (event) => {
+  const action = event?.action || 'seed'; // 'seed', 'query', 'categories', 'brands', 'test', 'init'
   const databaseUrl = event?.databaseUrl || process.env.DATABASE_URL;
+
   if (!databaseUrl) {
     return { ok: false, error: 'DATABASE_URL 未提供，请在调用时传入 { databaseUrl }。' };
   }
@@ -163,18 +236,60 @@ exports.main = async (event) => {
     return { ok: false, error: `连接数据库失败：${e.message}` };
   }
 
-  let brandUpserts = 0;
-  let categoryUpserts = 0;
-  let productUpserts = 0;
-  let imageCreates = 0;
-
   try {
+    const conn = await pool.getConnection();
+
+    if (action === 'test') {
+      // 测试数据库连接
+      await conn.execute('SELECT 1');
+      await conn.release();
+      await pool.end();
+      return { ok: true, action: 'test', message: '数据库连接成功' };
+    }
+
+    if (action === 'init') {
+      // 初始化数据库表结构
+      await ensureSchema(conn);
+      await conn.release();
+      await pool.end();
+      return { ok: true, action: 'init', message: '数据库表结构初始化成功' };
+    }
+
+    if (action === 'query') {
+      // 查询产品数据
+      const products = await queryProducts(conn, event);
+      await conn.release();
+      await pool.end();
+      return { ok: true, action: 'query', data: products, count: products.length };
+    }
+
+    if (action === 'categories') {
+      // 查询分类数据
+      const categories = await queryCategories(conn);
+      await conn.release();
+      await pool.end();
+      return { ok: true, action: 'categories', data: categories, count: categories.length };
+    }
+
+    if (action === 'brands') {
+      // 查询品牌数据
+      const brands = await queryBrands(conn);
+      await conn.release();
+      await pool.end();
+      return { ok: true, action: 'brands', data: brands, count: brands.length };
+    }
+
+    // 默认执行数据种子操作
+    await ensureSchema(conn);
+
+    let brandUpserts = 0;
+    let categoryUpserts = 0;
+    let productUpserts = 0;
+    let imageCreates = 0;
+
     const brandDict = await loadJson(event?.brandUrl, './data/brand_dictionary.json');
     const categoryDict = await loadJson(event?.categoryUrl, './data/category_dictionary.json');
     const productsRaw = await loadJson(event?.productsUrl, './data/products.json');
-
-    const conn = await pool.getConnection();
-    await ensureSchema(conn);
 
     const brands = normalizeBrands(brandDict);
     for (const b of brands) {
@@ -240,9 +355,9 @@ exports.main = async (event) => {
 
     await conn.release();
     await pool.end();
-    return { ok: true, brands: brandUpserts, categories: categoryUpserts, products: productUpserts, images: imageCreates };
+    return { ok: true, action: 'seed', brands: brandUpserts, categories: categoryUpserts, products: productUpserts, images: imageCreates };
   } catch (error) {
     if (pool) await pool.end();
-    return { ok: false, error: error?.message || String(error), brands: brandUpserts, categories: categoryUpserts, products: productUpserts, images: imageCreates };
+    return { ok: false, error: error?.message || String(error) };
   }
 };

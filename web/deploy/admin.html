@@ -1,0 +1,696 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>捷明达电商产品管理后台</title>
+    <script src="https://static.cloudbase.net/cloudbase-js-sdk/2.21.6/cloudbase.full.js?v=1"></script>
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f5f7fa;
+            color: #333;
+        }
+        
+        .admin-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        .header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 30px;
+            border-radius: 10px;
+            margin-bottom: 30px;
+            text-align: center;
+        }
+        
+        .header h1 {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+        }
+        
+        .header p {
+            font-size: 1.2em;
+            opacity: 0.9;
+        }
+        
+        .nav-tabs {
+            display: flex;
+            background: white;
+            border-radius: 10px;
+            padding: 5px;
+            margin-bottom: 30px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        
+        .nav-tab {
+            flex: 1;
+            padding: 15px 20px;
+            text-align: center;
+            cursor: pointer;
+            border-radius: 8px;
+            transition: all 0.3s;
+            font-weight: 500;
+        }
+        
+        .nav-tab.active {
+            background: #667eea;
+            color: white;
+        }
+        
+        .nav-tab:hover:not(.active) {
+            background: #f0f2f5;
+        }
+        
+        .content-panel {
+            background: white;
+            border-radius: 10px;
+            padding: 30px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            min-height: 600px;
+        }
+        
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+        
+        .stat-card {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 25px;
+            border-radius: 10px;
+            text-align: center;
+        }
+        
+        .stat-number {
+            font-size: 2.5em;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+        
+        .stat-label {
+            font-size: 1.1em;
+            opacity: 0.9;
+        }
+        
+        .data-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+        
+        .data-table th,
+        .data-table td {
+            padding: 12px;
+            text-align: left;
+            border-bottom: 1px solid #eee;
+        }
+        
+        .data-table th {
+            background: #f8f9fa;
+            font-weight: 600;
+            color: #555;
+        }
+        
+        .data-table tr:hover {
+            background: #f8f9fa;
+        }
+        
+        .btn {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 14px;
+            transition: all 0.3s;
+            margin: 5px;
+        }
+        
+        .btn-primary {
+            background: #667eea;
+            color: white;
+        }
+        
+        .btn-primary:hover {
+            background: #5a6fd8;
+        }
+        
+        .btn-success {
+            background: #28a745;
+            color: white;
+        }
+        
+        .btn-success:hover {
+            background: #218838;
+        }
+        
+        .btn-danger {
+            background: #dc3545;
+            color: white;
+        }
+        
+        .btn-danger:hover {
+            background: #c82333;
+        }
+        
+        .loading {
+            text-align: center;
+            padding: 40px;
+        }
+        
+        .spinner {
+            border: 4px solid #f3f3f3;
+            border-top: 4px solid #667eea;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            animation: spin 1s linear infinite;
+            margin: 0 auto 20px;
+        }
+        
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        
+        .search-box {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #ddd;
+            border-radius: 6px;
+            font-size: 16px;
+            margin-bottom: 20px;
+        }
+        
+        .pagination {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-top: 20px;
+            gap: 10px;
+        }
+        
+        .page-btn {
+            padding: 8px 12px;
+            border: 1px solid #ddd;
+            background: white;
+            cursor: pointer;
+            border-radius: 4px;
+        }
+        
+        .page-btn.active {
+            background: #667eea;
+            color: white;
+            border-color: #667eea;
+        }
+        
+        .page-btn:hover:not(.active) {
+            background: #f0f2f5;
+        }
+    </style>
+</head>
+<body>
+    <div id="app">
+        <div class="admin-container">
+            <div class="header">
+                <h1>捷明达电商产品管理后台</h1>
+                <p>产品、品牌、分类数据管理系统</p>
+                <div v-if="isAuthenticated" style="margin-top:10px; opacity:0.9; font-size:0.95em;">
+                    已登录：{{ user?.username || user?.email || user?.phone_number || user?.uid }}
+                    <button class="btn btn-danger" style="margin-left:10px;" @click="logout">退出登录</button>
+                </div>
+            </div>
+            
+            <div v-if="!isAuthenticated" class="content-panel" style="margin-bottom:20px;">
+                <h2>🔐 登录后台</h2>
+                <p style="margin:10px 0 20px; color:#555;">请输入用户名或邮箱，以及密码进行登录。</p>
+                <div style="display:flex; gap:10px; margin-bottom:10px;">
+                    <input v-model="loginUsername" class="search-box" placeholder="用户名或邮箱" style="flex:1;" />
+                    <input v-model="loginPassword" type="password" class="search-box" placeholder="密码" style="flex:1;" />
+                </div>
+                <div v-if="loginError" style="color:#dc3545; margin-bottom:10px;">{{ loginError }}</div>
+                <button class="btn btn-primary" @click="login">登录</button>
+                <button class="btn btn-success" style="margin-left:10px;" @click="goToLoginPage">去登录页</button>
+                <div style="margin-top:8px; font-size:12px; color:#666;">若账号未开通或需要更换登录方式，请点击“去登录页”进入 CloudBase 官方登录页面</div>
+            </div>
+            
+            <div class="nav-tabs" v-if="isAuthenticated">
+                <div class="nav-tab" :class="{ active: activeTab === 'dashboard' }" @click="activeTab = 'dashboard'">
+                    📊 数据概览
+                </div>
+                <div class="nav-tab" :class="{ active: activeTab === 'products' }" @click="activeTab = 'products'">
+                    🛍️ 产品管理
+                </div>
+                <div class="nav-tab" :class="{ active: activeTab === 'brands' }" @click="activeTab = 'brands'">
+                    🏷️ 品牌管理
+                </div>
+                <div class="nav-tab" :class="{ active: activeTab === 'categories' }" @click="activeTab = 'categories'">
+                    📂 分类管理
+                </div>
+            </div>
+            
+            <div class="content-panel">
+                <!-- 数据概览 -->
+                <div v-if="activeTab === 'dashboard'">
+                    <h2>📊 数据统计</h2>
+                    <div v-if="loading" class="loading">
+                        <div class="spinner"></div>
+                        <p>正在加载数据...</p>
+                    </div>
+                    <div v-else>
+                        <div class="stats-grid">
+                            <div class="stat-card">
+                                <div class="stat-number">{{ stats.totalProducts }}</div>
+                                <div class="stat-label">总产品数</div>
+                            </div>
+                            <div class="stat-card">
+                                <div class="stat-number">{{ stats.totalBrands }}</div>
+                                <div class="stat-label">品牌数量</div>
+                            </div>
+                            <div class="stat-card">
+                                <div class="stat-number">{{ stats.totalCategories }}</div>
+                                <div class="stat-label">分类数量</div>
+                            </div>
+                            <div class="stat-card">
+                                <div class="stat-number">{{ stats.onShelfProducts }}</div>
+                                <div class="stat-label">上架产品</div>
+                            </div>
+                        </div>
+                        
+                        <h3>🏆 热门品牌</h3>
+                        <table class="data-table">
+                            <thead>
+                                <tr>
+                                    <th>品牌名称</th>
+                                    <th>简称</th>
+                                    <th>产品数量</th>
+                                    <th>状态</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr v-for="brand in topBrands" :key="brand.id">
+                                    <td>{{ brand.name }}</td>
+                                    <td>{{ brand.shortName || '-' }}</td>
+                                    <td>{{ brand.productCount }}</td>
+                                    <td>
+                                        <span style="color: green;">✅ 活跃</span>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                
+                <!-- 产品管理 -->
+                <div v-if="activeTab === 'products'">
+                    <h2>🛍️ 产品管理</h2>
+                    <div class="toolbar">
+                        <input v-model="productSearch" class="search-box" placeholder="搜索产品名称、编码或规格...">
+                        <button class="btn btn-primary" @click="loadProducts">🔄 刷新数据</button>
+                        <button class="btn btn-success">➕ 添加产品</button>
+                    </div>
+                    
+                    <div v-if="loading" class="loading">
+                        <div class="spinner"></div>
+                        <p>正在加载产品数据...</p>
+                    </div>
+                    
+                    <div v-else>
+                        <table class="data-table">
+                            <thead>
+                                <tr>
+                                    <th>产品名称</th>
+                                    <th>品牌</th>
+                                    <th>分类</th>
+                                    <th>规格</th>
+                                    <th>单位</th>
+                                    <th>状态</th>
+                                    <th>操作</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr v-for="product in filteredProducts" :key="product.id">
+                                    <td>{{ product.name }}</td>
+                                    <td>{{ product.brandName || '-' }}</td>
+                                    <td>{{ product.categoryName || '-' }}</td>
+                                    <td>{{ product.spec || '-' }}</td>
+                                    <td>{{ product.unit || '-' }}</td>
+                                    <td>
+                                        <span v-if="product.isOnShelf" style="color: green;">✅ 上架</span>
+                                        <span v-else style="color: orange;">⏸️ 下架</span>
+                                    </td>
+                                    <td>
+                                        <button class="btn btn-primary">✏️ 编辑</button>
+                                        <button class="btn btn-danger">🗑️ 删除</button>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                
+                <!-- 品牌管理 -->
+                <div v-if="activeTab === 'brands'">
+                    <h2>🏷️ 品牌管理</h2>
+                    <div class="toolbar">
+                        <button class="btn btn-primary" @click="loadBrands">🔄 刷新数据</button>
+                        <button class="btn btn-success">➕ 添加品牌</button>
+                    </div>
+                    
+                    <div v-if="loading" class="loading">
+                        <div class="spinner"></div>
+                        <p>正在加载品牌数据...</p>
+                    </div>
+                    
+                    <div v-else>
+                        <table class="data-table">
+                            <thead>
+                                <tr>
+                                    <th>品牌名称</th>
+                                    <th>简称</th>
+                                    <th>代码</th>
+                                    <th>产品数量</th>
+                                    <th>状态</th>
+                                    <th>操作</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr v-for="brand in brands" :key="brand.id">
+                                    <td>{{ brand.name }}</td>
+                                    <td>{{ brand.shortName || '-' }}</td>
+                                    <td>{{ brand.code }}</td>
+                                    <td>{{ brand.productCount || 0 }}</td>
+                                    <td>
+                                        <span style="color: green;">✅ 活跃</span>
+                                    </td>
+                                    <td>
+                                        <button class="btn btn-primary">✏️ 编辑</button>
+                                        <button class="btn btn-danger">🗑️ 删除</button>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                
+                <!-- 分类管理 -->
+                <div v-if="activeTab === 'categories'">
+                    <h2>📂 分类管理</h2>
+                    <div class="toolbar">
+                        <button class="btn btn-primary" @click="loadCategories">🔄 刷新数据</button>
+                        <button class="btn btn-success">➕ 添加分类</button>
+                    </div>
+                    
+                    <div v-if="loading" class="loading">
+                        <div class="spinner"></div>
+                        <p>正在加载分类数据...</p>
+                    </div>
+                    
+                    <div v-else>
+                        <table class="data-table">
+                            <thead>
+                                <tr>
+                                    <th>分类名称</th>
+                                    <th>简称</th>
+                                    <th>代码</th>
+                                    <th>产品数量</th>
+                                    <th>状态</th>
+                                    <th>操作</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr v-for="category in categories" :key="category.id">
+                                    <td>{{ category.name }}</td>
+                                    <td>{{ category.shortName || '-' }}</td>
+                                    <td>{{ category.code }}</td>
+                                    <td>{{ category.productCount || 0 }}</td>
+                                    <td>
+                                        <span style="color: green;">✅ 活跃</span>
+                                    </td>
+                                    <td>
+                                        <button class="btn btn-primary">✏️ 编辑</button>
+                                        <button class="btn btn-danger">🗑️ 删除</button>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const { createApp } = Vue;
+        
+        createApp({
+            data() {
+                return {
+                    activeTab: 'dashboard',
+                    loading: false,
+                    productSearch: '',
+                    app: null,
+                    auth: null,
+                    isAuthenticated: false,
+                    user: null,
+                    loginUsername: '',
+                    loginPassword: '',
+                    loginError: '',
+                    config: {
+                        envId: 'cloud1-0gc8cbzg3efd6a99',
+                        clientId: undefined, // 可选：如 CloudBase 控制台提供 ClientId，可配置此处
+                        redirectUrl: 'https://cloud1-0gc8cbzg3efd6a99-1251221636.tcloudbaseapp.com/',
+                        mysql: {
+                            databaseUrl: 'mysql://skaiy_diao:Skaiy.290823@sh-cynosdbmysql-grp-94slsv2s.sql.tencentcdb.com:21976/cloud1-0gc8cbzg3efd6a99',
+                            queryFunction: 'mysqlQuery'
+                        }
+                    },
+                    stats: {
+                        totalProducts: 0,
+                        totalBrands: 0,
+                        totalCategories: 0,
+                        onShelfProducts: 0
+                    },
+                    products: [],
+                    brands: [],
+                    categories: [],
+                    topBrands: []
+                };
+            },
+            computed: {
+                filteredProducts() {
+                    if (!this.productSearch) return this.products.slice(0, 50); // 限制显示数量
+                    
+                    const search = this.productSearch.toLowerCase();
+                    return this.products.filter(product => 
+                        product.name.toLowerCase().includes(search) ||
+                        (product.productCode && product.productCode.toLowerCase().includes(search)) ||
+                        (product.spec && product.spec.toLowerCase().includes(search))
+                    ).slice(0, 50);
+                }
+            },
+            async mounted() {
+                // 兼容外部配置
+                if (window.CLOUDBASE_CONFIG) {
+                    this.config.envId = window.CLOUDBASE_CONFIG.envId || this.config.envId;
+                    if (window.CLOUDBASE_CONFIG?.auth?.clientId) {
+                        this.config.clientId = window.CLOUDBASE_CONFIG.auth.clientId;
+                    }
+                }
+
+                // 初始化 SDK 与认证
+                const initOptions = { env: this.config.envId };
+                if (this.config.clientId) initOptions.clientId = this.config.clientId;
+                this.app = cloudbase.init(initOptions);
+                window.app = this.app; // 挂载到 window 以便外部调用官方登录页
+                this.auth = this.app.auth({ persistence: 'local' });
+
+                // 监听登录状态变化
+                this.auth.onLoginStateChanged((state) => {
+                    this.isAuthenticated = !!state && !!state.user;
+                    this.user = state?.user || null;
+                    if (this.isAuthenticated && this.activeTab === 'dashboard') {
+                        this.loadDashboardData();
+                    }
+                });
+
+                // 初始状态检查
+                const state = await this.auth.getLoginState();
+                this.isAuthenticated = !!state && !!state.user;
+                this.user = state?.user || null;
+                if (this.isAuthenticated) {
+                    await this.loadDashboardData();
+                }
+            },
+            methods: {
+                async ensureAuthenticated() {
+                    const state = await this.auth.getLoginState();
+                    if (!state || !state.user) {
+                        throw new Error('请先登录再执行操作');
+                    }
+                    return state.user;
+                },
+
+                async login() {
+                    try {
+                        this.loginError = '';
+                        await this.auth.signIn({ username: this.loginUsername, password: this.loginPassword });
+                        // 登录成功后，状态监听器会触发并加载数据
+                    } catch (error) {
+                        console.error('登录失败:', error);
+                        this.loginError = (error && error.message) ? error.message : '登录失败，请检查账号或密码';
+                    }
+                },
+
+                goToLoginPage() {
+                    try {
+                        const redirect = this.config.redirectUrl || window.location.href;
+                        this.auth.toDefaultLoginPage({ redirectUrl: redirect });
+                    } catch (e) {
+                        console.error('跳转登录页失败', e);
+                        this.loginError = '跳转登录页失败，请稍后重试';
+                    }
+                },
+
+                async logout() {
+                    try {
+                        await this.auth.signOut();
+                        this.isAuthenticated = false;
+                        this.user = null;
+                        this.products = [];
+                        this.brands = [];
+                        this.categories = [];
+                    } catch (error) {
+                        console.error('退出登录失败:', error);
+                    }
+                },
+                
+                async callFunction(functionName, data = {}) {
+                    try {
+                        await this.ensureAuthenticated();
+                        const shouldPassDbUrl = ['localhost', '127.0.0.1'].includes(window.location.hostname);
+                        const result = await this.app.callFunction({
+                            name: functionName,
+                            data: {
+                                ...data,
+                                ...(shouldPassDbUrl && this.config.mysql?.databaseUrl ? { databaseUrl: this.config.mysql.databaseUrl } : {})
+                            }
+                        });
+                        return result.result;
+                    } catch (error) {
+                        console.error(`调用云函数 ${functionName} 失败:`, error);
+                        return null;
+                    }
+                },
+                
+                async loadDashboardData() {
+                    this.loading = true;
+                    try {
+                        // 验证数据库并获取统计信息
+                        const validateResult = await this.callFunction('validateDatabase', { action: 'validate' });
+                        if (validateResult && validateResult.ok) {
+                            const data = validateResult.data;
+                            this.stats = {
+                                totalProducts: data.summary?.totalProducts || 0,
+                                totalBrands: data.summary?.totalBrands || 0,
+                                totalCategories: data.summary?.totalCategories || 0,
+                                onShelfProducts: data.summary?.onShelfProducts || 0
+                            };
+                        }
+                        
+                        // 加载品牌数据
+                        const brandsResult = await this.callFunction('mysqlQuery', { action: 'brands' });
+                        if (brandsResult && brandsResult.ok) {
+                            this.topBrands = brandsResult.data.brandDictionary?.brands?.slice(0, 10) || [];
+                        }
+                    } catch (error) {
+                        console.error('加载仪表板数据失败:', error);
+                    } finally {
+                        this.loading = false;
+                    }
+                },
+                
+                async loadProducts() {
+                    this.loading = true;
+                    try {
+                        const result = await this.callFunction('mysqlQuery', { action: 'products' });
+                        if (result && result.ok) {
+                            // 解析产品数据
+                            this.products = [];
+                            if (result.data.categories) {
+                                result.data.categories.forEach(category => {
+                                    if (category.items) {
+                                        category.items.forEach(product => {
+                                            this.products.push({
+                                                ...product,
+                                                categoryName: category.name
+                                            });
+                                        });
+                                    }
+                                });
+                            }
+                        }
+                    } catch (error) {
+                        console.error('加载产品数据失败:', error);
+                    } finally {
+                        this.loading = false;
+                    }
+                },
+                
+                async loadBrands() {
+                    this.loading = true;
+                    try {
+                        const result = await this.callFunction('mysqlQuery', { action: 'brands' });
+                        if (result && result.ok) {
+                            this.brands = result.data.brandDictionary?.brands || [];
+                        }
+                    } catch (error) {
+                        console.error('加载品牌数据失败:', error);
+                    } finally {
+                        this.loading = false;
+                    }
+                },
+                
+                async loadCategories() {
+                    this.loading = true;
+                    try {
+                        const result = await this.callFunction('mysqlQuery', { action: 'categories' });
+                        if (result && result.ok) {
+                            this.categories = result.data.categoryDictionary?.categories || [];
+                        }
+                    } catch (error) {
+                        console.error('加载分类数据失败:', error);
+                    } finally {
+                        this.loading = false;
+                    }
+                }
+            },
+            watch: {
+                activeTab(newTab) {
+                    if (!this.isAuthenticated) return;
+                    if (newTab === 'products' && this.products.length === 0) {
+                        this.loadProducts();
+                    } else if (newTab === 'brands' && this.brands.length === 0) {
+                        this.loadBrands();
+                    } else if (newTab === 'categories' && this.categories.length === 0) {
+                        this.loadCategories();
+                    }
+                }
+            }
+        }).mount('#app');
+    </script>
+</body>
+</html>

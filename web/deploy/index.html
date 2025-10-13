@@ -114,6 +114,7 @@
     const config = window.CLOUDBASE_CONFIG || {};
     const CLOUDBASE_ENV = window.CLOUDBASE_ENV || localStorage.getItem('CLOUDBASE_ENV') || config.envId || '';
     const USE_CLOUDBASE = !!CLOUDBASE_ENV;
+    const USE_MYSQL = config.dataSource === 'mysql';
     const CONFIG_URL = './data/category_config.json';
     let CATEGORY_BANNER_SLUGS = {};
     let CATEGORY_SHORT_NAMES = {};
@@ -395,12 +396,34 @@
 
     async function initApp() {
       try {
-        const [productsData, configData, brandData, categoryData] = await Promise.all([
-          USE_CLOUDBASE ? loadProductsFromCloudBase() : fetch(FETCH_URL).then(r => r.json()),
-          USE_CLOUDBASE ? loadCategoryMetaFromCloudBase() : fetch(CONFIG_URL).then(r => r.json()).catch(() => ({banner_slugs: {}, short_names: {}})),
-          USE_CLOUDBASE ? loadBrandDictionaryFromCloudBase() : fetch(BRAND_DICTIONARY_URL).then(r => r.json()).catch(() => ({brandDictionary: {brands: []}})),
-          USE_CLOUDBASE ? loadCategoryDictionaryFromCloudBase() : fetch(CATEGORY_DICTIONARY_URL).then(r => r.json()).catch(() => ({categoryDictionary: {categories: []}}))
-        ]);
+        let productsData, configData, brandData, categoryData;
+
+        if (USE_MYSQL) {
+          // 使用MySQL数据源
+          [productsData, configData, brandData, categoryData] = await Promise.all([
+            loadProductsFromMySQL(),
+            loadCategoryMetaFromMySQL(),
+            loadBrandDictionaryFromMySQL(),
+            loadCategoryDictionaryFromMySQL()
+          ]);
+        } else if (USE_CLOUDBASE) {
+          // 使用CloudBase数据源
+          [productsData, configData, brandData, categoryData] = await Promise.all([
+            loadProductsFromCloudBase(),
+            loadCategoryMetaFromCloudBase(),
+            loadBrandDictionaryFromCloudBase(),
+            loadCategoryDictionaryFromCloudBase()
+          ]);
+        } else {
+          // 使用本地JSON文件
+          [productsData, configData, brandData, categoryData] = await Promise.all([
+            fetch(FETCH_URL).then(r => r.json()),
+            fetch(CONFIG_URL).then(r => r.json()).catch(() => ({banner_slugs: {}, short_names: {}})),
+            fetch(BRAND_DICTIONARY_URL).then(r => r.json()).catch(() => ({brandDictionary: {brands: []}})),
+            fetch(CATEGORY_DICTIONARY_URL).then(r => r.json()).catch(() => ({categoryDictionary: {categories: []}}))
+          ]);
+        }
+
         DATA = productsData;
         CATEGORY_BANNER_SLUGS = (configData.CATEGORY_BANNER_SLUGS || configData.banner_slugs || {});
         CATEGORY_SHORT_NAMES = (configData.CATEGORY_SHORT_NAMES || configData.short_names || {});
@@ -549,6 +572,86 @@
         }
       } catch (err) {
         console.warn('CloudBase 分类字典加载失败，回退到本地:', err);
+        return fetch(CATEGORY_DICTIONARY_URL).then(r => r.json()).catch(() => ({categoryDictionary: {categories: []}}));
+      }
+    }
+
+    // MySQL数据加载函数
+    async function callCloudFunction(functionName, data = {}) {
+      try {
+        const app = cloudbase.init({ env: CLOUDBASE_ENV });
+        await app.auth({ persistence: (config.auth && config.auth.persistence) || 'local' }).signInAnonymously();
+        const result = await app.callFunction({
+          name: functionName,
+          data: {
+            ...data,
+            databaseUrl: config.mysql?.databaseUrl
+          }
+        });
+
+        if (result.result && result.result.ok) {
+          return result.result.data;
+        } else {
+          throw new Error(result.result?.error || '云函数调用失败');
+        }
+      } catch (error) {
+        console.error(`调用云函数 ${functionName} 失败:`, error);
+        throw error;
+      }
+    }
+
+    async function loadProductsFromMySQL() {
+      try {
+        const data = await callCloudFunction(config.mysql?.queryFunction || 'mysqlQuery', { action: 'products' });
+
+        // 健康检查
+        if (!data || !Array.isArray(data.categories)) {
+          throw new Error('MySQL产品数据格式异常');
+        }
+
+        if (!isCategoryDataHealthy(data.categories)) {
+          console.warn('检测到MySQL分类数据异常，回退到本地 JSON 数据源');
+          return await fetch(FETCH_URL).then(r => r.json());
+        }
+
+        return data;
+      } catch (error) {
+        console.warn('MySQL产品数据加载失败，回退到本地数据:', error);
+        return fetch(FETCH_URL).then(r => r.json());
+      }
+    }
+
+    async function loadCategoryMetaFromMySQL() {
+      try {
+        const data = await callCloudFunction(config.mysql?.queryFunction || 'mysqlQuery', { action: 'config' });
+        return {
+          CATEGORY_BANNER_SLUGS: data.banner_slugs || {},
+          CATEGORY_SHORT_NAMES: data.short_names || {},
+          banner_slugs: data.banner_slugs || {},
+          short_names: data.short_names || {}
+        };
+      } catch (error) {
+        console.warn('MySQL分类配置加载失败，回退到本地配置:', error);
+        return fetch(CONFIG_URL).then(r => r.json()).catch(() => ({banner_slugs: {}, short_names: {}}));
+      }
+    }
+
+    async function loadBrandDictionaryFromMySQL() {
+      try {
+        const data = await callCloudFunction(config.mysql?.queryFunction || 'mysqlQuery', { action: 'brands' });
+        return data;
+      } catch (error) {
+        console.warn('MySQL品牌字典加载失败，回退到本地:', error);
+        return fetch(BRAND_DICTIONARY_URL).then(r => r.json()).catch(() => ({brandDictionary: {brands: []}}));
+      }
+    }
+
+    async function loadCategoryDictionaryFromMySQL() {
+      try {
+        const data = await callCloudFunction(config.mysql?.queryFunction || 'mysqlQuery', { action: 'categories' });
+        return data;
+      } catch (error) {
+        console.warn('MySQL分类字典加载失败，回退到本地:', error);
         return fetch(CATEGORY_DICTIONARY_URL).then(r => r.json()).catch(() => ({categoryDictionary: {categories: []}}));
       }
     }
