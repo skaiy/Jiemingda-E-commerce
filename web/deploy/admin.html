@@ -6,6 +6,7 @@
     <title>捷明达电商产品管理后台</title>
     <script src="https://static.cloudbase.net/cloudbase-js-sdk/2.21.6/cloudbase.full.js?v=1"></script>
     <script src="https://unpkg.com/vue@3/dist/vue.global.prod.js"></script>
+    <!-- 更新奶油色系样式 -->
     <style>
         * {
             margin: 0;
@@ -15,8 +16,8 @@
         
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background-color: #f5f7fa;
-            color: #333;
+            background-color: #faf5ef; /* 奶油底色 */
+            color: #4a3f35; /* 深棕文字 */
         }
         
         .admin-container {
@@ -26,8 +27,8 @@
         }
         
         .header {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: white;
+            background: linear-gradient(135deg, #fff5e6 0%, #f8ecd1 100%); /* 奶油渐变 */
+            color: #5a4e3c;
             padding: 30px;
             border-radius: 10px;
             margin-bottom: 30px;
@@ -46,11 +47,11 @@
         
         .nav-tabs {
             display: flex;
-            background: white;
+            background: #fffaf0; /* 奶油白 */
             border-radius: 10px;
             padding: 5px;
             margin-bottom: 30px;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            box-shadow: 0 2px 10px rgba(90, 78, 60, 0.08);
         }
         
         .nav-tab {
@@ -64,19 +65,19 @@
         }
         
         .nav-tab.active {
-            background: #667eea;
-            color: white;
+            background: #f1e6d0; /* 奶油高亮 */
+            color: #6b5f43;
         }
         
         .nav-tab:hover:not(.active) {
-            background: #f0f2f5;
+            background: #f7efe0; /* 奶油悬停 */
         }
         
         .content-panel {
-            background: white;
+            background: #fffaf4;
             border-radius: 10px;
             padding: 30px;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            box-shadow: 0 2px 10px rgba(90,78,60,0.08);
             min-height: 600px;
         }
         
@@ -88,8 +89,8 @@
         }
         
         .stat-card {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: white;
+            background: linear-gradient(135deg, #fbead7 0%, #f4e4c8 100%);
+            color: #5a4e3c;
             padding: 25px;
             border-radius: 10px;
             text-align: center;
@@ -173,7 +174,7 @@
         
         .spinner {
             border: 4px solid #f3f3f3;
-            border-top: 4px solid #667eea;
+            border-top: 4px solid #c9a96a;
             border-radius: 50%;
             width: 40px;
             height: 40px;
@@ -242,7 +243,7 @@
             animation: slideUp 0.24s ease-out;
         }
         .modal-header {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            background: linear-gradient(135deg, #fff5e6 0%, #f8ecd1 100%); color: #5a4e3c; }
             color: #fff;
             padding: 16px 18px;
         }
@@ -374,7 +375,7 @@
                     <div class="toolbar">
                         <input v-model="productSearch" class="search-box" placeholder="搜索产品名称、编码或规格...">
                         <button class="btn btn-primary" @click="loadProducts">🔄 刷新数据</button>
-                        <button class="btn btn-success">➕ 添加产品</button>
+                        <button class="btn btn-success" @click="openAddProductModal">➕ 添加产品</button>
                     </div>
                     
                     <div v-if="loading" class="loading">
@@ -407,8 +408,8 @@
                                         <span v-else style="color: orange;">⏸️ 下架</span>
                                     </td>
                                     <td>
-                                        <button class="btn btn-primary">✏️ 编辑</button>
-                                        <button class="btn btn-danger">🗑️ 删除</button>
+                                        <button class="btn btn-primary" @click="openEditProductModal(product)">✏️ 编辑</button>
+                                        <button class="btn btn-danger" @click="deleteProduct(product)">🗑️ 删除</button>
                                     </td>
                                 </tr>
                             </tbody>
@@ -743,5 +744,74 @@
             }
         }).mount('#app');
     </script>
+</body>
+</html>
+
+<!-- 在脚本前插入：产品新增/编辑模态框 -->
+<div class="modal-overlay" v-if="showProductModal">
+  <div class="modal" style="max-width: 720px;">
+    <div class="modal-header">
+      <h3>{{ isEditMode ? '编辑产品' : '新增产品' }}</h3>
+    </div>
+    <div class="modal-body">
+      <div style="display:grid; grid-template-columns: repeat(2, 1fr); gap: 16px;">
+        <div>
+          <label style="display:block; margin-bottom:6px; color:#666;">产品名称</label>
+          <input v-model="productForm.name" type="text" placeholder="请输入产品名称" class="search-box" />
+        </div>
+        <div>
+          <label style="display:block; margin-bottom:6px; color:#666;">产品编码</label>
+          <input v-model="productForm.productCode" type="text" placeholder="可选，未填自动生成" class="search-box" />
+        </div>
+        <div>
+          <label style="display:block; margin-bottom:6px; color:#666;">品牌</label>
+          <select v-model="productForm.brandId" class="search-box">
+            <option :value="null">未选择</option>
+            <option v-for="b in brandOptions" :key="b.id" :value="b.id">{{ b.name }}</option>
+          </select>
+        </div>
+        <div>
+          <label style="display:block; margin-bottom:6px; color:#666;">分类</label>
+          <select v-model="productForm.categoryId" class="search-box">
+            <option :value="null">未选择</option>
+            <option v-for="c in categoryOptions" :key="c.id" :value="c.id">{{ c.name }}</option>
+          </select>
+        </div>
+        <div>
+          <label style="display:block; margin-bottom:6px; color:#666;">货号</label>
+          <input v-model="productForm.itemNo" type="text" placeholder="可选" class="search-box" />
+        </div>
+        <div>
+          <label style="display:block; margin-bottom:6px; color:#666;">规格</label>
+          <input v-model="productForm.spec" type="text" placeholder="如 10mm/20mm" class="search-box" />
+        </div>
+        <div>
+          <label style="display:block; margin-bottom:6px; color:#666;">单位</label>
+          <input v-model="productForm.unit" type="text" placeholder="如 件/套/米" class="search-box" />
+        </div>
+        <div>
+          <label style="display:block; margin-bottom:6px; color:#666;">价格</label>
+          <input v-model.number="productForm.price" type="number" step="0.01" placeholder="可选" class="search-box" />
+        </div>
+        <div>
+          <label style="display:block; margin-bottom:6px; color:#666;">图片地址</label>
+          <input v-model="productForm.imageUrl" type="text" placeholder="可选" class="search-box" />
+        </div>
+        <div>
+          <label style="display:block; margin-bottom:6px; color:#666;">备注</label>
+          <input v-model="productForm.remark" type="text" placeholder="可选" class="search-box" />
+        </div>
+        <div style="display:flex; align-items:center; gap:8px; margin-top:8px;">
+          <input type="checkbox" id="onShelf" v-model="productForm.isOnShelf" />
+          <label for="onShelf" style="color:#666;">上架</label>
+        </div>
+      </div>
+    </div>
+    <div class="modal-actions">
+      <button class="btn" @click="closeProductModal" style="background:#eee; color:#5a4e3c;">取消</button>
+      <button class="btn btn-primary" @click="saveProduct">{{ isEditMode ? '保存修改' : '创建产品' }}</button>
+    </div>
+  </div>
+</div>
 </body>
 </html>
