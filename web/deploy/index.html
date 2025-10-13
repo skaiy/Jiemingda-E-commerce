@@ -42,7 +42,7 @@
     .category-item .label{flex:1 1 auto;min-width:0;white-space:normal;word-break:break-word}
     .category-item .badge{margin-left:auto;background:#eee;padding:4px 8px;border-radius:12px;font-size:12px;color:var(--muted)}
     .content{flex:1;overflow:auto;padding:8px}
-    .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:8px;padding:8px}
+    .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:8px;padding:8px;margin-top:8px}
     .card{background:var(--card);border-radius:12px;padding:8px;box-shadow:0 4px 12px rgba(0,0,0,0.08);display:flex;flex-direction:column;transition: transform .2s cubic-bezier(.2,.8,.2,1), box-shadow .25s ease}
     .card:hover, .card:active{ box-shadow: 0 8px 24px rgba(0,0,0,0.12); transform: translateY(-1px) scale(1.01); }
     .card .img{height:110px;border-radius:8px;background:linear-gradient(180deg,#eee,#ddd);display:flex;align-items:center;justify-content:center;font-size:12px;color:#999}
@@ -56,10 +56,10 @@
     @media(max-width:420px){.main-content{flex-direction:row}.sidebar{order:1;width:36%;min-width:100px;max-width:160px;border-right:1px solid #eee;border-top:none}.content{order:2}.grid{grid-template-columns:1fr}.category-item{padding:10px 10px}.category-item .label{font-size:13px;line-height:1.25;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}.category-item .badge{font-size:11px;padding:2px 6px}}
     .empty{padding:30px;text-align:center;color:var(--muted)}
       /* 分类 Banner 样式 - 变窄并置顶 */
-      .category-banner { position: sticky; top: 0; z-index: 10; width: 100%; height: 50px; border-radius: 0; overflow: hidden; background: linear-gradient(135deg, #6ea2ff 0%, #46d9a6 100%); margin: 0; }
+      .category-banner { position: sticky; top: 0; z-index: 10; width: 100%; height: 50px; border-radius: 12px; overflow: hidden; background: linear-gradient(135deg, #6ea2ff 0%, #46d9a6 100%); margin: 8px 8px 0 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.15), 0 2px 6px rgba(0,0,0,0.1); }
       .category-banner .title-overlay { position: absolute; left: 16px; top: 50%; transform: translateY(-50%); color: #fff; font-size: 16px; font-weight: 700; text-shadow: 0 2px 6px rgba(0,0,0,0.35); }
-      @media(min-width: 768px){ .category-banner { height: 60px; } .category-banner .title-overlay { font-size: 18px; } }
-      @media(max-width: 420px){ .category-banner { height: 45px; } .category-banner .title-overlay { font-size: 14px; } }
+      @media(min-width: 768px){ .category-banner { height: 60px; margin: 12px 12px 0 12px; border-radius: 16px; } .category-banner .title-overlay { font-size: 18px; } }
+      @media(max-width: 420px){ .category-banner { height: 45px; margin: 6px 6px 0 6px; border-radius: 10px; } .category-banner .title-overlay { font-size: 14px; } }
       #categoryTitle { display: none; }
       .sidebar, .content { scroll-behavior: smooth; }
       .sidebar-actions { position: sticky; bottom: 8px; padding: 8px; background: linear-gradient(#fff,#fafafa); border-top: 1px solid #eee; }
