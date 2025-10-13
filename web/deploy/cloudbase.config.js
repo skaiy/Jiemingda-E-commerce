@@ -51,7 +51,7 @@ const CLOUDBASE_CONFIG = {
     persistence: 'local',
 
     // 是否使用匿名登录
-    anonymousAuth: false,
+    anonymousAuth: true,
 
     // 可选：ClientId（控制台获取后再填，前端只用于默认登录页跳转场景）
     // clientId: ''

@@ -220,7 +220,15 @@
                 showLoading(true);
 
                 const app = cloudbase.init({ env: config.envId });
-                await app.auth({ persistence: 'local' }).signInAnonymously();
+
+                // 尝试匿名登录，如果失败则跳过认证
+                try {
+                    if (config.auth && config.auth.anonymousAuth !== false) {
+                        await app.auth({ persistence: 'local' }).signInAnonymously();
+                    }
+                } catch (authError) {
+                    console.warn('匿名登录失败，尝试直接调用云函数:', authError);
+                }
 
                 const result = await app.callFunction({
                     name: functionName,

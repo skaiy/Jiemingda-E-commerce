@@ -201,13 +201,29 @@
     }
 
     function loadBannerBackground(bannerEl, name){
+      // 设置默认渐变背景
       bannerEl.style.background = 'linear-gradient(135deg, #6ea2ff 0%, #46d9a6 100%)';
+
       const slug = CATEGORY_BANNER_SLUGS[name] || 'others';
+
+      // 尝试加载PNG图片，如果失败则尝试SVG，最后回退到默认渐变
+      const tryLoadImage = (url, fallbackUrl = null) => {
+        const img = new Image();
+        img.onload = () => {
+          bannerEl.style.background = `linear-gradient(180deg, rgba(0,0,0,0.25), rgba(0,0,0,0.15)), url('${url}') center/cover no-repeat`;
+        };
+        img.onerror = () => {
+          if (fallbackUrl) {
+            tryLoadImage(fallbackUrl);
+          }
+          // 如果都失败了，保持默认渐变背景，不输出错误
+        };
+        img.src = url;
+      };
+
       const pngUrl = `./data/banners/${slug}.png`;
-      const img = new Image();
-      img.onload = ()=>{ bannerEl.style.background = `linear-gradient(180deg, rgba(0,0,0,0.25), rgba(0,0,0,0.15)), url('${pngUrl}') center/cover no-repeat`; };
-      img.onerror = ()=>{};
-      img.src = pngUrl;
+      const svgUrl = `./data/banners/${slug}.svg`;
+      tryLoadImage(pngUrl, svgUrl);
     }
 
     function extractBrands() {
@@ -580,7 +596,17 @@
     async function callCloudFunction(functionName, data = {}) {
       try {
         const app = cloudbase.init({ env: CLOUDBASE_ENV });
-        await app.auth({ persistence: (config.auth && config.auth.persistence) || 'local' }).signInAnonymously();
+
+        // 尝试匿名登录，如果失败则跳过认证直接调用
+        try {
+          if (config.auth && config.auth.anonymousAuth !== false) {
+            await app.auth({ persistence: (config.auth && config.auth.persistence) || 'local' }).signInAnonymously();
+          }
+        } catch (authError) {
+          console.warn('匿名登录失败，尝试直接调用云函数:', authError);
+          // 继续执行，不中断流程
+        }
+
         const result = await app.callFunction({
           name: functionName,
           data: {

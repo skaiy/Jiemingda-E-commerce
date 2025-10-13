@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>捷明达电商产品管理后台</title>
     <script src="https://static.cloudbase.net/cloudbase-js-sdk/2.21.6/cloudbase.full.js?v=1"></script>
-    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+    <script src="https://unpkg.com/vue@3/dist/vue.global.prod.js"></script>
     <style>
         * {
             margin: 0;
@@ -297,7 +297,6 @@
                     </div>
                     <div class="modal-actions">
                         <button class="btn btn-primary" @click="login">登录</button>
-                        <button class="btn" @click="goToLoginPage">使用默认登录页</button>
                     </div>
                 </div>
             </div>
@@ -614,16 +613,6 @@
                     } catch (error) {
                         console.error('登录失败:', error);
                         this.loginError = (error && error.message) ? error.message : '登录失败，请检查账号或密码';
-                    }
-                },
-
-                goToLoginPage() {
-                    try {
-                        const redirect = this.config.redirectUrl || window.location.href;
-                        this.auth.toDefaultLoginPage({ redirectUrl: redirect });
-                    } catch (e) {
-                        console.error('跳转登录页失败', e);
-                        this.loginError = '跳转登录页失败，请稍后重试';
                     }
                 },
 
