@@ -43,35 +43,53 @@ function normalizeCategories(dict) {
 function normalizeProducts(productsRaw) {
   if (!productsRaw) return [];
   let items = [];
+  // 支持数组形式：[{ slug, products|items: [...] }, ...] 或直接产品数组
   if (Array.isArray(productsRaw)) {
-    if (productsRaw.length && productsRaw[0] && productsRaw[0].products) {
+    if (productsRaw.length && productsRaw[0] && (productsRaw[0].products || productsRaw[0].items)) {
       productsRaw.forEach(cat => {
-        (cat.products || []).forEach(p => items.push({ ...p, _categorySlug: cat.slug || cat.id || null }));
+        const list = cat.products || cat.items || [];
+        list.forEach(p => items.push({ ...p, _categorySlug: cat.slug || cat.id || null }));
       });
     } else {
       items = productsRaw;
     }
   } else if (productsRaw.categories) {
     productsRaw.categories.forEach(cat => {
-      (cat.products || []).forEach(p => items.push({ ...p, _categorySlug: cat.slug || cat.id || null }));
+      const list = cat.products || cat.items || [];
+      list.forEach(p => items.push({ ...p, _categorySlug: cat.slug || cat.id || null }));
     });
-  } else if (productsRaw.products) {
-    items = productsRaw.products;
+  } else if (productsRaw.products || productsRaw.items) {
+    items = productsRaw.products || productsRaw.items;
   }
-  return items.map(p => ({
-    productCode: p.productCode || p.code || null,
-    name: p.name || p.title || '',
-    brandName: p.brand || p.brandName || null,
-    itemNo: p.itemNo || p.sku || null,
-    spec: p.spec || p.specification || null,
-    unit: p.unit || null,
-    price: p.price ?? null,
-    imageUrl: Array.isArray(p.images) ? (p.images[0]?.url || p.images[0]) : (p.imageUrl || p.photo || null),
-    remark: p.description || p.remark || null,
-    isOnShelf: p.isOnShelf !== undefined ? !!p.isOnShelf : true,
-    _images: Array.isArray(p.images) ? p.images : [],
-    _categorySlug: p._categorySlug || null,
-  })).filter(p => p.name);
+
+  // 字段标准化：兼容 image、description、brand 等别名
+  return items.map(p => {
+    const firstImage = Array.isArray(p.images)
+      ? (typeof p.images[0] === 'string' ? p.images[0] : (p.images[0]?.url || null))
+      : (p.image || p.imageUrl || p.photo || null);
+    const images = Array.isArray(p.images)
+      ? p.images
+      : (p.image ? [p.image] : []);
+    let price = p.price;
+    if (typeof price === 'string') {
+      const trimmed = price.trim();
+      price = trimmed ? Number(trimmed) : null;
+    }
+    return {
+      productCode: p.productCode || p.code || null,
+      name: p.name || p.title || '',
+      brandName: p.brand || p.brandName || null,
+      itemNo: p.itemNo || p.sku || null,
+      spec: p.spec || p.specification || null,
+      unit: p.unit || null,
+      price: price ?? null,
+      imageUrl: firstImage,
+      remark: p.description || p.remark || null,
+      isOnShelf: p.isOnShelf !== undefined ? !!p.isOnShelf : true,
+      _images: images,
+      _categorySlug: p._categorySlug || null,
+    };
+  }).filter(p => p.name);
 }
 
 async function ensureSchema(conn) {
