@@ -37,13 +37,13 @@
 - **URL**: https://cloud1-0gc8cbzg3efd6a99-1251221636.tcloudbaseapp.com/
 - **内容**: 所有HTML、CSS、JS文件和静态资源
 
-### 云函数 ⚠️
-需要进一步确认部署状态：
-- `mysqlQuery` - MySQL数据查询
-- `mysqlSeed2` - MySQL数据导入
-- `validateDatabase` - 数据库验证
-- `inspectData` - 数据检查
-- `initDatabase` - 数据库初始化
+### 云函数 ✅/⚠️
+当前架构以 MySQL 为主：
+- `mysqlQuery` - MySQL数据查询（已部署）
+- `mysqlSeed2` - MySQL数据导入/初始化（已部署）
+- `validateDatabase` - 数据库验证（已部署）
+- `inspectData` - 数据检查（已部署）
+- `initDatabase` - 文档库初始化（已弃用，已从部署流程中移除）
 
 ## 下一步操作
 

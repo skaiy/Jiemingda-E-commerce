@@ -22,8 +22,8 @@
         
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background-color: #faf5ef; /* 奶油底色 */
-            color: #4a3f35; /* 深棕文字 */
+            background-color: #1a1a1a; /* 暗黑色背景 */
+            color: #e0e0e0; /* 浅灰色文字 */
         }
         
         .admin-container {
@@ -33,8 +33,8 @@
         }
         
         .header {
-            background: linear-gradient(135deg, #fff5e6 0%, #f8ecd1 100%);
-            color: #5a4e3c;
+            background: linear-gradient(135deg, #2d2d2d 0%, #3a3a3a 100%);
+            color: #ffffff;
             padding: 14px 16px; /* 紧凑头部 */
             border-radius: 10px;
             margin-bottom: 16px; /* 减少占用空间 */
@@ -47,6 +47,7 @@
         .header p {
             font-size: 0.95em;
             opacity: 0.85;
+            color: #e0e0e0;
         }
         
         /* 旧顶部标签导航删除，改用左侧侧栏 */
@@ -59,10 +60,10 @@
             margin-bottom: 20px;
         }
         .sidebar {
-            background: #fffaf0;
+            background: #2a2a2a;
             border-radius: 10px;
             padding: 12px;
-            box-shadow: 0 2px 10px rgba(90,78,60,0.08);
+            box-shadow: 0 2px 10px rgba(0,0,0,0.3);
         }
         .side-nav { display: flex; flex-direction: column; gap: 8px; }
         .side-item {
@@ -72,8 +73,8 @@
             transition: all .2s ease;
             font-weight: 500;
         }
-        .side-item.active { background: #f1e6d0; color: #6b5f43; }
-        .side-item:hover:not(.active) { background: #f7efe0; }
+        .side-item.active { background: #4a4a4a; color: #ffffff; }
+        .side-item:hover:not(.active) { background: #3a3a3a; }
         @media (max-width: 992px) {
             .layout { grid-template-columns: 1fr; }
             .sidebar { order: -1; }
@@ -81,10 +82,10 @@
         }
         
         .content-panel {
-            background: #fffaf4;
+            background: #2d2d2d;
             border-radius: 10px;
             padding: 30px;
-            box-shadow: 0 2px 10px rgba(90,78,60,0.08);
+            box-shadow: 0 2px 10px rgba(0,0,0,0.3);
             min-height: 600px;
         }
         
@@ -96,8 +97,8 @@
         }
         
         .stat-card {
-            background: linear-gradient(135deg, #fbead7 0%, #f4e4c8 100%);
-            color: #5a4e3c;
+            background: linear-gradient(135deg, #3a3a3a 0%, #4a4a4a 100%);
+            color: #ffffff;
             padding: 25px;
             border-radius: 10px;
             text-align: center;
@@ -112,6 +113,7 @@
         .stat-label {
             font-size: 1.1em;
             opacity: 0.9;
+            color: #e0e0e0;
         }
         
         .data-table {
@@ -124,17 +126,17 @@
         .data-table td {
             padding: 12px;
             text-align: left;
-            border-bottom: 1px solid #eee;
+            border-bottom: 1px solid #404040;
         }
         
         .data-table th {
-            background: #f8f9fa;
+            background: #3a3a3a;
             font-weight: 600;
-            color: #555;
+            color: #ffffff;
         }
         
         .data-table tr:hover {
-            background: #f8f9fa;
+            background: #3a3a3a;
         }
         
         .btn {
@@ -177,6 +179,7 @@
         .loading {
             text-align: center;
             padding: 40px;
+            color: #e0e0e0;
         }
         
         .spinner {
@@ -200,11 +203,12 @@
             height: 44px; /* 默认更高 */
             padding: 10px 12px;
             font-size: 16px; /* 字体更大一些 */
-            border: 1px solid #ddd;
+            border: 1px solid #555555;
             border-radius: 10px; /* 更圆润 */
             outline: none;
-            background-color: #fff;
-            box-shadow: inset 0 1px 3px rgba(0,0,0,0.03);
+            background-color: #3a3a3a;
+            color: #e0e0e0;
+            box-shadow: inset 0 1px 3px rgba(0,0,0,0.3);
         }
         .search-box:focus {
             border-color: #e6b36c; /* 与主题色一致 */
@@ -224,20 +228,21 @@
         
         .page-btn {
             padding: 8px 12px;
-            border: 1px solid #ddd;
-            background: white;
+            border: 1px solid #555555;
+            background: #3a3a3a;
+            color: #e0e0e0;
             cursor: pointer;
             border-radius: 4px;
         }
         
         .page-btn.active {
-            background: #667eea;
+            background: #4a90e2;
             color: white;
-            border-color: #667eea;
+            border-color: #4a90e2;
         }
         
         .page-btn:hover:not(.active) {
-            background: #f0f2f5;
+            background: #4a4a4a;
         }
 
         /* 工具条与分区面板 */
@@ -245,8 +250,8 @@
         .bulk-bar { display: flex; align-items: center; gap: 10px; flex-wrap: nowrap; overflow-x: auto; white-space: nowrap; }
         .query-bar { display: flex; align-items: center; gap: 10px; flex-wrap: nowrap; }
         .panel-sections { display: grid; grid-template-columns: 1fr; gap: 12px; margin: 8px 0 12px; }
-        .panel { background: #fff; border: 1px solid #eee; border-radius: 10px; padding: 12px; }
-        .panel-title { font-size: 14px; color: #6b5f43; margin-bottom: 8px; opacity: 0.85; }
+        .panel { background: #3a3a3a; border: 1px solid #555555; border-radius: 10px; padding: 12px; }
+        .panel-title { font-size: 14px; color: #e0e0e0; margin-bottom: 8px; opacity: 0.85; }
 
         /* 复选框更大尺寸（统一系统尺寸） */
         .row-select {
@@ -263,7 +268,7 @@
         .modal-overlay {
             position: fixed;
             top: 0; left: 0; right: 0; bottom: 0;
-            background: rgba(0, 0, 0, 0.45);
+            background: rgba(0, 0, 0, 0.6);
             display: flex;
             align-items: center;
             justify-content: center;
@@ -273,16 +278,15 @@
         .modal {
             width: 420px;
             max-width: 92vw;
-            background: #fff;
+            background: #2d2d2d;
             border-radius: 12px;
-            box-shadow: 0 12px 30px rgba(0,0,0,0.18);
+            box-shadow: 0 12px 30px rgba(0,0,0,0.5);
             overflow: hidden;
             animation: slideUp 0.24s ease-out;
         }
         .modal-header {
-            background: linear-gradient(135deg, #fff5e6 0%, #f8ecd1 100%); 
-            color: #5a4e3c; 
-            color: #fff;
+            background: linear-gradient(135deg, #2d2d2d 0%, #3a3a3a 100%);
+            color: #ffffff;
             padding: 16px 18px;
         }
         
@@ -305,7 +309,7 @@
         .drawer-overlay {
             position: fixed;
             top: 0; left: 0; right: 0; bottom: 0;
-            background: rgba(0,0,0,0.35);
+            background: rgba(0,0,0,0.5);
             backdrop-filter: blur(2px);
             z-index: 998;
         }
@@ -314,8 +318,8 @@
             top: 0; right: 0;
             width: min(720px, 92vw);
             height: 100vh;
-            background: #fff;
-            box-shadow: -2px 0 16px rgba(0,0,0,0.12);
+            background: #2d2d2d;
+            box-shadow: -2px 0 16px rgba(0,0,0,0.5);
             z-index: 999;
             display: flex;
             flex-direction: column;
@@ -329,15 +333,15 @@
         }
         .drawer-header {
             padding: 18px 20px;
-            border-bottom: 1px solid #eee;
+            border-bottom: 1px solid #555555;
         }
         .drawer-header h3 {
-            margin: 0; font-size: 20px; color: #5a4e3c;
+            margin: 0; font-size: 20px; color: #ffffff;
         }
         .drawer-body { padding: 18px 20px; overflow-y: auto; }
         .drawer-actions {
             padding: 16px 20px;
-            border-top: 1px solid #eee;
+            border-top: 1px solid #555555;
             display: flex;
             justify-content: flex-end;
             gap: 12px;
@@ -349,7 +353,7 @@
         .switch-button { position: absolute; top: 2px; left: 2px; width: 24px; height: 24px; background: #fff; border-radius: 50%; box-shadow: 0 1px 3px rgba(0,0,0,.2); transition: left .2s ease; }
         .switch-input:checked + .switch-label { background: #e6b36c; }
         .switch-input:checked + .switch-label .switch-button { left: 22px; }
-        .switch-text { color:#5a4e3c; font-size: 14px; }
+        .switch-text { color:#e0e0e0; font-size: 14px; }
         .drawer label { font-size: 14px; }
         .drawer input[type="checkbox"] { width: 20px; height: 20px; }
 
@@ -382,11 +386,12 @@
             height: 44px;
             padding: 10px 12px;
             font-size: 16px;
-            border: 1px solid #ddd;
+            border: 1px solid #555555;
             border-radius: 10px;
             outline: none;
-            background-color: #fff;
-            box-shadow: inset 0 1px 3px rgba(0,0,0,0.03);
+            background-color: #3a3a3a;
+            color: #e0e0e0;
+            box-shadow: inset 0 1px 3px rgba(0,0,0,0.3);
         }
         .select-box:focus {
             border-color: #e6b36c;
@@ -400,9 +405,9 @@
             <div class="header">
                 <h1>捷明达电商产品管理后台</h1>
                 <p>产品、品牌、分类数据管理系统</p>
-                <div v-if="isAuthenticated" style="margin-top:10px; opacity:0.9; font-size:0.95em;">
-                    已登录：{{ user?.username || user?.email || user?.phone_number || user?.uid }}
-                    <button class="btn btn-danger" style="margin-left:10px;" @click="logout">退出登录</button>
+                <div v-if="isAuthenticated" style="margin-top:10px; opacity:0.9; font-size:0.95em; color:#cccccc;">
+                    <span style="color:#e0e0e0;">已登录：{{ user?.username || user?.email || user?.phone_number || user?.uid }}</span>
+                    <button class="btn btn-danger" style="margin-left:10px; color:#ffffff;" @click="logout">退出登录</button>
                 </div>
             </div>
             
@@ -416,16 +421,16 @@
                         <h3>安全登录</h3>
                     </div>
                     <div class="modal-body">
-                        <p style="margin-bottom:12px; color:#555;">请输入管理员账号与密码以登录后台管理</p>
+                        <p style="margin-bottom:12px; color:#cccccc;">请输入管理员账号与密码以登录后台管理</p>
                         <div style="margin-bottom:12px;">
-                            <label style="display:block; margin-bottom:6px; color:#666;">用户名</label>
+                            <label style="display:block; margin-bottom:6px; color:#cccccc;">用户名</label>
                             <input v-model="loginUsername" type="text" placeholder="用户名 / 邮箱 / 手机号" class="search-box" />
                         </div>
                         <div style="margin-bottom:6px;">
-                            <label style="display:block; margin-bottom:6px; color:#666;">密码</label>
+                            <label style="display:block; margin-bottom:6px; color:#cccccc;">密码</label>
                             <input v-model="loginPassword" type="password" placeholder="密码" class="search-box" />
                         </div>
-                        <div v-if="loginError" style="color:#dc3545; margin-top:8px;">{{ loginError }}</div>
+                        <div v-if="loginError" style="color:#ff6b6b; margin-top:8px;">{{ loginError }}</div>
                     </div>
                     <div class="modal-actions">
                         <button class="btn btn-primary" @click="login">登录</button>
@@ -630,13 +635,13 @@
                               <button class="page-btn" @click="prevPage" :disabled="currentPage === 1">上一页</button>
                               <span>第 {{ currentPage }} / {{ totalPages }} 页</span>
                               <button class="page-btn" @click="nextPage" :disabled="currentPage === totalPages">下一页</button>
-                              <span style="color:#666; margin-left:12px;">每页</span>
+                              <span style="color:#cccccc; margin-left:12px;">每页</span>
                               <select v-model.number="pageSize" class="select-box" style="width:80px;" @change="setPageSize(pageSize)">
                                 <option :value="20">20</option>
                                 <option :value="50">50</option>
                                 <option :value="100">100</option>
                               </select>
-                              <span style="color:#666;">条（共 {{ filteredProducts.length }} 条）</span>
+                              <span style="color:#cccccc;">条（共 {{ filteredProducts.length }} 条）</span>
                             </div>
                         </div>
                     </div>
@@ -742,53 +747,53 @@
       <div class="drawer-body">
           <div style="display:grid; grid-template-columns: repeat(2, 1fr); gap: 16px;">
             <div>
-              <label style="display:block; margin-bottom:6px; color:#666;">产品名称</label>
+              <label style="display:block; margin-bottom:6px; color:#cccccc;">产品名称</label>
               <input v-model="productForm.name" type="text" placeholder="请输入产品名称" class="search-box" />
             </div>
           <div>
-            <label style="display:block; margin-bottom:6px; color:#666;">产品编码</label>
+            <label style="display:block; margin-bottom:6px; color:#cccccc;">产品编码</label>
             <input v-model="productForm.productCode" type="text" placeholder="可选，未填自动生成" class="search-box" />
           </div>
           <div>
-            <label style="display:block; margin-bottom:6px; color:#666;">品牌</label>
+            <label style="display:block; margin-bottom:6px; color:#cccccc;">品牌</label>
             <select v-model="productForm.brandId" class="search-box">
               <option :value="null">未选择</option>
               <option v-for="b in brandOptions" :key="b.id" :value="b.id">{{ b.name }}</option>
             </select>
           </div>
           <div>
-            <label style="display:block; margin-bottom:6px; color:#666;">分类</label>
+            <label style="display:block; margin-bottom:6px; color:#cccccc;">分类</label>
             <select v-model="productForm.categoryId" class="search-box">
               <option :value="null">未选择</option>
               <option v-for="c in categoryOptions" :key="c.id" :value="c.id">{{ c.name }}</option>
             </select>
           </div>
           <div>
-            <label style="display:block; margin-bottom:6px; color:#666;">货号</label>
+            <label style="display:block; margin-bottom:6px; color:#cccccc;">货号</label>
             <input v-model="productForm.itemNo" type="text" placeholder="可选" class="search-box" />
           </div>
           <div>
-            <label style="display:block; margin-bottom:6px; color:#666;">规格</label>
+            <label style="display:block; margin-bottom:6px; color:#cccccc;">规格</label>
             <input v-model="productForm.spec" type="text" placeholder="如 10mm/20mm" class="search-box" />
           </div>
           <div>
-            <label style="display:block; margin-bottom:6px; color:#666;">单位</label>
+            <label style="display:block; margin-bottom:6px; color:#cccccc;">单位</label>
             <input v-model="productForm.unit" type="text" placeholder="如 件/套/米" class="search-box" />
           </div>
           <div>
-            <label style="display:block; margin-bottom:6px; color:#666;">价格</label>
+            <label style="display:block; margin-bottom:6px; color:#cccccc;">价格</label>
             <input v-model.number="productForm.price" type="number" step="0.01" placeholder="可选" class="search-box" />
           </div>
           <div>
-            <label style="display:block; margin-bottom:6px; color:#666;">图片地址</label>
+            <label style="display:block; margin-bottom:6px; color:#cccccc;">图片地址</label>
             <input v-model="productForm.imageUrl" type="text" placeholder="可选" class="search-box" />
           </div>
           <div>
-            <label style="display:block; margin-bottom:6px; color:#666;">备注</label>
+            <label style="display:block; margin-bottom:6px; color:#cccccc;">备注</label>
             <input v-model="productForm.remark" type="text" placeholder="可选" class="search-box" />
           </div>
           <div style="margin-top:4px; grid-column: span 2;">
-            <label style="display:block; margin-bottom:6px; color:#666;">上架</label>
+            <label style="display:block; margin-bottom:6px; color:#cccccc;">上架</label>
             <div class="switch">
               <input type="checkbox" id="onShelfSwitch" class="switch-input" v-model="productForm.isOnShelf">
               <label for="onShelfSwitch" class="switch-label">
@@ -800,7 +805,7 @@
           </div>
         </div>
       <div class="drawer-actions">
-        <button class="btn" @click="closeProductModal" style="background:#eee; color:#5a4e3c;">取消</button>
+        <button class="btn" @click="closeProductModal" style="background:#3a3a3a; color:#e0e0e0;">取消</button>
         <button class="btn btn-primary" @click="saveProduct">{{ isEditMode ? '保存修改' : '创建产品' }}</button>
       </div>
     </div>

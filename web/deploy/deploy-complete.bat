@@ -51,11 +51,7 @@ if %errorlevel% neq 0 (
 )
 
 echo.
-echo 7. 部署云函数 initDatabase...
-tcb fn deploy initDatabase --dir ./functions/initDatabase
-if %errorlevel% neq 0 (
-    echo 警告: initDatabase 云函数部署失败，请手动部署
-)
+echo 7. 跳过 initDatabase 部署（已迁移至 MySQL，无需文档库初始化）
 
 echo.
 echo ========================================

@@ -26,57 +26,7 @@
           "envVariables": {},
           "cloudbaseConfig": {
             "functionRoot": "./functions",
-            "functions": [
-              {
-                "name": "initDatabase",
-                "timeout": 60,
-                "envVariables": {},
-                "runtime": "Nodejs16.13",
-                "memorySize": 256,
-                "handler": "index.main",
-                "installDependency": true
-              },
-
-              {
-                "name": "mysqlSeed2",
-                "timeout": 120,
-                "envVariables": { "DATABASE_URL": "mysql://skaiy_diao:Skaiy.290823@sh-cynosdbmysql-grp-94slsv2s.sql.tencentcdb.com:21976/cloud1-0gc8cbzg3efd6a99" },
-                "runtime": "Nodejs16.13",
-                "memorySize": 512,
-                "handler": "index.main",
-                "installDependency": true
-              },
-              {
-                "name": "mysqlQuery",
-                "timeout": 60,
-                "envVariables": { "DATABASE_URL": "mysql://skaiy_diao:Skaiy.290823@sh-cynosdbmysql-grp-94slsv2s.sql.tencentcdb.com:21976/cloud1-0gc8cbzg3efd6a99" },
-                "runtime": "Nodejs16.13",
-                "memorySize": 256,
-                "handler": "index.main",
-                "installDependency": true
-              },
-
-
-              {
-                "name": "inspectData",
-                "timeout": 60,
-                "envVariables": {},
-                "runtime": "Nodejs16.13",
-                "memorySize": 256,
-                "handler": "index.main",
-                "installDependency": true
-              },
-
-              {
-                "name": "validateDatabase",
-                "timeout": 60,
-                "envVariables": { "DATABASE_URL": "mysql://skaiy_diao:Skaiy.290823@sh-cynosdbmysql-grp-94slsv2s.sql.tencentcdb.com:21976/cloud1-0gc8cbzg3efd6a99" },
-                "runtime": "Nodejs16.13",
-                "memorySize": 256,
-                "handler": "index.main",
-                "installDependency": true
-              }
-            ]
+            "functions": []
           }
         }
       }
@@ -84,55 +34,5 @@
   },
   "region": "ap-shanghai",
   "functionRoot": "./functions",
-  "functions": [
-    {
-      "name": "initDatabase",
-      "timeout": 60,
-      "envVariables": {},
-      "runtime": "Nodejs16.13",
-      "memorySize": 256,
-      "handler": "index.main",
-      "installDependency": true
-    },
-
-    {
-      "name": "mysqlSeed2",
-      "timeout": 120,
-      "envVariables": { "DATABASE_URL": "mysql://skaiy_diao:Skaiy.290823@sh-cynosdbmysql-grp-94slsv2s.sql.tencentcdb.com:21976/cloud1-0gc8cbzg3efd6a99" },
-      "runtime": "Nodejs16.13",
-      "memorySize": 512,
-      "handler": "index.main",
-      "installDependency": true
-    },
-    {
-      "name": "mysqlQuery",
-      "timeout": 60,
-      "envVariables": { "DATABASE_URL": "mysql://skaiy_diao:Skaiy.290823@sh-cynosdbmysql-grp-94slsv2s.sql.tencentcdb.com:21976/cloud1-0gc8cbzg3efd6a99" },
-      "runtime": "Nodejs16.13",
-      "memorySize": 256,
-      "handler": "index.main",
-      "installDependency": true
-    },
-
-
-    {
-      "name": "inspectData",
-      "timeout": 60,
-      "envVariables": {},
-      "runtime": "Nodejs16.13",
-      "memorySize": 256,
-      "handler": "index.main",
-      "installDependency": true
-    },
-
-    {
-      "name": "validateDatabase",
-      "timeout": 60,
-      "envVariables": { "DATABASE_URL": "mysql://skaiy_diao:Skaiy.290823@sh-cynosdbmysql-grp-94slsv2s.sql.tencentcdb.com:21976/cloud1-0gc8cbzg3efd6a99" },
-      "runtime": "Nodejs16.13",
-      "memorySize": 256,
-      "handler": "index.main",
-      "installDependency": true
-    }
-  ]
+  "functions": []
 }
