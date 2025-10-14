@@ -40,7 +40,7 @@
               {
                 "name": "mysqlSeed2",
                 "timeout": 120,
-                "envVariables": {},
+                "envVariables": { "DATABASE_URL": "mysql://skaiy_diao:Skaiy.290823@sh-cynosdbmysql-grp-94slsv2s.sql.tencentcdb.com:21976/cloud1-0gc8cbzg3efd6a99" },
                 "runtime": "Nodejs16.13",
                 "memorySize": 512,
                 "handler": "index.main",
@@ -49,7 +49,7 @@
               {
                 "name": "mysqlQuery",
                 "timeout": 60,
-                "envVariables": {},
+                "envVariables": { "DATABASE_URL": "mysql://skaiy_diao:Skaiy.290823@sh-cynosdbmysql-grp-94slsv2s.sql.tencentcdb.com:21976/cloud1-0gc8cbzg3efd6a99" },
                 "runtime": "Nodejs16.13",
                 "memorySize": 256,
                 "handler": "index.main",
@@ -70,7 +70,7 @@
               {
                 "name": "validateDatabase",
                 "timeout": 60,
-                "envVariables": {},
+                "envVariables": { "DATABASE_URL": "mysql://skaiy_diao:Skaiy.290823@sh-cynosdbmysql-grp-94slsv2s.sql.tencentcdb.com:21976/cloud1-0gc8cbzg3efd6a99" },
                 "runtime": "Nodejs16.13",
                 "memorySize": 256,
                 "handler": "index.main",
@@ -98,7 +98,7 @@
     {
       "name": "mysqlSeed2",
       "timeout": 120,
-      "envVariables": {},
+      "envVariables": { "DATABASE_URL": "mysql://skaiy_diao:Skaiy.290823@sh-cynosdbmysql-grp-94slsv2s.sql.tencentcdb.com:21976/cloud1-0gc8cbzg3efd6a99" },
       "runtime": "Nodejs16.13",
       "memorySize": 512,
       "handler": "index.main",
@@ -107,7 +107,7 @@
     {
       "name": "mysqlQuery",
       "timeout": 60,
-      "envVariables": {},
+      "envVariables": { "DATABASE_URL": "mysql://skaiy_diao:Skaiy.290823@sh-cynosdbmysql-grp-94slsv2s.sql.tencentcdb.com:21976/cloud1-0gc8cbzg3efd6a99" },
       "runtime": "Nodejs16.13",
       "memorySize": 256,
       "handler": "index.main",
@@ -128,7 +128,7 @@
     {
       "name": "validateDatabase",
       "timeout": 60,
-      "envVariables": {},
+      "envVariables": { "DATABASE_URL": "mysql://skaiy_diao:Skaiy.290823@sh-cynosdbmysql-grp-94slsv2s.sql.tencentcdb.com:21976/cloud1-0gc8cbzg3efd6a99" },
       "runtime": "Nodejs16.13",
       "memorySize": 256,
       "handler": "index.main",

@@ -13,12 +13,17 @@
   "dependencies": {
     "@cloudbase/node-sdk": "^2.4.1",
     "@prisma/client": "^5.17.0",
-    "dotenv": "^16.4.5"
+    "dotenv": "^16.4.5",
+    "vue": "^3.5.22"
   },
   "devDependencies": {
     "prisma": "^5.17.0"
   },
-  "keywords": ["cloudbase", "database", "initialization"],
+  "keywords": [
+    "cloudbase",
+    "database",
+    "initialization"
+  ],
   "author": "",
   "license": "MIT"
 }

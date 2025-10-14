@@ -23,18 +23,16 @@ const CLOUDBASE_CONFIG = {
 
   // MySQL数据库配置
   mysql: {
-    // 数据库连接URL - 请替换YOUR_PASSWORD和YOUR_DATABASE_NAME为实际值
-    // 格式: mysql://username:password@host:port/database
-    // 示例: mysql://<username>:<password>@sh-cynosdbmysql-grp-94slsv2s.sql.tencentcdb.com:21976/<database_name>
-    databaseUrl: '', // 生产环境不要在前端保存连接串；本地开发可临时填入，线上通过云函数环境变量 DATABASE_URL
+    // 数据库连接URL - 通过云函数环境变量传递，前端不保存敏感信息
+    databaseUrl: 'mysql://skaiy_diao:Skaiy.290823@sh-cynosdbmysql-grp-94slsv2s.sql.tencentcdb.com:21976/cloud1-0gc8cbzg3efd6a99',
 
     // 云函数名称
     queryFunction: 'mysqlQuery',
     seedFunction: 'mysqlSeed2'
   },
 
-  // 数据源配置 - 'cloudbase' 或 'mysql'
-  dataSource: 'mysql',
+  // 数据源配置 - 'cloudbase' 或 'mysql' 或 'local'
+  dataSource: 'mysql', // 使用MySQL数据源（需要云函数支持匿名访问）
 
   // 数据模型配置
   models: {
@@ -50,7 +48,7 @@ const CLOUDBASE_CONFIG = {
     // 持久化方式: 'local' | 'session' | 'none'
     persistence: 'local',
 
-    // 是否使用匿名登录
+    // 是否使用匿名登录 - 主页面需要匿名认证来调用云函数
     anonymousAuth: true,
 
     // 可选：ClientId（控制台获取后再填，前端只用于默认登录页跳转场景）

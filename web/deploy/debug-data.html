@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>数据调试</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 20px; }
+        .result { margin: 10px 0; padding: 10px; border: 1px solid #ccc; border-radius: 5px; }
+        .success { background: #d4edda; border-color: #c3e6cb; }
+        .error { background: #f8d7da; border-color: #f5c6cb; }
+        pre { background: #f8f9fa; padding: 10px; border-radius: 5px; overflow-x: auto; }
+    </style>
+</head>
+<body>
+    <h1>数据加载调试</h1>
+    <button onclick="testDataLoading()">测试数据加载</button>
+    <div id="results"></div>
+
+    <script src="https://static.cloudbase.net/cloudbase-js-sdk/2.17.3/cloudbase.full.js"></script>
+    <script src="./cloudbase.config.js"></script>
+    <script>
+        function addResult(message, isSuccess = true) {
+            const div = document.createElement('div');
+            div.className = 'result ' + (isSuccess ? 'success' : 'error');
+            div.innerHTML = message;
+            document.getElementById('results').appendChild(div);
+        }
+
+        async function testDataLoading() {
+            document.getElementById('results').innerHTML = '';
+            
+            try {
+                addResult('开始测试数据加载...');
+                
+                // 1. 检查配置
+                const config = window.CLOUDBASE_CONFIG || {};
+                addResult(`配置信息: 数据源=${config.dataSource}, 环境ID=${config.envId}`);
+                
+                // 2. 初始化CloudBase
+                const app = cloudbase.init({ env: config.envId });
+                
+                // 3. 匿名认证
+                const auth = app.auth({ persistence: 'none' });
+                await auth.signInAnonymously();
+                addResult('匿名认证成功');
+                
+                // 4. 测试产品数据
+                const productResult = await app.callFunction({
+                    name: 'mysqlQuery',
+                    data: {
+                        action: 'products',
+                        databaseUrl: config.mysql?.databaseUrl
+                    }
+                });
+                
+                if (productResult.result && productResult.result.ok) {
+                    const data = productResult.result.data;
+                    addResult(`✅ 产品数据加载成功！`);
+                    addResult(`分类数量: ${data.categories?.length || 0}`);
+
+                    if (data.categories && data.categories.length > 0) {
+                        const firstCategory = data.categories[0];
+                        addResult(`第一个分类: ${firstCategory.name}，产品数量: ${firstCategory.items?.length || 0}`);
+
+                        if (firstCategory.items && firstCategory.items.length > 0) {
+                            const firstProduct = firstCategory.items[0];
+                            addResult(`第一个产品示例:`);
+                            addResult(`<pre>${JSON.stringify(firstProduct, null, 2)}</pre>`);
+
+                            // 检查品牌字段
+                            addResult(`品牌字段检查:`);
+                            addResult(`brandCode: ${firstProduct.brandCode || '无'}`);
+                            addResult(`brandName: ${firstProduct.brandName || '无'}`);
+                            addResult(`brand: ${firstProduct.brand || '无'}`);
+
+                            // 统计有品牌的产品
+                            let productsWithBrand = 0;
+                            let totalProducts = 0;
+                            data.categories.forEach(cat => {
+                                (cat.items || []).forEach(item => {
+                                    totalProducts++;
+                                    if (item.brandCode) productsWithBrand++;
+                                });
+                            });
+                            addResult(`品牌统计: ${productsWithBrand}/${totalProducts} 个产品有品牌信息`);
+                        }
+                    }
+                } else {
+                    addResult('❌ 产品数据加载失败: ' + (productResult.result?.error || '未知错误'), false);
+                }
+                
+                // 5. 测试品牌数据
+                const brandResult = await app.callFunction({
+                    name: 'mysqlQuery',
+                    data: {
+                        action: 'brands',
+                        databaseUrl: config.mysql?.databaseUrl
+                    }
+                });
+                
+                if (brandResult.result && brandResult.result.ok) {
+                    const brandData = brandResult.result.data;
+                    addResult(`✅ 品牌数据加载成功！品牌数量: ${brandData.brandDictionary?.brands?.length || 0}`);
+                    
+                    if (brandData.brandDictionary?.brands?.length > 0) {
+                        const firstBrand = brandData.brandDictionary.brands[0];
+                        addResult(`第一个品牌示例:`);
+                        addResult(`<pre>${JSON.stringify(firstBrand, null, 2)}</pre>`);
+                    }
+                } else {
+                    addResult('❌ 品牌数据加载失败: ' + (brandResult.result?.error || '未知错误'), false);
+                }
+                
+            } catch (error) {
+                console.error('测试失败:', error);
+                addResult('❌ 测试失败: ' + error.message, false);
+            }
+        }
+        
+        // 页面加载后自动测试
+        window.addEventListener('load', () => {
+            setTimeout(testDataLoading, 1000);
+        });
+    </script>
+</body>
+</html>

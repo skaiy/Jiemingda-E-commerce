@@ -1,8 +1,8 @@
 {
   "brandDictionary": {
     "description": "产品品牌数据字典 - 3位数字编码",
-    "version": "2.0",
-    "lastUpdated": "2025-10-07",
+    "version": "2.1",
+    "lastUpdated": "2025-10-14",
     "brands": [
       {
         "code": "001",
@@ -199,6 +199,181 @@
         "shortName": "法国进口",
         "description": "供应商，0个产品",
         "productCount": 0
+      },
+      {
+        "code": "029",
+        "name": "丘比食品有限公司",
+        "shortName": "丘比",
+        "description": "供应商，0个产品",
+        "productCount": 5
+      },
+      {
+        "code": "030",
+        "name": "百利",
+        "shortName": "百利",
+        "description": "供应商，0个产品",
+        "productCount": 1
+      },
+      {
+        "code": "031",
+        "name": "天津市利好公司",
+        "shortName": "利好",
+        "description": "供应商，0个产品",
+        "productCount": 3
+      },
+      {
+        "code": "032",
+        "name": "德州鲁樱食品有限公司",
+        "shortName": "鲁樱",
+        "description": "供应商，0个产品",
+        "productCount": 3
+      },
+      {
+        "code": "033",
+        "name": "山东贝琪食品有限公司",
+        "shortName": "贝琪",
+        "description": "供应商，0个产品",
+        "productCount": 5
+      },
+      {
+        "code": "034",
+        "name": "可可琳纳食品贸易（上海）股份有限公司",
+        "shortName": "可可琳纳",
+        "description": "供应商，0个产品",
+        "productCount": 5
+      },
+      {
+        "code": "035",
+        "name": "烟台兴雅食品有限公司",
+        "shortName": "兴雅",
+        "description": "供应商，0个产品",
+        "productCount": 4
+      },
+      {
+        "code": "036",
+        "name": "金宝丽",
+        "shortName": "金宝丽",
+        "description": "供应商，0个产品",
+        "productCount": 1
+      },
+      {
+        "code": "037",
+        "name": "朋宗",
+        "shortName": "朋宗",
+        "description": "供应商，0个产品",
+        "productCount": 3
+      },
+      {
+        "code": "038",
+        "name": "济南维德食品有限公司",
+        "shortName": "维德",
+        "description": "供应商，0个产品",
+        "productCount": 1
+      },
+      {
+        "code": "039",
+        "name": "福基",
+        "shortName": "福基",
+        "description": "供应商，0个产品",
+        "productCount": 2
+      },
+      {
+        "code": "040",
+        "name": "内蒙伊利实业集团股份有限公司",
+        "shortName": "伊利",
+        "description": "供应商，0个产品",
+        "productCount": 1
+      },
+      {
+        "code": "041",
+        "name": "西诺迪斯食品（上海）有限公司",
+        "shortName": "西诺迪斯",
+        "description": "供应商，0个产品",
+        "productCount": 4
+      },
+      {
+        "code": "042",
+        "name": "菲仕兰",
+        "shortName": "菲仕兰",
+        "description": "供应商，0个产品",
+        "productCount": 1
+      },
+      {
+        "code": "043",
+        "name": "潍坊兴达油脂有限公司",
+        "shortName": "兴达油脂",
+        "description": "供应商，0个产品",
+        "productCount": 4
+      },
+      {
+        "code": "044",
+        "name": "天津翘甜食品有限公司",
+        "shortName": "翘甜",
+        "description": "供应商，0个产品",
+        "productCount": 5
+      },
+      {
+        "code": "045",
+        "name": "上海早苗食品有限公司",
+        "shortName": "早苗",
+        "description": "供应商，0个产品",
+        "productCount": 5
+      },
+      {
+        "code": "046",
+        "name": "蓝黛",
+        "shortName": "蓝黛",
+        "description": "供应商，0个产品",
+        "productCount": 1
+      },
+      {
+        "code": "047",
+        "name": "德馨",
+        "shortName": "德馨",
+        "description": "供应商，0个产品",
+        "productCount": 1
+      },
+      {
+        "code": "048",
+        "name": "瑞康品尚（天津）进出口贸易有限公司",
+        "shortName": "瑞康品尚",
+        "description": "供应商，0个产品",
+        "productCount": 4
+      },
+      {
+        "code": "049",
+        "name": "金太阳",
+        "shortName": "金太阳",
+        "description": "供应商，0个产品",
+        "productCount": 1
+      },
+      {
+        "code": "050",
+        "name": "深圳市嘉焙食品有限公司",
+        "shortName": "嘉焙",
+        "description": "供应商，0个产品",
+        "productCount": 2
+      },
+      {
+        "code": "051",
+        "name": "菏泽华瑞面粉有限公司",
+        "shortName": "华瑞面粉",
+        "description": "供应商，0个产品",
+        "productCount": 3
+      },
+      {
+        "code": "052",
+        "name": "东莞华创制粉有限公司",
+        "shortName": "华创制粉",
+        "description": "供应商，0个产品",
+        "productCount": 4
+      },
+      {
+        "code": "053",
+        "name": "亿滋",
+        "shortName": "亿滋",
+        "description": "供应商，0个产品",
+        "productCount": 3
       }
     ]
   }

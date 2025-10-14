@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>云函数测试</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 20px; }
+        .result { margin: 10px 0; padding: 10px; border: 1px solid #ccc; border-radius: 5px; }
+        .success { background: #d4edda; border-color: #c3e6cb; }
+        .error { background: #f8d7da; border-color: #f5c6cb; }
+        pre { background: #f8f9fa; padding: 10px; border-radius: 5px; overflow-x: auto; max-height: 300px; }
+        button { padding: 10px 20px; margin: 5px; }
+    </style>
+</head>
+<body>
+    <h1>云函数直接测试</h1>
+    <button onclick="testProducts()">测试产品数据</button>
+    <button onclick="testBrands()">测试品牌数据</button>
+    <div id="results"></div>
+
+    <script src="https://static.cloudbase.net/cloudbase-js-sdk/2.17.3/cloudbase.full.js"></script>
+    <script src="./cloudbase.config.js"></script>
+    <script>
+        function addResult(message, isSuccess = true) {
+            const div = document.createElement('div');
+            div.className = 'result ' + (isSuccess ? 'success' : 'error');
+            div.innerHTML = message;
+            document.getElementById('results').appendChild(div);
+        }
+
+        async function callFunction(action) {
+            try {
+                const config = window.CLOUDBASE_CONFIG || {};
+                const app = cloudbase.init({ env: config.envId });
+                
+                const auth = app.auth({ persistence: 'none' });
+                await auth.signInAnonymously();
+                
+                const result = await app.callFunction({
+                    name: 'mysqlQuery',
+                    data: {
+                        action: action,
+                        databaseUrl: config.mysql?.databaseUrl
+                    }
+                });
+                
+                return result;
+            } catch (error) {
+                throw error;
+            }
+        }
+
+        async function testProducts() {
+            document.getElementById('results').innerHTML = '';
+            addResult('开始测试产品数据...');
+            
+            try {
+                const result = await callFunction('products');
+                addResult('✅ 云函数调用成功');
+                addResult(`<pre>${JSON.stringify(result, null, 2)}</pre>`);
+                
+                if (result.result && result.result.data) {
+                    const data = result.result.data;
+                    addResult(`分类数量: ${data.categories?.length || 0}`);
+                    
+                    if (data.categories && data.categories.length > 0) {
+                        data.categories.forEach((cat, idx) => {
+                            addResult(`分类 ${idx + 1}: ${cat.name} (${cat.items?.length || 0} 个产品)`);
+                        });
+                    }
+                }
+            } catch (error) {
+                addResult('❌ 测试失败: ' + error.message, false);
+            }
+        }
+
+        async function testBrands() {
+            document.getElementById('results').innerHTML = '';
+            addResult('开始测试品牌数据...');
+            
+            try {
+                const result = await callFunction('brands');
+                addResult('✅ 云函数调用成功');
+                addResult(`<pre>${JSON.stringify(result, null, 2)}</pre>`);
+            } catch (error) {
+                addResult('❌ 测试失败: ' + error.message, false);
+            }
+        }
+    </script>
+</body>
+</html>

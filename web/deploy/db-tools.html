@@ -40,11 +40,60 @@
     const logEl = document.getElementById('log');
     function log(msg){ const ts = new Date().toLocaleTimeString(); logEl.textContent += `[${ts}] ${msg}\n`; logEl.scrollTop = logEl.scrollHeight; console.log(msg); }
     function clearLog(){ logEl.textContent=''; }
+
+    // 认证检查
+    async function checkAuthentication() {
+        try {
+            const testApp = cloudbase.init({ env: ENV_ID });
+            const auth = testApp.auth({ persistence: 'local' });
+            const state = await auth.getLoginState();
+
+            if (!state || !state.user) {
+                alert('此页面需要登录后才能访问，将跳转到登录页面');
+                window.location.href = './admin.html';
+                return false;
+            }
+
+            // 显示用户信息
+            const userInfo = document.createElement('div');
+            userInfo.style.cssText = 'text-align: center; margin-bottom: 20px; padding: 10px; background: #e8f5e8; border-radius: 6px; font-size: 14px;';
+            userInfo.innerHTML = `已登录：${state.user?.username || state.user?.email || state.user?.phone_number || state.user?.uid} <button onclick="logout()" style="margin-left: 10px; padding: 4px 8px; background: #dc3545; color: white; border: none; border-radius: 4px; cursor: pointer;">退出登录</button>`;
+            document.body.insertBefore(userInfo, document.querySelector('h1').nextSibling);
+
+            return true;
+        } catch (error) {
+            console.error('认证检查失败:', error);
+            alert('认证检查失败，将跳转到登录页面');
+            window.location.href = './admin.html';
+            return false;
+        }
+    }
+
+    async function logout() {
+        try {
+            const testApp = cloudbase.init({ env: ENV_ID });
+            const auth = testApp.auth({ persistence: 'local' });
+            await auth.signOut();
+            window.location.href = './admin.html';
+        } catch (error) {
+            console.error('退出登录失败:', error);
+            window.location.href = './admin.html';
+        }
+    }
+
+    // 页面加载时检查认证
+    window.addEventListener('load', async () => {
+        const isAuthenticated = await checkAuthentication();
+        if (!isAuthenticated) {
+            return; // 如果未认证，页面会重定向，不继续执行
+        }
+    });
     async function initCB(){
       if (app && db) return true;
       if (typeof cloudbase === 'undefined'){ log('CloudBase SDK 未加载'); return false; }
       app = cloudbase.init({ env: ENV_ID, region: REGION });
-      try { await app.auth().signInAnonymously(); log('匿名登录成功'); } catch(e){ log('匿名登录失败: '+ e.message + '，继续尝试数据库'); }
+      // 线上已关闭匿名登录，跳过认证
+      log('线上已关闭匿名登录，跳过认证，直接尝试数据库操作');
       db = app.database();
       log('CloudBase 初始化完成');
       return true;

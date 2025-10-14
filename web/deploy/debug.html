@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>调试页面</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 20px; }
+        .debug-section { margin: 20px 0; padding: 15px; border: 1px solid #ccc; border-radius: 5px; }
+        .debug-title { font-weight: bold; color: #333; margin-bottom: 10px; }
+        .debug-content { background: #f5f5f5; padding: 10px; border-radius: 3px; white-space: pre-wrap; }
+        .error { color: red; }
+        .success { color: green; }
+    </style>
+</head>
+<body>
+    <h1>CloudBase 调试页面</h1>
+    
+    <div class="debug-section">
+        <div class="debug-title">配置信息</div>
+        <div class="debug-content" id="config-info">加载中...</div>
+    </div>
+    
+    <div class="debug-section">
+        <div class="debug-title">数据源测试</div>
+        <div class="debug-content" id="data-source-test">测试中...</div>
+    </div>
+    
+    <div class="debug-section">
+        <div class="debug-title">产品数据测试</div>
+        <div class="debug-content" id="products-test">测试中...</div>
+    </div>
+    
+    <div class="debug-section">
+        <div class="debug-title">控制台日志</div>
+        <div class="debug-content" id="console-logs"></div>
+    </div>
+
+    <script src="https://static.cloudbase.net/cloudbase-js-sdk/2.17.3/cloudbase.full.js"></script>
+    <script src="./cloudbase.config.js"></script>
+    <script>
+        // 捕获控制台日志
+        const originalLog = console.log;
+        const originalError = console.error;
+        const logs = [];
+
+        console.log = function(...args) {
+            logs.push(['LOG', ...args]);
+            originalLog.apply(console, args);
+            updateConsoleLogs();
+        };
+
+        console.error = function(...args) {
+            logs.push(['ERROR', ...args]);
+            originalError.apply(console, args);
+            updateConsoleLogs();
+        };
+        
+        function updateConsoleLogs() {
+            const logsDiv = document.getElementById('console-logs');
+            logsDiv.innerHTML = logs.map(log => {
+                const [type, ...args] = log;
+                const className = type === 'ERROR' ? 'error' : '';
+                return `<div class="${className}">[${type}] ${args.join(' ')}</div>`;
+            }).join('');
+        }
+        
+        async function runDebugTests() {
+            try {
+                // 1. 显示配置信息
+                const configDiv = document.getElementById('config-info');
+                const config = window.CLOUDBASE_CONFIG || {};
+                configDiv.innerHTML = JSON.stringify(config, null, 2);
+                
+                // 2. 测试数据源配置
+                const dataSourceDiv = document.getElementById('data-source-test');
+                const USE_CLOUDBASE = config.dataSource === 'cloudbase';
+                const USE_MYSQL = config.dataSource === 'mysql';
+                const USE_LOCAL = config.dataSource === 'local' || (!USE_CLOUDBASE && !USE_MYSQL);
+                
+                dataSourceDiv.innerHTML = `
+数据源配置: ${config.dataSource || '未设置'}
+USE_CLOUDBASE: ${USE_CLOUDBASE}
+USE_MYSQL: ${USE_MYSQL}
+USE_LOCAL: ${USE_LOCAL}
+环境ID: ${config.envId || '未设置'}
+                `;
+                
+                // 3. 测试产品数据加载
+                const productsDiv = document.getElementById('products-test');
+                productsDiv.innerHTML = '正在加载产品数据...';
+                
+                try {
+                    const response = await fetch('./data/products.json');
+                    if (!response.ok) {
+                        throw new Error(`HTTP ${response.status}: ${response.statusText}`);
+                    }
+                    const data = await response.json();
+                    
+                    const categoriesCount = data.categories ? data.categories.length : 0;
+                    const totalItems = data.categories ? 
+                        data.categories.reduce((sum, cat) => sum + (cat.items ? cat.items.length : 0), 0) : 0;
+                    
+                    productsDiv.innerHTML = `
+<span class="success">✓ 产品数据加载成功</span>
+分类数量: ${categoriesCount}
+商品总数: ${totalItems}
+数据结构: ${JSON.stringify(Object.keys(data), null, 2)}
+第一个分类: ${data.categories && data.categories[0] ? data.categories[0].name : '无'}
+                    `;
+                } catch (error) {
+                    productsDiv.innerHTML = `<span class="error">✗ 产品数据加载失败: ${error.message}</span>`;
+                }
+
+                // 4. 测试云函数调用
+                if (USE_MYSQL) {
+                    try {
+                        console.log('测试云函数调用...');
+                        const app = cloudbase.init({ env: config.envId });
+
+                        const result = await app.callFunction({
+                            name: 'mysqlQuery',
+                            data: {
+                                action: 'products',
+                                databaseUrl: config.mysql?.databaseUrl
+                            }
+                        });
+
+                        console.log('云函数调用结果:', result);
+
+                        if (result.result && result.result.ok) {
+                            productsDiv.innerHTML += `\n\n<span class="success">✓ 云函数调用成功</span>\n云函数返回数据: ${JSON.stringify(result.result.data, null, 2)}`;
+                        } else {
+                            productsDiv.innerHTML += `\n\n<span class="error">✗ 云函数调用失败: ${result.result?.error || '未知错误'}</span>`;
+                        }
+                    } catch (error) {
+                        console.error('云函数调用失败:', error);
+                        productsDiv.innerHTML += `\n\n<span class="error">✗ 云函数调用异常: ${error.message}</span>`;
+                    }
+                }
+
+            } catch (error) {
+                console.error('调试测试失败:', error);
+            }
+        }
+        
+        // 页面加载完成后运行测试
+        window.addEventListener('load', runDebugTests);
+    </script>
+</body>
+</html>

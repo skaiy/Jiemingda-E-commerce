@@ -63,8 +63,56 @@
                 queryFunction: 'mysqlQuery'
             }
         };
-        
+
         let app = null;
+
+        // 认证检查
+        async function checkAuthentication() {
+            try {
+                const testApp = cloudbase.init({ env: config.envId });
+                const auth = testApp.auth({ persistence: 'local' });
+                const state = await auth.getLoginState();
+
+                if (!state || !state.user) {
+                    alert('此页面需要登录后才能访问，将跳转到登录页面');
+                    window.location.href = './admin.html';
+                    return false;
+                }
+
+                // 显示用户信息
+                const userInfo = document.createElement('div');
+                userInfo.style.cssText = 'text-align: center; margin-bottom: 20px; padding: 10px; background: #e8f5e8; border-radius: 6px; font-size: 14px;';
+                userInfo.innerHTML = `已登录：${state.user?.username || state.user?.email || state.user?.phone_number || state.user?.uid} <button onclick="logout()" style="margin-left: 10px; padding: 4px 8px; background: #dc3545; color: white; border: none; border-radius: 4px; cursor: pointer;">退出登录</button>`;
+                document.body.insertBefore(userInfo, document.querySelector('h1').nextSibling);
+
+                return true;
+            } catch (error) {
+                console.error('认证检查失败:', error);
+                alert('认证检查失败，将跳转到登录页面');
+                window.location.href = './admin.html';
+                return false;
+            }
+        }
+
+        async function logout() {
+            try {
+                const testApp = cloudbase.init({ env: config.envId });
+                const auth = testApp.auth({ persistence: 'local' });
+                await auth.signOut();
+                window.location.href = './admin.html';
+            } catch (error) {
+                console.error('退出登录失败:', error);
+                window.location.href = './admin.html';
+            }
+        }
+
+        // 页面加载时检查认证
+        window.addEventListener('load', async () => {
+            const isAuthenticated = await checkAuthentication();
+            if (!isAuthenticated) {
+                return; // 如果未认证，页面会重定向，不继续执行
+            }
+        });
         
         function addResult(message, type = 'info') {
             const resultsDiv = document.getElementById('results');
@@ -111,12 +159,8 @@
             
             addResult('开始测试连接...', 'info');
             
-            try {
-                await app.auth({ persistence: 'local' }).signInAnonymously();
-                addResult('✅ 匿名登录成功', 'success');
-            } catch (error) {
-                addResult(`❌ 匿名登录失败: ${error.message}`, 'error');
-            }
+            // 线上已关闭匿名登录，跳过认证测试
+            addResult('ℹ️ 线上已关闭匿名登录，跳过认证测试', 'info');
         }
         
         async function testFunction() {

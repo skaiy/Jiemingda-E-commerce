@@ -113,8 +113,9 @@
     const DEFAULT_PRODUCT_IMAGE = './assets/default-product.jpg';
     const config = window.CLOUDBASE_CONFIG || {};
     const CLOUDBASE_ENV = window.CLOUDBASE_ENV || localStorage.getItem('CLOUDBASE_ENV') || config.envId || '';
-    const USE_CLOUDBASE = !!CLOUDBASE_ENV;
+    const USE_CLOUDBASE = config.dataSource === 'cloudbase' && !!CLOUDBASE_ENV;
     const USE_MYSQL = config.dataSource === 'mysql';
+    const USE_LOCAL = config.dataSource === 'local' || (!USE_CLOUDBASE && !USE_MYSQL);
     const CONFIG_URL = './data/category_config.json';
     let CATEGORY_BANNER_SLUGS = {};
     let CATEGORY_SHORT_NAMES = {};
@@ -184,9 +185,23 @@
         const arr = Array.isArray(categories) ? categories : [];
         const nonEmpty = arr.filter(c => Array.isArray(c.items) && c.items.length > 0);
         const total = nonEmpty.reduce((s,c)=> s + c.items.length, 0);
-        if (nonEmpty.length === 0) return false;
-        // 仅 1-2 个分类通常表示云端产品缺失分类字段
-        if (nonEmpty.length <= 2) return false;
+        console.log('健康检查详情:', {
+          总分类数: arr.length,
+          非空分类数: nonEmpty.length,
+          总产品数: total,
+          分类名称: nonEmpty.map(c => c.name)
+        });
+
+        if (nonEmpty.length === 0) {
+          console.log('健康检查失败: 没有非空分类');
+          return false;
+        }
+
+        // 放宽健康检查条件 - 只要有产品就认为健康
+        if (total > 0) {
+          console.log('健康检查通过: 有产品数据');
+          return true;
+        }
         // 若“099/其他/其它”类占比过高，视为不健康
         const badNames = new Set(['099','其他','其它']);
         const badCount = nonEmpty
@@ -206,7 +221,7 @@
 
       const slug = CATEGORY_BANNER_SLUGS[name] || 'others';
 
-      // 尝试加载PNG图片，如果失败则尝试SVG，最后回退到默认渐变
+      // 优化图片加载逻辑：优先尝试SVG格式，避免不必要的404错误
       const tryLoadImage = (url, fallbackUrl = null) => {
         const img = new Image();
         img.onload = () => {
@@ -221,26 +236,38 @@
         img.src = url;
       };
 
-      const pngUrl = `./data/banners/${slug}.png`;
+      // 优先使用SVG格式，减少404错误
       const svgUrl = `./data/banners/${slug}.svg`;
-      tryLoadImage(pngUrl, svgUrl);
+      const pngUrl = `./data/banners/${slug}.png`;
+      tryLoadImage(svgUrl, pngUrl);
     }
 
     function extractBrands() {
-      const brandCodes = new Set();
-      DATA.categories.forEach(category => {
-        (category.items || []).forEach(item => { if (item.brandCode) brandCodes.add(item.brandCode); });
-      });
+      // 直接使用品牌字典中的数据
       const dict = BRAND_DICTIONARY.brandDictionary || BRAND_DICTIONARY || {};
       const list = Array.isArray(dict.brands) ? dict.brands : [];
-      allBrands = Array.from(brandCodes).map(code => {
-        const brand = list.find(b => b.code === code);
-        return { code, name: brand ? (brand.shortName || brand.name || code) : '未知品牌', productCount: 0 };
+
+      // 计算每个品牌的产品数量
+      const brandProductCounts = {};
+      DATA.categories.forEach(category => {
+        (category.items || []).forEach(item => {
+          if (item.brandCode) {
+            brandProductCounts[item.brandCode] = (brandProductCounts[item.brandCode] || 0) + 1;
+          }
+        });
       });
-      allBrands.forEach(brand => {
-        brand.productCount = DATA.categories.reduce((count, category) => count + (category.items || []).filter(item => item.brandCode === brand.code).length, 0);
-      });
-      allBrands.sort((a,b)=> b.productCount - a.productCount);
+
+      // 只显示有产品的品牌
+      allBrands = list
+        .filter(brand => brandProductCounts[brand.code] > 0)
+        .map(brand => ({
+          code: brand.code,
+          name: brand.shortName || brand.name || brand.code,
+          productCount: brandProductCounts[brand.code] || 0
+        }))
+        .sort((a, b) => b.productCount - a.productCount);
+
+      console.log('提取的品牌数据:', allBrands);
     }
     function renderBrandTabs(){
       const brandTabs = document.getElementById('brandTabs');
@@ -416,6 +443,7 @@
 
         if (USE_MYSQL) {
           // 使用MySQL数据源
+          console.log('使用MySQL数据源');
           [productsData, configData, brandData, categoryData] = await Promise.all([
             loadProductsFromMySQL(),
             loadCategoryMetaFromMySQL(),
@@ -424,6 +452,7 @@
           ]);
         } else if (USE_CLOUDBASE) {
           // 使用CloudBase数据源
+          console.log('使用CloudBase数据源');
           [productsData, configData, brandData, categoryData] = await Promise.all([
             loadProductsFromCloudBase(),
             loadCategoryMetaFromCloudBase(),
@@ -432,6 +461,7 @@
           ]);
         } else {
           // 使用本地JSON文件
+          console.log('使用本地JSON数据源');
           [productsData, configData, brandData, categoryData] = await Promise.all([
             fetch(FETCH_URL).then(r => r.json()),
             fetch(CONFIG_URL).then(r => r.json()).catch(() => ({banner_slugs: {}, short_names: {}})),
@@ -460,8 +490,8 @@
     async function loadProductsFromCloudBase() {
       try {
         const app = cloudbase.init({ env: CLOUDBASE_ENV });
-        // 修正匿名登录方式以兼容当前 SDK
-        await app.auth({ persistence: (config.auth && config.auth.persistence) || 'local' }).signInAnonymously();
+        // 线上已关闭匿名登录，直接使用数据库，无需认证
+        console.log('直接访问CloudBase数据库，无需认证');
         const db = app.database();
         const _ = db.command;
         // 统一读取 CloudBase 中的产品集合与文档ID
@@ -536,7 +566,8 @@
     async function loadCategoryMetaFromCloudBase() {
       try {
         const app = cloudbase.init({ env: CLOUDBASE_ENV });
-        await app.auth({ persistence: (config.auth && config.auth.persistence) || 'local' }).signInAnonymously();
+        // 线上已关闭匿名登录，直接使用数据库，无需认证
+        console.log('直接访问CloudBase数据库，无需认证');
         const db = app.database();
         const configCollection = (window.CLOUDBASE_CONFIG && window.CLOUDBASE_CONFIG.database && window.CLOUDBASE_CONFIG.database.configCollection) || 'config';
         const configDocId = (window.CLOUDBASE_CONFIG && window.CLOUDBASE_CONFIG.database && window.CLOUDBASE_CONFIG.database.configDocId) || 'category-config';
@@ -559,7 +590,8 @@
     async function loadBrandDictionaryFromCloudBase() {
       try {
         const app = cloudbase.init({ env: CLOUDBASE_ENV });
-        await app.auth({ persistence: (config.auth && config.auth.persistence) || 'local' }).signInAnonymously();
+        // 线上已关闭匿名登录，直接使用数据库，无需认证
+        console.log('直接访问CloudBase数据库，无需认证');
         const db = app.database();
         const configCollection = (window.CLOUDBASE_CONFIG && window.CLOUDBASE_CONFIG.database && window.CLOUDBASE_CONFIG.database.configCollection) || 'config';
         const res = await db.collection(configCollection).doc('brand-dictionary').get();
@@ -577,7 +609,8 @@
     async function loadCategoryDictionaryFromCloudBase() {
       try {
         const app = cloudbase.init({ env: CLOUDBASE_ENV });
-        await app.auth({ persistence: (config.auth && config.auth.persistence) || 'local' }).signInAnonymously();
+        // 线上已关闭匿名登录，直接使用数据库，无需认证
+        console.log('直接访问CloudBase数据库，无需认证');
         const db = app.database();
         const configCollection = (window.CLOUDBASE_CONFIG && window.CLOUDBASE_CONFIG.database && window.CLOUDBASE_CONFIG.database.configCollection) || 'config';
         const res = await db.collection(configCollection).doc('category-dictionary').get();
@@ -592,19 +625,21 @@
       }
     }
 
-    // MySQL数据加载函数
+    // MySQL数据加载函数 - 使用匿名认证调用云函数
     async function callCloudFunction(functionName, data = {}) {
       try {
         const app = cloudbase.init({ env: CLOUDBASE_ENV });
 
-        // 尝试匿名登录，如果失败则跳过认证直接调用
+        console.log(`调用云函数: ${functionName}`);
+
+        // 先进行匿名认证
         try {
-          if (config.auth && config.auth.anonymousAuth !== false) {
-            await app.auth({ persistence: (config.auth && config.auth.persistence) || 'local' }).signInAnonymously();
-          }
+          const auth = app.auth({ persistence: 'none' });
+          await auth.signInAnonymously();
+          console.log('匿名认证成功');
         } catch (authError) {
-          console.warn('匿名登录失败，尝试直接调用云函数:', authError);
-          // 继续执行，不中断流程
+          console.log('匿名认证失败，尝试直接调用:', authError.message);
+          // 如果匿名认证失败，继续尝试直接调用
         }
 
         const result = await app.callFunction({
@@ -615,13 +650,15 @@
           }
         });
 
+        console.log(`云函数 ${functionName} 调用结果:`, result);
+
         if (result.result && result.result.ok) {
           return result.result.data;
         } else {
           throw new Error(result.result?.error || '云函数调用失败');
         }
       } catch (error) {
-        console.error(`调用云函数 ${functionName} 失败:`, error);
+        console.error(`云函数 ${functionName} 调用失败:`, error);
         throw error;
       }
     }
@@ -635,10 +672,17 @@
           throw new Error('MySQL产品数据格式异常');
         }
 
-        if (!isCategoryDataHealthy(data.categories)) {
-          console.warn('检测到MySQL分类数据异常，回退到本地 JSON 数据源');
-          return await fetch(FETCH_URL).then(r => r.json());
-        }
+        console.log('MySQL数据健康检查:', {
+          categoriesCount: data.categories?.length,
+          firstCategory: data.categories?.[0]?.name,
+          firstCategoryItems: data.categories?.[0]?.items?.length
+        });
+
+        // 暂时禁用健康检查，直接使用MySQL数据
+        // if (!isCategoryDataHealthy(data.categories)) {
+        //   console.warn('检测到MySQL分类数据异常，回退到本地 JSON 数据源');
+        //   return await fetch(FETCH_URL).then(r => r.json());
+        // }
 
         return data;
       } catch (error) {

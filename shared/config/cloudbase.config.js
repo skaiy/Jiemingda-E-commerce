@@ -34,9 +34,9 @@ const CLOUDBASE_CONFIG = {
   auth: {
     // 持久化方式: 'local' | 'session' | 'none'
     persistence: 'local',
-    
-    // 是否使用匿名登录
-    anonymousAuth: true
+
+    // 是否使用匿名登录 - 线上已关闭匿名登录，设为false
+    anonymousAuth: false
   }
 };
 

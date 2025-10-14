@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>简单数据测试</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 20px; }
+        .section { margin: 20px 0; padding: 15px; border: 1px solid #ddd; border-radius: 5px; }
+        .success { background: #d4edda; }
+        .error { background: #f8d7da; }
+        pre { background: #f8f9fa; padding: 10px; border-radius: 5px; overflow-x: auto; max-height: 400px; }
+        button { padding: 10px 20px; margin: 5px; background: #007bff; color: white; border: none; border-radius: 5px; cursor: pointer; }
+        button:hover { background: #0056b3; }
+    </style>
+</head>
+<body>
+    <h1>数据加载测试</h1>
+    
+    <button onclick="testData()">测试数据加载</button>
+    <button onclick="clearResults()">清空结果</button>
+    
+    <div id="results"></div>
+
+    <script src="https://static.cloudbase.net/cloudbase-js-sdk/2.17.3/cloudbase.full.js"></script>
+    <script src="./cloudbase.config.js"></script>
+    <script>
+        let DATA = null;
+        let BRAND_DICTIONARY = null;
+        
+        function addSection(title, content, isSuccess = true) {
+            const div = document.createElement('div');
+            div.className = 'section ' + (isSuccess ? 'success' : 'error');
+            div.innerHTML = `<h3>${title}</h3>${content}`;
+            document.getElementById('results').appendChild(div);
+        }
+        
+        function clearResults() {
+            document.getElementById('results').innerHTML = '';
+        }
+
+        async function callCloudFunction(functionName, data = {}) {
+            try {
+                const config = window.CLOUDBASE_CONFIG || {};
+                const app = cloudbase.init({ env: config.envId });
+
+                const auth = app.auth({ persistence: 'none' });
+                await auth.signInAnonymously();
+
+                const result = await app.callFunction({
+                    name: functionName,
+                    data: {
+                        ...data,
+                        databaseUrl: config.mysql?.databaseUrl
+                    }
+                });
+
+                if (result.result && result.result.ok) {
+                    return result.result.data;
+                } else {
+                    throw new Error(result.result?.error || '云函数调用失败');
+                }
+            } catch (error) {
+                throw error;
+            }
+        }
+
+        async function testData() {
+            clearResults();
+            
+            try {
+                // 1. 测试产品数据
+                addSection('步骤1', '正在加载产品数据...');
+                const productsData = await callCloudFunction('mysqlQuery', { action: 'products' });
+                DATA = productsData;
+                
+                addSection('产品数据结果', `
+                    <p>✅ 产品数据加载成功</p>
+                    <p>分类数量: ${DATA.categories?.length || 0}</p>
+                    <p>数据结构: <pre>${JSON.stringify(DATA, null, 2)}</pre></p>
+                `);
+                
+                // 2. 测试品牌数据
+                addSection('步骤2', '正在加载品牌数据...');
+                const brandData = await callCloudFunction('mysqlQuery', { action: 'brands' });
+                BRAND_DICTIONARY = brandData;
+                
+                addSection('品牌数据结果', `
+                    <p>✅ 品牌数据加载成功</p>
+                    <p>品牌数量: ${BRAND_DICTIONARY.brands?.length || 0}</p>
+                    <p>数据结构: <pre>${JSON.stringify(BRAND_DICTIONARY, null, 2)}</pre></p>
+                `);
+                
+                // 3. 测试品牌提取逻辑
+                if (DATA && BRAND_DICTIONARY) {
+                    addSection('步骤3', '正在测试品牌提取逻辑...');
+                    
+                    // 计算每个品牌的产品数量
+                    const brandProductCounts = {};
+                    DATA.categories.forEach(category => {
+                        (category.items || []).forEach(item => {
+                            if (item.brandCode) {
+                                brandProductCounts[item.brandCode] = (brandProductCounts[item.brandCode] || 0) + 1;
+                            }
+                        });
+                    });
+                    
+                    const dict = BRAND_DICTIONARY.brandDictionary || BRAND_DICTIONARY || {};
+                    const list = Array.isArray(dict.brands) ? dict.brands : [];
+                    
+                    const allBrands = list
+                        .filter(brand => brandProductCounts[brand.code] > 0)
+                        .map(brand => ({
+                            code: brand.code,
+                            name: brand.shortName || brand.name || brand.code,
+                            productCount: brandProductCounts[brand.code] || 0
+                        }))
+                        .sort((a, b) => b.productCount - a.productCount);
+                    
+                    addSection('品牌提取结果', `
+                        <p>✅ 品牌提取成功</p>
+                        <p>有产品的品牌数量: ${allBrands.length}</p>
+                        <p>品牌列表: <pre>${JSON.stringify(allBrands, null, 2)}</pre></p>
+                        <p>品牌产品统计: <pre>${JSON.stringify(brandProductCounts, null, 2)}</pre></p>
+                    `);
+                }
+                
+            } catch (error) {
+                addSection('错误', `❌ 测试失败: ${error.message}`, false);
+            }
+        }
+    </script>
+</body>
+</html>

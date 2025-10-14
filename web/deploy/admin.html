@@ -4,8 +4,14 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>捷明达电商产品管理后台</title>
-    <script src="https://static.cloudbase.net/cloudbase-js-sdk/2.21.6/cloudbase.full.js?v=1"></script>
-    <script src="https://unpkg.com/vue@3/dist/vue.global.prod.js"></script>
+    <!-- 优先使用本地 CloudBase SDK，避免 CDN 连接问题 -->
+    <script src="./cloudbase.full.js"></script>
+    <!-- 本地 Vue3 回退（优先加载） -->
+    <script src="./assets/vue.global.prod.js"></script>
+    <!-- Vue3 多CDN回退：unpkg → jsDelivr → Cloudflare（网络可用时作为备用） -->
+    <script src="https://unpkg.com/vue@3/dist/vue.global.prod.js" defer></script>
+    <script src="https://cdn.jsdelivr.net/npm/vue@3/dist/vue.global.prod.js" defer></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/vue/3.4.31/vue.global.prod.min.js" defer></script>
     <!-- 更新奶油色系样式 -->
     <style>
         * {
@@ -27,50 +33,51 @@
         }
         
         .header {
-            background: linear-gradient(135deg, #fff5e6 0%, #f8ecd1 100%); /* 奶油渐变 */
+            background: linear-gradient(135deg, #fff5e6 0%, #f8ecd1 100%);
             color: #5a4e3c;
-            padding: 30px;
+            padding: 14px 16px; /* 紧凑头部 */
             border-radius: 10px;
-            margin-bottom: 30px;
+            margin-bottom: 16px; /* 减少占用空间 */
             text-align: center;
         }
-        
         .header h1 {
-            font-size: 2.5em;
-            margin-bottom: 10px;
+            font-size: 1.8em;
+            margin-bottom: 4px;
         }
-        
         .header p {
-            font-size: 1.2em;
-            opacity: 0.9;
+            font-size: 0.95em;
+            opacity: 0.85;
         }
         
-        .nav-tabs {
-            display: flex;
-            background: #fffaf0; /* 奶油白 */
+        /* 旧顶部标签导航删除，改用左侧侧栏 */
+        /* 布局：左侧侧栏 + 右侧内容 */
+        .layout {
+            display: grid;
+            grid-template-columns: 220px 1fr;
+            gap: 16px;
+            align-items: start;
+            margin-bottom: 20px;
+        }
+        .sidebar {
+            background: #fffaf0;
             border-radius: 10px;
-            padding: 5px;
-            margin-bottom: 30px;
-            box-shadow: 0 2px 10px rgba(90, 78, 60, 0.08);
+            padding: 12px;
+            box-shadow: 0 2px 10px rgba(90,78,60,0.08);
         }
-        
-        .nav-tab {
-            flex: 1;
-            padding: 15px 20px;
-            text-align: center;
+        .side-nav { display: flex; flex-direction: column; gap: 8px; }
+        .side-item {
+            padding: 10px 12px;
             cursor: pointer;
             border-radius: 8px;
-            transition: all 0.3s;
+            transition: all .2s ease;
             font-weight: 500;
         }
-        
-        .nav-tab.active {
-            background: #f1e6d0; /* 奶油高亮 */
-            color: #6b5f43;
-        }
-        
-        .nav-tab:hover:not(.active) {
-            background: #f7efe0; /* 奶油悬停 */
+        .side-item.active { background: #f1e6d0; color: #6b5f43; }
+        .side-item:hover:not(.active) { background: #f7efe0; }
+        @media (max-width: 992px) {
+            .layout { grid-template-columns: 1fr; }
+            .sidebar { order: -1; }
+            .side-nav { flex-direction: row; flex-wrap: wrap; }
         }
         
         .content-panel {
@@ -187,14 +194,25 @@
             100% { transform: rotate(360deg); }
         }
         
+        /* 更大的输入框样式（复用 search-box 类以保持一致） */
         .search-box {
-            width: 100%;
-            padding: 12px;
+            width: 72%;
+            height: 44px; /* 默认更高 */
+            padding: 10px 12px;
+            font-size: 16px; /* 字体更大一些 */
             border: 1px solid #ddd;
-            border-radius: 6px;
-            font-size: 16px;
-            margin-bottom: 20px;
+            border-radius: 10px; /* 更圆润 */
+            outline: none;
+            background-color: #fff;
+            box-shadow: inset 0 1px 3px rgba(0,0,0,0.03);
         }
+        .search-box:focus {
+            border-color: #e6b36c; /* 与主题色一致 */
+            box-shadow: 0 0 0 3px rgba(230, 179, 108, 0.20);
+        }
+        
+        /* select 更统一高度 */
+        select.search-box { height: 44px; }
         
         .pagination {
             display: flex;
@@ -221,6 +239,25 @@
         .page-btn:hover:not(.active) {
             background: #f0f2f5;
         }
+
+        /* 工具条与分区面板 */
+        .toolbar { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }
+        .bulk-bar { display: flex; align-items: center; gap: 10px; flex-wrap: nowrap; overflow-x: auto; white-space: nowrap; }
+        .query-bar { display: flex; align-items: center; gap: 10px; flex-wrap: nowrap; }
+        .panel-sections { display: grid; grid-template-columns: 1fr; gap: 12px; margin: 8px 0 12px; }
+        .panel { background: #fff; border: 1px solid #eee; border-radius: 10px; padding: 12px; }
+        .panel-title { font-size: 14px; color: #6b5f43; margin-bottom: 8px; opacity: 0.85; }
+
+        /* 复选框更大尺寸（统一系统尺寸） */
+        .row-select {
+            width: 20px;
+            height: 20px;
+        }
+        /* 全局复选框尺寸统一为与 .row-select 一致 */
+        input[type="checkbox"] {
+            width: 20px;
+            height: 20px;
+        }
         
         /* 新增：模态登录样式 */
         .modal-overlay {
@@ -243,10 +280,12 @@
             animation: slideUp 0.24s ease-out;
         }
         .modal-header {
-            background: linear-gradient(135deg, #fff5e6 0%, #f8ecd1 100%); color: #5a4e3c; }
+            background: linear-gradient(135deg, #fff5e6 0%, #f8ecd1 100%); 
+            color: #5a4e3c; 
             color: #fff;
             padding: 16px 18px;
         }
+        
         .modal-header h3 { font-weight: 600; }
         .modal-body { padding: 18px; }
         .modal-actions {
@@ -260,6 +299,98 @@
         }
         @keyframes slideUp {
             from { transform: translateY(8px); } to { transform: translateY(0); }
+        }
+        
+        /* 抽屉样式 */
+        .drawer-overlay {
+            position: fixed;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: rgba(0,0,0,0.35);
+            backdrop-filter: blur(2px);
+            z-index: 998;
+        }
+        .drawer {
+            position: fixed;
+            top: 0; right: 0;
+            width: min(720px, 92vw);
+            height: 100vh;
+            background: #fff;
+            box-shadow: -2px 0 16px rgba(0,0,0,0.12);
+            z-index: 999;
+            display: flex;
+            flex-direction: column;
+            border-top-left-radius: 12px;
+            border-bottom-left-radius: 12px;
+            animation: drawer-slide-in 220ms ease-out;
+        }
+        @keyframes drawer-slide-in {
+            from { transform: translateX(16px); opacity: 0; }
+            to   { transform: translateX(0);    opacity: 1; }
+        }
+        .drawer-header {
+            padding: 18px 20px;
+            border-bottom: 1px solid #eee;
+        }
+        .drawer-header h3 {
+            margin: 0; font-size: 20px; color: #5a4e3c;
+        }
+        .drawer-body { padding: 18px 20px; overflow-y: auto; }
+        .drawer-actions {
+            padding: 16px 20px;
+            border-top: 1px solid #eee;
+            display: flex;
+            justify-content: flex-end;
+            gap: 12px;
+        }
+        /* 开关按钮样式 */
+        .switch { display: inline-flex; align-items: center; gap: 10px; }
+        .switch-input { display: none; }
+        .switch-label { position: relative; width: 48px; height: 28px; background: #ddd; border-radius: 18px; cursor: pointer; transition: background .2s ease; }
+        .switch-button { position: absolute; top: 2px; left: 2px; width: 24px; height: 24px; background: #fff; border-radius: 50%; box-shadow: 0 1px 3px rgba(0,0,0,.2); transition: left .2s ease; }
+        .switch-input:checked + .switch-label { background: #e6b36c; }
+        .switch-input:checked + .switch-label .switch-button { left: 22px; }
+        .switch-text { color:#5a4e3c; font-size: 14px; }
+        .drawer label { font-size: 14px; }
+        .drawer input[type="checkbox"] { width: 20px; height: 20px; }
+
+        /* —— 筛选区域优化 —— */
+        .filters-toolbar {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 12px;
+            margin-top: 8px;
+            margin-bottom: 8px;
+        }
+        .filters-grid {
+            display: grid;
+            grid-template-columns: repeat(3, minmax(180px, 220px));
+            gap: 12px;
+            align-items: center;
+        }
+        @media (max-width: 992px) {
+            .filters-grid { grid-template-columns: repeat(2, minmax(160px, 1fr)); }
+        }
+        @media (max-width: 560px) {
+            .filters-grid { grid-template-columns: 1fr; }
+        }
+        .filter-control { width: 220px; }
+        .filter-status { width: 160px; }
+        .filters-actions { display: flex; gap: 10px; margin-left: auto; }
+        .select-box {
+            height: 44px;
+            padding: 10px 12px;
+            font-size: 16px;
+            border: 1px solid #ddd;
+            border-radius: 10px;
+            outline: none;
+            background-color: #fff;
+            box-shadow: inset 0 1px 3px rgba(0,0,0,0.03);
+        }
+        .select-box:focus {
+            border-color: #e6b36c;
+            box-shadow: 0 0 0 3px rgba(230, 179, 108, 0.20);
         }
     </style>
 </head>
@@ -302,22 +433,16 @@
                 </div>
             </div>
             
-            <div class="nav-tabs" v-if="isAuthenticated">
-                <div class="nav-tab" :class="{ active: activeTab === 'dashboard' }" @click="activeTab = 'dashboard'">
-                    📊 数据概览
+            <div v-if="isAuthenticated" class="layout">
+              <aside class="sidebar">
+                <div class="side-nav">
+                  <div class="side-item" :class="{ active: activeTab === 'dashboard' }" @click="activeTab = 'dashboard'">📊 数据概览</div>
+                  <div class="side-item" :class="{ active: activeTab === 'products' }" @click="activeTab = 'products'">🛍️ 产品管理</div>
+                  <div class="side-item" :class="{ active: activeTab === 'brands' }" @click="activeTab = 'brands'">🏷️ 品牌管理</div>
+                  <div class="side-item" :class="{ active: activeTab === 'categories' }" @click="activeTab = 'categories'">📂 分类管理</div>
                 </div>
-                <div class="nav-tab" :class="{ active: activeTab === 'products' }" @click="activeTab = 'products'">
-                    🛍️ 产品管理
-                </div>
-                <div class="nav-tab" :class="{ active: activeTab === 'brands' }" @click="activeTab = 'brands'">
-                    🏷️ 品牌管理
-                </div>
-                <div class="nav-tab" :class="{ active: activeTab === 'categories' }" @click="activeTab = 'categories'">
-                    📂 分类管理
-                </div>
-            </div>
-            
-            <div class="content-panel">
+              </aside>
+              <div class="content-panel">
                 <!-- 数据概览 -->
                 <div v-if="activeTab === 'dashboard'">
                     <h2>📊 数据统计</h2>
@@ -372,10 +497,89 @@
                 <!-- 产品管理 -->
                 <div v-if="activeTab === 'products'">
                     <h2>🛍️ 产品管理</h2>
-                    <div class="toolbar">
-                        <input v-model="productSearch" class="search-box" placeholder="搜索产品名称、编码或规格...">
-                        <button class="btn btn-primary" @click="loadProducts">🔄 刷新数据</button>
-                        <button class="btn btn-success" @click="openAddProductModal">➕ 添加产品</button>
+                    <!-- 分区面板容器 -->
+                    <div class="panel-sections">
+                      <!-- 搜索与操作 -->
+                      <div class="panel">
+                        <div class="panel-title" @click="togglePanel('searchOps')" style="cursor:pointer; display:flex; align-items:center; justify-content:space-between;">
+                          <span>查询条件</span>
+                          <div style="display:flex; align-items:center; gap:8px;">
+                            <button class="btn btn-primary" @click.stop="loadProducts">刷新数据</button>
+                            <button class="btn btn-success" @click.stop="openAddProductModal">添加产品</button>
+                            <span>{{ panelCollapsed.searchOps ? '▶' : '▼' }}</span>
+                          </div>
+                        </div>
+                        <div v-show="!panelCollapsed.searchOps" class="query-bar">
+                          <input v-model="productSearch" class="search-box" placeholder="搜索产品名称、编码或规格..." style="flex:1; min-width:260px;">
+                          <select v-model="filterBrandId" class="select-box filter-control" style="width:160px;">
+                            <option :value="null">全部品牌</option>
+                            <option v-for="b in brandOptions" :key="b.id" :value="b.id">{{ b.name }}</option>
+                          </select>
+                          <select v-model="filterCategoryId" class="select-box filter-control" style="width:160px;">
+                            <option :value="null">全部分类</option>
+                            <option v-for="c in categoryOptions" :key="c.id" :value="c.id">{{ c.name }}</option>
+                          </select>
+                          <select v-model="filterOnShelf" class="select-box filter-status" style="width:140px;">
+                            <option value="all">全部状态</option>
+                            <option value="on">上架</option>
+                            <option value="off">下架</option>
+                          </select>
+                          <button class="btn btn-secondary" @click="clearFilters">清空筛选</button>
+                        </div>
+                      </div>
+
+                      <!-- 批量操作 -->
+                      <div class="panel" v-if="filteredProducts.length">
+                        <div class="panel-title" @click="togglePanel('bulk')" style="cursor:pointer; display:flex; align-items:center; justify-content:space-between;">
+                          <span>批量操作</span>
+                          <span>{{ panelCollapsed.bulk ? '▶' : '▼' }}</span>
+                        </div>
+                        <div class="bulk-bar" v-show="!panelCollapsed.bulk">
+                          <label style="display:flex; align-items:center; gap:8px;">
+                             <input type="checkbox" :checked="isAllSelected" @change="toggleSelectAll($event)" />
+                             <span>全选本页</span>
+                          </label>
+                          <div style="display:flex; align-items:center; gap:10px; flex-wrap: nowrap; white-space: nowrap;">
+                            <select v-model="bulkField" class="search-box" style="width:200px;">
+                              <option value="isOnShelf">上架状态</option>
+                              <option value="price">价格</option>
+                              <option value="unit">单位</option>
+                              <option value="spec">规格</option>
+                              <option value="brandId">品牌</option>
+                              <option value="categoryId">分类</option>
+                              <option value="remark">备注</option>
+                            </select>
+                            <!-- 动态值输入 -->
+                            <template v-if="bulkField === 'isOnShelf'">
+                              <div class="switch">
+                                <input type="checkbox" id="bulkOnShelf" class="switch-input" v-model="bulkValueBool">
+                                <label for="bulkOnShelf" class="switch-label"><span class="switch-button"></span></label>
+                                <span class="switch-text">{{ bulkValueBool ? '开' : '关' }}</span>
+                              </div>
+                            </template>
+                            <template v-else-if="bulkField === 'price'">
+                              <input type="number" step="0.01" v-model.number="bulkValueNumber" class="search-box" style="width:200px;" placeholder="设置价格">
+                            </template>
+                            <template v-else-if="bulkField === 'brandId'">
+                              <select v-model="bulkValueId" class="search-box" style="width:220px;">
+                                <option :value="null">未选择</option>
+                                <option v-for="b in brandOptions" :key="b.id" :value="b.id">{{ b.name }}</option>
+                              </select>
+                            </template>
+                            <template v-else-if="bulkField === 'categoryId'">
+                              <select v-model="bulkValueId" class="search-box" style="width:220px;">
+                                <option :value="null">未选择</option>
+                                <option v-for="c in categoryOptions" :key="c.id" :value="c.id">{{ c.name }}</option>
+                              </select>
+                            </template>
+                            <template v-else>
+                              <input type="text" v-model="bulkValueText" class="search-box" style="width:280px;" :placeholder="'设置 ' + bulkField">
+                            </template>
+                            <button class="btn btn-primary" @click="applyBulkUpdate" :disabled="!selectedProductIds.length">应用到已选</button>
+                          </div>
+                        </div>
+                      </div>
+                      
                     </div>
                     
                     <div v-if="loading" class="loading">
@@ -387,17 +591,23 @@
                         <table class="data-table">
                             <thead>
                                 <tr>
-                                    <th>产品名称</th>
-                                    <th>品牌</th>
-                                    <th>分类</th>
-                                    <th>规格</th>
-                                    <th>单位</th>
-                                    <th>状态</th>
+                                    <th style="width:50px;">
+                                      <input type="checkbox" :checked="isAllSelected" @change="toggleSelectAll($event)" title="全选当前" />
+                                    </th>
+                                    <th @click="toggleSort('name')" style="cursor:pointer;">产品名称 <span v-if="sortBy==='name'">{{ sortOrder==='asc' ? '▲' : '▼' }}</span></th>
+                                    <th @click="toggleSort('brandName')" style="cursor:pointer;">品牌 <span v-if="sortBy==='brandName'">{{ sortOrder==='asc' ? '▲' : '▼' }}</span></th>
+                                    <th @click="toggleSort('categoryName')" style="cursor:pointer;">分类 <span v-if="sortBy==='categoryName'">{{ sortOrder==='asc' ? '▲' : '▼' }}</span></th>
+                                    <th @click="toggleSort('spec')" style="cursor:pointer;">规格 <span v-if="sortBy==='spec'">{{ sortOrder==='asc' ? '▲' : '▼' }}</span></th>
+                                    <th @click="toggleSort('unit')" style="cursor:pointer;">单位 <span v-if="sortBy==='unit'">{{ sortOrder==='asc' ? '▲' : '▼' }}</span></th>
+                                    <th @click="toggleSort('isOnShelf')" style="cursor:pointer;">状态 <span v-if="sortBy==='isOnShelf'">{{ sortOrder==='asc' ? '▲' : '▼' }}</span></th>
                                     <th>操作</th>
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr v-for="product in filteredProducts" :key="product.id">
+                                <tr v-for="product in displayedProducts" :key="product.id" @click="toggleRowSelect(product.id)" style="cursor:pointer;">
+                                    <td>
+                                      <input type="checkbox" class="row-select" :value="product.id" v-model="selectedProductIds" @click.stop />
+                                    </td>
                                     <td>{{ product.name }}</td>
                                     <td>{{ product.brandName || '-' }}</td>
                                     <td>{{ product.categoryName || '-' }}</td>
@@ -408,12 +618,27 @@
                                         <span v-else style="color: orange;">⏸️ 下架</span>
                                     </td>
                                     <td>
-                                        <button class="btn btn-primary" @click="openEditProductModal(product)">✏️ 编辑</button>
-                                        <button class="btn btn-danger" @click="deleteProduct(product)">🗑️ 删除</button>
+                              <button class="btn btn-primary" @click.stop="openEditProductModal(product)">编辑</button>
+                              <button class="btn btn-danger" @click.stop="deleteProduct(product)">删除</button>
                                     </td>
                                 </tr>
                             </tbody>
                         </table>
+                        <!-- 分页组件 -->
+                        <div class="pagination">
+                            <div style="display:flex; align-items:center; gap:10px; flex-wrap:wrap;">
+                              <button class="page-btn" @click="prevPage" :disabled="currentPage === 1">上一页</button>
+                              <span>第 {{ currentPage }} / {{ totalPages }} 页</span>
+                              <button class="page-btn" @click="nextPage" :disabled="currentPage === totalPages">下一页</button>
+                              <span style="color:#666; margin-left:12px;">每页</span>
+                              <select v-model.number="pageSize" class="select-box" style="width:80px;" @change="setPageSize(pageSize)">
+                                <option :value="20">20</option>
+                                <option :value="50">50</option>
+                                <option :value="100">100</option>
+                              </select>
+                              <span style="color:#666;">条（共 {{ filteredProducts.length }} 条）</span>
+                            </div>
+                        </div>
                     </div>
                 </div>
                 
@@ -452,8 +677,8 @@
                                         <span style="color: green;">✅ 活跃</span>
                                     </td>
                                     <td>
-                                        <button class="btn btn-primary">✏️ 编辑</button>
-                                        <button class="btn btn-danger">🗑️ 删除</button>
+                              <button class="btn btn-primary">编辑</button>
+                              <button class="btn btn-danger">删除</button>
                                     </td>
                                 </tr>
                             </tbody>
@@ -496,16 +721,88 @@
                                         <span style="color: green;">✅ 活跃</span>
                                     </td>
                                     <td>
-                                        <button class="btn btn-primary">✏️ 编辑</button>
-                                        <button class="btn btn-danger">🗑️ 删除</button>
+                              <button class="btn btn-primary">编辑</button>
+                              <button class="btn btn-danger">删除</button>
                                     </td>
                                 </tr>
                             </tbody>
                         </table>
                     </div>
                 </div>
+              </div>
             </div>
         </div>
+
+    <!-- 产品新增/编辑抽屉 -->
+    <div class="drawer-overlay" v-if="showProductModal"></div>
+    <div class="drawer" v-if="showProductModal">
+      <div class="drawer-header">
+        <h3>{{ isEditMode ? '编辑产品' : '新增产品' }}</h3>
+      </div>
+      <div class="drawer-body">
+          <div style="display:grid; grid-template-columns: repeat(2, 1fr); gap: 16px;">
+            <div>
+              <label style="display:block; margin-bottom:6px; color:#666;">产品名称</label>
+              <input v-model="productForm.name" type="text" placeholder="请输入产品名称" class="search-box" />
+            </div>
+          <div>
+            <label style="display:block; margin-bottom:6px; color:#666;">产品编码</label>
+            <input v-model="productForm.productCode" type="text" placeholder="可选，未填自动生成" class="search-box" />
+          </div>
+          <div>
+            <label style="display:block; margin-bottom:6px; color:#666;">品牌</label>
+            <select v-model="productForm.brandId" class="search-box">
+              <option :value="null">未选择</option>
+              <option v-for="b in brandOptions" :key="b.id" :value="b.id">{{ b.name }}</option>
+            </select>
+          </div>
+          <div>
+            <label style="display:block; margin-bottom:6px; color:#666;">分类</label>
+            <select v-model="productForm.categoryId" class="search-box">
+              <option :value="null">未选择</option>
+              <option v-for="c in categoryOptions" :key="c.id" :value="c.id">{{ c.name }}</option>
+            </select>
+          </div>
+          <div>
+            <label style="display:block; margin-bottom:6px; color:#666;">货号</label>
+            <input v-model="productForm.itemNo" type="text" placeholder="可选" class="search-box" />
+          </div>
+          <div>
+            <label style="display:block; margin-bottom:6px; color:#666;">规格</label>
+            <input v-model="productForm.spec" type="text" placeholder="如 10mm/20mm" class="search-box" />
+          </div>
+          <div>
+            <label style="display:block; margin-bottom:6px; color:#666;">单位</label>
+            <input v-model="productForm.unit" type="text" placeholder="如 件/套/米" class="search-box" />
+          </div>
+          <div>
+            <label style="display:block; margin-bottom:6px; color:#666;">价格</label>
+            <input v-model.number="productForm.price" type="number" step="0.01" placeholder="可选" class="search-box" />
+          </div>
+          <div>
+            <label style="display:block; margin-bottom:6px; color:#666;">图片地址</label>
+            <input v-model="productForm.imageUrl" type="text" placeholder="可选" class="search-box" />
+          </div>
+          <div>
+            <label style="display:block; margin-bottom:6px; color:#666;">备注</label>
+            <input v-model="productForm.remark" type="text" placeholder="可选" class="search-box" />
+          </div>
+          <div style="margin-top:4px; grid-column: span 2;">
+            <label style="display:block; margin-bottom:6px; color:#666;">上架</label>
+            <div class="switch">
+              <input type="checkbox" id="onShelfSwitch" class="switch-input" v-model="productForm.isOnShelf">
+              <label for="onShelfSwitch" class="switch-label">
+                <span class="switch-button"></span>
+              </label>
+              <span class="switch-text">{{ productForm.isOnShelf ? '开' : '关' }}</span>
+            </div>
+          </div>
+          </div>
+        </div>
+      <div class="drawer-actions">
+        <button class="btn" @click="closeProductModal" style="background:#eee; color:#5a4e3c;">取消</button>
+        <button class="btn btn-primary" @click="saveProduct">{{ isEditMode ? '保存修改' : '创建产品' }}</button>
+      </div>
     </div>
 
     <script>
@@ -534,28 +831,124 @@
                             queryFunction: 'mysqlQuery'
                         }
                     },
-                    stats: {
-                        totalProducts: 0,
-                        totalBrands: 0,
-                        totalCategories: 0,
-                        onShelfProducts: 0
+            stats: {
+                totalProducts: 0,
+                totalBrands: 0,
+                totalCategories: 0,
+                onShelfProducts: 0
+            },
+            products: [],
+            brands: [],
+            categories: [],
+            topBrands: [],
+            // 批量选择与更新
+            selectedProductIds: [],
+            bulkField: 'isOnShelf',
+            bulkValueBool: true,
+            bulkValueNumber: null,
+            bulkValueText: '',
+            bulkValueId: null,
+            // 分页相关
+            pageSize: 50,
+            currentPage: 1,
+            // 排序相关
+            sortBy: null,
+            sortOrder: 'asc',
+            // 产品CRUD相关状态
+            showProductModal: false,
+            isEditMode: false,
+            productForm: {
+              id: null,
+                      name: '',
+                      productCode: '',
+                      brandId: null,
+                      categoryId: null,
+                      itemNo: '',
+                      spec: '',
+                      unit: '',
+                      price: null,
+                      imageUrl: '',
+                      remark: '',
+                      isOnShelf: true
                     },
-                    products: [],
-                    brands: [],
-                    categories: [],
-                    topBrands: []
-                };
+                    brandOptions: [],
+                    categoryOptions: [],
+                    // 列表筛选状态
+                    filterBrandId: null,
+                    filterCategoryId: null,
+                    filterOnShelf: 'all',
+                    // 面板折叠状态
+                    panelCollapsed: {
+                        searchOps: false,
+                        filters: false,
+                        bulk: false,
+                        paging: false
+                    },
+                }
             },
             computed: {
                 filteredProducts() {
-                    if (!this.productSearch) return this.products.slice(0, 50); // 限制显示数量
-                    
-                    const search = this.productSearch.toLowerCase();
-                    return this.products.filter(product => 
-                        product.name.toLowerCase().includes(search) ||
-                        (product.productCode && product.productCode.toLowerCase().includes(search)) ||
-                        (product.spec && product.spec.toLowerCase().includes(search))
-                    ).slice(0, 50);
+                    let list = Array.isArray(this.products) ? this.products.slice() : [];
+
+                    const search = (this.productSearch || '').trim().toLowerCase();
+                    if (search) {
+                        list = list.filter(product => 
+                            (product.name && product.name.toLowerCase().includes(search)) ||
+                            (product.productCode && product.productCode.toLowerCase().includes(search)) ||
+                            (product.spec && product.spec.toLowerCase().includes(search))
+                        );
+                    }
+
+                    if (this.filterBrandId != null) {
+                        const fb = this.filterBrandId;
+                        list = list.filter(p => p.brandId == fb);
+                    }
+                    if (this.filterCategoryId != null) {
+                        const fc = this.filterCategoryId;
+                        list = list.filter(p => p.categoryId == fc);
+                    }
+                    if (this.filterOnShelf === 'on') {
+                        list = list.filter(p => !!p.isOnShelf);
+                    } else if (this.filterOnShelf === 'off') {
+                        list = list.filter(p => !p.isOnShelf);
+                    }
+
+                    return list;
+                },
+                totalPages() {
+                    const total = this.sortedFilteredProducts.length;
+                    return total === 0 ? 1 : Math.ceil(total / this.pageSize);
+                },
+                sortedFilteredProducts() {
+                    const list = this.filteredProducts.slice();
+                    if (!this.sortBy) return list;
+                    const key = this.sortBy;
+                    const order = this.sortOrder === 'desc' ? -1 : 1;
+                    return list.sort((a,b) => {
+                        let va = a[key];
+                        let vb = b[key];
+                        // 统一处理空值
+                        if (va == null && vb == null) return 0;
+                        if (va == null) return -1 * order;
+                        if (vb == null) return 1 * order;
+                        // 布尔转数字
+                        if (typeof va === 'boolean') va = va ? 1 : 0;
+                        if (typeof vb === 'boolean') vb = vb ? 1 : 0;
+                        // 字符串统一小写比较
+                        if (typeof va === 'string') va = va.toLowerCase();
+                        if (typeof vb === 'string') vb = vb.toLowerCase();
+                        if (va < vb) return -1 * order;
+                        if (va > vb) return 1 * order;
+                        return 0;
+                    });
+                },
+                displayedProducts() {
+                    const start = (this.currentPage - 1) * this.pageSize;
+                    return this.sortedFilteredProducts.slice(start, start + this.pageSize);
+                },
+                isAllSelected() {
+                    if (!this.displayedProducts.length) return false;
+                    return this.selectedProductIds.length === this.displayedProducts.map(p => p.id).length;
                 }
             },
             async mounted() {
@@ -598,6 +991,98 @@
                 }
             },
             methods: {
+                clearFilters() {
+                    this.productSearch = '';
+                    this.filterBrandId = null;
+                    this.filterCategoryId = null;
+                    this.filterOnShelf = 'all';
+                    this.selectedProductIds = [];
+                },
+                toggleSort(field) {
+                    if (this.sortBy === field) {
+                        this.sortOrder = this.sortOrder === 'asc' ? 'desc' : 'asc';
+                    } else {
+                        this.sortBy = field;
+                        this.sortOrder = 'asc';
+                    }
+                    this.currentPage = 1;
+                },
+                toggleSelectAll(e) {
+                    const checked = !!e.target.checked;
+                    if (checked) {
+                        this.selectedProductIds = this.displayedProducts.map(p => p.id);
+                    } else {
+                        this.selectedProductIds = [];
+                    }
+                },
+                toggleRowSelect(id) {
+                    const idx = this.selectedProductIds.indexOf(id);
+                    if (idx === -1) this.selectedProductIds.push(id);
+                    else this.selectedProductIds.splice(idx, 1);
+                },
+                // 分页控制
+                prevPage() {
+                    if (this.currentPage > 1) {
+                        this.currentPage--;
+                        this.selectedProductIds = [];
+                    }
+                },
+                nextPage() {
+                    if (this.currentPage < this.totalPages) {
+                        this.currentPage++;
+                        this.selectedProductIds = [];
+                    }
+                },
+                setPageSize(size) {
+                    this.pageSize = Number(size) || 50;
+                    this.currentPage = 1;
+                    this.selectedProductIds = [];
+                },
+                togglePanel(key) {
+                    if (!this.panelCollapsed || !(key in this.panelCollapsed)) return;
+                    this.panelCollapsed[key] = !this.panelCollapsed[key];
+                },
+                async applyBulkUpdate() {
+                    try {
+                        await this.ensureAuthenticated();
+                        if (!this.selectedProductIds.length) {
+                            alert('请先选择需要批量更新的产品');
+                            return;
+                        }
+                        // 解析值
+                        let value;
+                        if (this.bulkField === 'isOnShelf') value = !!this.bulkValueBool;
+                        else if (this.bulkField === 'price') value = (this.bulkValueNumber != null ? Number(this.bulkValueNumber) : null);
+                        else if (this.bulkField === 'brandId' || this.bulkField === 'categoryId') value = (this.bulkValueId ?? null);
+                        else value = this.bulkValueText || '';
+
+                        // 逐条更新（为避免批量失败，这里串行执行）
+                        for (const id of this.selectedProductIds) {
+                            const payload = { id };
+                            payload[this.bulkField] = value;
+                            const res = await this.callFunction('mysqlQuery', { action: 'product.update', payload });
+                            if (!res || !res.ok) {
+                                throw new Error(res?.error || res?.message || `更新失败（ID: ${id}）`);
+                            }
+                            // 本地行级更新，避免整表刷新
+                            const extra = {};
+                            if (this.bulkField === 'brandId') {
+                                const b = this.brandOptions.find(x => x.id === value);
+                                extra.brandName = b ? b.name : null;
+                            }
+                            if (this.bulkField === 'categoryId') {
+                                const c = this.categoryOptions.find(x => x.id === value);
+                                extra.categoryName = c ? c.name : null;
+                            }
+                            this.updateLocalProduct(id, { [this.bulkField]: value, ...extra });
+                        }
+                        alert('批量更新完成');
+                        this.selectedProductIds = [];
+                    } catch (error) {
+                        console.error('批量更新失败:', error);
+                        alert(error?.message || '批量更新失败');
+                    }
+                },
                 async ensureAuthenticated() {
                     const state = await this.auth.getLoginState();
                     if (!state || !state.user) {
@@ -680,7 +1165,6 @@
                     try {
                         const result = await this.callFunction('mysqlQuery', { action: 'products' });
                         if (result && result.ok) {
-                            // 解析产品数据
                             this.products = [];
                             if (result.data.categories) {
                                 result.data.categories.forEach(category => {
@@ -695,6 +1179,13 @@
                                 });
                             }
                         }
+                        // 加载下拉选项（品牌与分类）
+                        const brandsAll = await this.callFunction('mysqlQuery', { action: 'brands.all' });
+                        this.brandOptions = brandsAll && brandsAll.ok ? (brandsAll.data || []) : (this.brands || []);
+                        const categoriesAll = await this.callFunction('mysqlQuery', { action: 'categories.all' });
+                        this.categoryOptions = categoriesAll && categoriesAll.ok ? (categoriesAll.data || []) : (this.categories || []);
+                        this.currentPage = 1; // 数据刷新后回到第一页
+                        this.selectedProductIds = [];
                     } catch (error) {
                         console.error('加载产品数据失败:', error);
                     } finally {
@@ -728,6 +1219,127 @@
                     } finally {
                         this.loading = false;
                     }
+                },
+                // 新增：打开抽屉前确保加载下拉选项
+                async loadDropdownOptions(force = false) {
+                    try {
+                        await this.ensureAuthenticated();
+                        if (force || !this.brandOptions.length) {
+                            const brandsAll = await this.callFunction('mysqlQuery', { action: 'brands.all' });
+                            const brandsData = (brandsAll && brandsAll.ok) ? (brandsAll.data || brandsAll.data?.brandDictionary?.brands || []) : [];
+                            this.brandOptions = Array.isArray(brandsData) ? brandsData : [];
+                        }
+                        if (force || !this.categoryOptions.length) {
+                            const categoriesAll = await this.callFunction('mysqlQuery', { action: 'categories.all' });
+                            const categoriesData = (categoriesAll && categoriesAll.ok) ? (categoriesAll.data || categoriesAll.data?.categoryDictionary?.categories || []) : [];
+                            this.categoryOptions = Array.isArray(categoriesData) ? categoriesData : [];
+                        }
+                    } catch (error) {
+                        console.error('加载下拉选项失败:', error);
+                    }
+                },
+
+                
+                async openAddProductModal() {
+                    this.isEditMode = false;
+                    this.productForm = {
+                        id: null,
+                        name: '',
+                        productCode: '',
+                        brandId: null,
+                        categoryId: null,
+                        itemNo: '',
+                        spec: '',
+                        unit: '',
+                        price: null,
+                        imageUrl: '',
+                        remark: '',
+                        isOnShelf: true
+                    };
+                    await this.loadDropdownOptions();
+                    this.showProductModal = true;
+                },
+                async openEditProductModal(product) {
+                    this.isEditMode = true;
+                    this.productForm = {
+                        id: product.id,
+                        name: product.name || '',
+                        productCode: product.productCode || '',
+                        brandId: product.brandId ?? null,
+                        categoryId: product.categoryId ?? null,
+                        itemNo: product.itemNo || '',
+                        spec: product.spec || '',
+                        unit: product.unit || '',
+                        price: product.price != null ? Number(product.price) : null,
+                        imageUrl: product.image || product.imageUrl || '',
+                        remark: product.description || product.remark || '',
+                        isOnShelf: product.isOnShelf !== undefined ? !!product.isOnShelf : true
+                    };
+                    await this.loadDropdownOptions();
+                    this.showProductModal = true;
+                },
+                closeProductModal() {
+                    this.showProductModal = false;
+                },
+                async saveProduct() {
+                    try {
+                        await this.ensureAuthenticated();
+                        const payload = { ...this.productForm };
+                        const action = this.isEditMode ? 'product.update' : 'product.create';
+                        const res = await this.callFunction('mysqlQuery', { action, payload });
+                        if (res && res.ok) {
+                            this.showProductModal = false;
+                            if (this.isEditMode) {
+                                const b = this.brandOptions.find(x => x.id === this.productForm.brandId);
+                                const c = this.categoryOptions.find(x => x.id === this.productForm.categoryId);
+                                this.updateLocalProduct(this.productForm.id, {
+                                    ...this.productForm,
+                                    brandName: b ? b.name : (this.productForm.brandName || null),
+                                    categoryName: c ? c.name : (this.productForm.categoryName || null)
+                                });
+                            } else {
+                                const createdId = res.data?.id || res.id || null;
+                                const b = this.brandOptions.find(x => x.id === this.productForm.brandId);
+                                const c = this.categoryOptions.find(x => x.id === this.productForm.categoryId);
+                                const newItem = {
+                                    ...(res.data?.product || this.productForm),
+                                    id: createdId || this.productForm.id,
+                                    brandName: b ? b.name : null,
+                                    categoryName: c ? c.name : null
+                                };
+                                // 添加到列表顶部
+                                this.products.unshift(newItem);
+                            }
+                        } else {
+                            alert((res && res.error) ? res.error : '保存失败');
+                        }
+                    } catch (e) {
+                        console.error('保存产品失败:', e);
+                        alert(e?.message || '保存产品失败');
+                    }
+                },
+                updateLocalProduct(id, changes) {
+                    const idx = this.products.findIndex(p => p.id === id);
+                    if (idx !== -1) {
+                        this.products[idx] = { ...this.products[idx], ...changes };
+                    }
+                },
+                async deleteProduct(product) {
+                    if (!product || !product.id) return alert('缺少产品 id');
+                    if (!confirm(`确认删除产品：${product.name}？`)) return;
+                    try {
+                        await this.ensureAuthenticated();
+                        const res = await this.callFunction('mysqlQuery', { action: 'product.delete', payload: { id: product.id } });
+                        if (res && res.ok) {
+                            // 本地删除，避免整表刷新
+                            this.products = this.products.filter(p => p.id !== product.id);
+                        } else {
+                            alert((res && res.error) ? res.error : '删除失败');
+                        }
+                    } catch (e) {
+                        console.error('删除产品失败:', e);
+                        alert(e?.message || '删除产品失败');
+                    }
                 }
             },
             watch: {
@@ -740,78 +1352,15 @@
                     } else if (newTab === 'categories' && this.categories.length === 0) {
                         this.loadCategories();
                     }
-                }
+                },
+                // 筛选与搜索变化时重置分页与选择
+                productSearch() { this.currentPage = 1; this.selectedProductIds = []; },
+                filterBrandId() { this.currentPage = 1; this.selectedProductIds = []; },
+                filterCategoryId() { this.currentPage = 1; this.selectedProductIds = []; },
+                filterOnShelf() { this.currentPage = 1; this.selectedProductIds = []; }
             }
         }).mount('#app');
     </script>
-</body>
-</html>
 
-<!-- 在脚本前插入：产品新增/编辑模态框 -->
-<div class="modal-overlay" v-if="showProductModal">
-  <div class="modal" style="max-width: 720px;">
-    <div class="modal-header">
-      <h3>{{ isEditMode ? '编辑产品' : '新增产品' }}</h3>
-    </div>
-    <div class="modal-body">
-      <div style="display:grid; grid-template-columns: repeat(2, 1fr); gap: 16px;">
-        <div>
-          <label style="display:block; margin-bottom:6px; color:#666;">产品名称</label>
-          <input v-model="productForm.name" type="text" placeholder="请输入产品名称" class="search-box" />
-        </div>
-        <div>
-          <label style="display:block; margin-bottom:6px; color:#666;">产品编码</label>
-          <input v-model="productForm.productCode" type="text" placeholder="可选，未填自动生成" class="search-box" />
-        </div>
-        <div>
-          <label style="display:block; margin-bottom:6px; color:#666;">品牌</label>
-          <select v-model="productForm.brandId" class="search-box">
-            <option :value="null">未选择</option>
-            <option v-for="b in brandOptions" :key="b.id" :value="b.id">{{ b.name }}</option>
-          </select>
-        </div>
-        <div>
-          <label style="display:block; margin-bottom:6px; color:#666;">分类</label>
-          <select v-model="productForm.categoryId" class="search-box">
-            <option :value="null">未选择</option>
-            <option v-for="c in categoryOptions" :key="c.id" :value="c.id">{{ c.name }}</option>
-          </select>
-        </div>
-        <div>
-          <label style="display:block; margin-bottom:6px; color:#666;">货号</label>
-          <input v-model="productForm.itemNo" type="text" placeholder="可选" class="search-box" />
-        </div>
-        <div>
-          <label style="display:block; margin-bottom:6px; color:#666;">规格</label>
-          <input v-model="productForm.spec" type="text" placeholder="如 10mm/20mm" class="search-box" />
-        </div>
-        <div>
-          <label style="display:block; margin-bottom:6px; color:#666;">单位</label>
-          <input v-model="productForm.unit" type="text" placeholder="如 件/套/米" class="search-box" />
-        </div>
-        <div>
-          <label style="display:block; margin-bottom:6px; color:#666;">价格</label>
-          <input v-model.number="productForm.price" type="number" step="0.01" placeholder="可选" class="search-box" />
-        </div>
-        <div>
-          <label style="display:block; margin-bottom:6px; color:#666;">图片地址</label>
-          <input v-model="productForm.imageUrl" type="text" placeholder="可选" class="search-box" />
-        </div>
-        <div>
-          <label style="display:block; margin-bottom:6px; color:#666;">备注</label>
-          <input v-model="productForm.remark" type="text" placeholder="可选" class="search-box" />
-        </div>
-        <div style="display:flex; align-items:center; gap:8px; margin-top:8px;">
-          <input type="checkbox" id="onShelf" v-model="productForm.isOnShelf" />
-          <label for="onShelf" style="color:#666;">上架</label>
-        </div>
-      </div>
-    </div>
-    <div class="modal-actions">
-      <button class="btn" @click="closeProductModal" style="background:#eee; color:#5a4e3c;">取消</button>
-      <button class="btn btn-primary" @click="saveProduct">{{ isEditMode ? '保存修改' : '创建产品' }}</button>
-    </div>
-  </div>
-</div>
 </body>
 </html>
