@@ -1,0 +1,18 @@
+<!-- pages/category/category.wxml - 分类页 -->
+<view class="container">
+    <view class="category-grid">
+        <view wx:for="{{categories}}" wx:key="id" class="category-card" bindtap="selectCategory" data-id="{{item.id}}" data-name="{{item.name}}">
+            <image class="category-banner" src="{{item.bannerUrl || '/assets/images/category-default.png'}}" mode="aspectFill"></image>
+            <view class="category-info">
+                <text class="category-name">{{item.name}}</text>
+                <text class="category-count">{{item.productCount || 0}} 件产品</text>
+            </view>
+        </view>
+    </view>
+    <view class="empty-state" wx:if="{{categories.length === 0 && !loading}}">
+        <text class="empty-text">暂无分类数据</text>
+    </view>
+    <view class="loading" wx:if="{{loading}}">
+        <text>加载中...</text>
+    </view>
+</view>

@@ -1,0 +1,40 @@
+/* pages/category/category.wxss - 分类页样式 */
+
+.category-grid {
+  display: flex;
+  flex-wrap: wrap;
+  margin: -12rpx;
+}
+
+.category-card {
+  width: calc(50% - 24rpx);
+  margin: 12rpx;
+  background-color: #ffffff;
+  border-radius: 16rpx;
+  overflow: hidden;
+  box-shadow: 0 4rpx 16rpx rgba(0, 0, 0, 0.08);
+}
+
+.category-banner {
+  width: 100%;
+  height: 180rpx;
+  background-color: #f0f0f0;
+}
+
+.category-info {
+  padding: 20rpx;
+}
+
+.category-name {
+  display: block;
+  font-size: 30rpx;
+  font-weight: 500;
+  color: #333333;
+  margin-bottom: 8rpx;
+}
+
+.category-count {
+  display: block;
+  font-size: 24rpx;
+  color: #999999;
+}
