@@ -5,14 +5,26 @@ FROM nginx:alpine
 WORKDIR /usr/share/nginx/html
 
 # 复制静态文件到nginx默认目录
-COPY src/ .
+# 使用 deploy/ 目录作为源
+COPY deploy/index.html .
+COPY deploy/admin.html .
+COPY deploy/cloudbase.config.js .
+COPY deploy/cloudbase.full.js .
+COPY deploy/tcb.js .
+COPY deploy/data/ ./data/
+COPY deploy/assets/ ./assets/
 
-# 创建nginx配置文件，支持SPA路由
+# 创建nginx配置文件，支持SPA路由和CORS
 RUN echo 'server { \
     listen 80; \
     server_name localhost; \
     root /usr/share/nginx/html; \
     index index.html; \
+    \
+    # CORS配置 \
+    add_header Access-Control-Allow-Origin "*"; \
+    add_header Access-Control-Allow-Methods "GET, POST, OPTIONS"; \
+    add_header Access-Control-Allow-Headers "Content-Type"; \
     \
     # 静态资源缓存配置 \
     location ~* \.(js|css|png|jpg|jpeg|gif|ico|svg)$ { \

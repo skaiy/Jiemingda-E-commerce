@@ -1063,9 +1063,9 @@
 
                         // 逐条更新（为避免批量失败，这里串行执行）
                         for (const id of this.selectedProductIds) {
-                            const payload = { id };
-                            payload[this.bulkField] = value;
-                            const res = await this.callFunction('mysqlQuery', { action: 'product.update', payload });
+                            const params = { action: 'update', id };
+                            params[this.bulkField] = value;
+                            const res = await this.callFunction('productCRUD', params);
                             if (!res || !res.ok) {
                                 throw new Error(res?.error || res?.message || `更新失败（ID: ${id}）`);
                             }
@@ -1289,9 +1289,10 @@
                 async saveProduct() {
                     try {
                         await this.ensureAuthenticated();
-                        const payload = { ...this.productForm };
-                        const action = this.isEditMode ? 'product.update' : 'product.create';
-                        const res = await this.callFunction('mysqlQuery', { action, payload });
+                        const action = this.isEditMode ? 'update' : 'create';
+                        // 构建请求参数（productCRUD云函数使用扁平结构）
+                        const params = { action, ...this.productForm };
+                        const res = await this.callFunction('productCRUD', params);
                         if (res && res.ok) {
                             this.showProductModal = false;
                             if (this.isEditMode) {
@@ -1307,7 +1308,7 @@
                                 const b = this.brandOptions.find(x => x.id === this.productForm.brandId);
                                 const c = this.categoryOptions.find(x => x.id === this.productForm.categoryId);
                                 const newItem = {
-                                    ...(res.data?.product || this.productForm),
+                                    ...(res.data || this.productForm),
                                     id: createdId || this.productForm.id,
                                     brandName: b ? b.name : null,
                                     categoryName: c ? c.name : null
@@ -1334,7 +1335,7 @@
                     if (!confirm(`确认删除产品：${product.name}？`)) return;
                     try {
                         await this.ensureAuthenticated();
-                        const res = await this.callFunction('mysqlQuery', { action: 'product.delete', payload: { id: product.id } });
+                        const res = await this.callFunction('productCRUD', { action: 'delete', id: product.id });
                         if (res && res.ok) {
                             // 本地删除，避免整表刷新
                             this.products = this.products.filter(p => p.id !== product.id);

@@ -1,0 +1,9 @@
+{
+    "name": "productCRUD",
+    "version": "1.0.0",
+    "description": "产品管理CRUD云函数",
+    "main": "index.js",
+    "dependencies": {
+        "mysql2": "^3.15.2"
+    }
+}

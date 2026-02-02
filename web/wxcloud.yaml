@@ -5,25 +5,31 @@ region: ap-shanghai
 # 服务配置
 service:
   name: jiemingda-web
-  version: v1.0.0
-  
+  version: v2.0.0
+
 # 容器配置
 container:
   name: jiemingda-product-catalog
   # 使用nginx作为web服务器
   image: nginx:alpine
   port: 80
-  
-  # 资源配置
+
+  # 资源配置（微信云托管免费额度）
   cpu: 0.25
-  memory: 512Mi
-  
+  memory: 256Mi
+
+  # 最小/最大副本数
+  minReplicas: 0
+  maxReplicas: 5
+
   # 环境变量
   env:
     - name: NODE_ENV
       value: production
-    - name: WX_CLOUD_ENV_ID  
+    - name: WX_CLOUD_ENV_ID
       value: jiemingda-0g8ddwgk28c2ff66
+    - name: CLOUDBASE_ENV_ID
+      value: cloud1-0gc8cbzg3efd6a99
 
 # 构建配置
 build:
@@ -37,3 +43,7 @@ deploy:
   auto_release: true
   # 流量分配
   traffic_percent: 100
+  # 缩容到0时的待机配置
+  scale_to_zero:
+    enabled: true
+    idle_timeout: 600
