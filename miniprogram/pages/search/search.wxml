@@ -1,0 +1,33 @@
+<!-- pages/search/search.wxml - 搜索页 -->
+<view class="container">
+    <view class="search-header">
+        <view class="search-input-wrap">
+            <image class="search-icon" src="/assets/icons/search.png" mode="aspectFit"></image>
+            <input class="search-input" placeholder="搜索产品名称、规格..." value="{{keyword}}" bindinput="onInput" bindconfirm="doSearch" focus="{{true}}" confirm-type="search" />
+            <image class="clear-icon" src="/assets/icons/close.png" mode="aspectFit" wx:if="{{keyword}}" bindtap="clearKeyword"></image>
+        </view>
+        <text class="cancel-btn" bindtap="goBack">取消</text>
+    </view>
+    <!-- 搜索结果 -->
+    <view class="search-results" wx:if="{{searched}}">
+        <view class="result-count" wx:if="{{products.length > 0}}">
+            找到 {{products.length}} 个相关产品
+        </view>
+        <view wx:for="{{products}}" wx:key="id" class="product-card" bindtap="goToProduct" data-id="{{item.id}}">
+            <image class="product-image" src="{{item.imageUrl || '/assets/images/placeholder.png'}}" mode="aspectFill"></image>
+            <view class="product-info">
+                <text class="product-name">{{item.name}}</text>
+                <text class="product-spec" wx:if="{{item.spec}}">{{item.spec}}</text>
+                <view class="product-meta">
+                    <text class="product-brand" wx:if="{{item.brandName}}">{{item.brandName}}</text>
+                </view>
+            </view>
+        </view>
+        <view class="empty-state" wx:if="{{products.length === 0 && !loading}}">
+            <text class="empty-text">未找到相关产品</text>
+        </view>
+    </view>
+    <view class="loading" wx:if="{{loading}}">
+        <text>搜索中...</text>
+    </view>
+</view>

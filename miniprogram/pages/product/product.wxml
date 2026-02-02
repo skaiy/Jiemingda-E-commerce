@@ -1,0 +1,64 @@
+<!-- pages/product/product.wxml - 产品详情页 -->
+<view class="container" wx:if="{{!loading}}">
+    <!-- 产品图片 -->
+    <view class="product-gallery">
+        <image class="product-main-image" src="{{product.imageUrl || product.image || '/assets/images/placeholder.png'}}" mode="aspectFit" bindtap="previewImage"></image>
+    </view>
+    <!-- 产品信息 -->
+    <view class="product-header">
+        <text class="product-name">{{product.name}}</text>
+        <text class="product-code" wx:if="{{product.productCode}}">
+            编码: {{product.productCode}}
+        </text>
+    </view>
+    <!-- 价格信息 -->
+    <view class="price-section" wx:if="{{product.price}}">
+        <text class="price-label">价格</text>
+        <text class="price-value">¥{{product.price}}</text>
+        <text class="price-unit" wx:if="{{product.unit}}">/ {{product.unit}}</text>
+    </view>
+    <!-- 规格信息 -->
+    <view class="info-card">
+        <view class="info-title">产品规格</view>
+        <view class="info-item" wx:if="{{product.spec}}">
+            <text class="info-label">规格型号</text>
+            <text class="info-value">{{product.spec}}</text>
+        </view>
+        <view class="info-item" wx:if="{{product.itemNo}}">
+            <text class="info-label">货号</text>
+            <text class="info-value">{{product.itemNo}}</text>
+        </view>
+        <view class="info-item" wx:if="{{product.unit}}">
+            <text class="info-label">单位</text>
+            <text class="info-value">{{product.unit}}</text>
+        </view>
+        <view class="info-item" wx:if="{{product.brandName}}">
+            <text class="info-label">品牌</text>
+            <text class="info-value">{{product.brandName}}</text>
+        </view>
+        <view class="info-item" wx:if="{{product.categoryName}}">
+            <text class="info-label">分类</text>
+            <text class="info-value">{{product.categoryName}}</text>
+        </view>
+    </view>
+    <!-- 描述/备注 -->
+    <view class="info-card" wx:if="{{product.remark || product.description}}">
+        <view class="info-title">产品描述</view>
+        <view class="description-text">{{product.remark || product.description}}</view>
+    </view>
+    <!-- 联系咨询 -->
+    <view class="action-bar">
+        <button class="btn-contact" open-type="contact">
+            <text>在线咨询</text>
+        </button>
+        <button class="btn-share" open-type="share">
+            <text>分享产品</text>
+        </button>
+    </view>
+</view>
+<!-- 加载状态 -->
+<view class="loading-container" wx:if="{{loading}}">
+    <view class="loading">
+        <text>加载中...</text>
+    </view>
+</view>
