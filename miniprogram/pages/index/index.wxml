@@ -1,52 +1,76 @@
-<!-- pages/index/index.wxml - 首页 -->
-<view class="container">
-    <!-- 搜索栏 -->
-    <view class="search-bar" bindtap="goToSearch">
-        <image class="search-icon" src="/assets/icons/search.png" mode="aspectFit"></image>
-        <text class="search-placeholder">搜索产品名称、规格...</text>
+<!--pages/index/index.wxml - 首页-->
+<view class="page">
+  <!-- 顶部搜索入口 -->
+  <view class="search-entry" bindtap="onSearchTap">
+    <view class="search-entry-inner">
+      <text class="search-icon">&#x1F50D;</text>
+      <text class="search-placeholder">搜索产品名称、品牌、规格...</text>
     </view>
-    <!-- 分类横向滚动 -->
-    <scroll-view class="category-scroll" scroll-x enable-flex>
-        <view class="category-list">
-            <view class="category-item {{currentCategoryId === null ? 'active' : ''}}" bindtap="selectCategory" data-id="{{null}}">
-                全部
-            </view>
-            <view wx:for="{{categories}}" wx:key="id" class="category-item {{currentCategoryId === item.id ? 'active' : ''}}" bindtap="selectCategory" data-id="{{item.id}}">
-                {{item.shortName || item.name}}
-            </view>
+  </view>
+
+  <!-- 分类横向滚动 -->
+  <scroll-view class="category-scroll" scroll-x enhanced show-scrollbar="{{false}}">
+    <view class="category-tabs">
+      <view
+        class="category-tab {{currentCategory === '' ? 'active' : ''}}"
+        bindtap="onCategoryTap"
+        data-code="">
+        <text>全部</text>
+        <text class="tab-count">{{products.length > 99 ? '99+' : ''}}</text>
+      </view>
+      <view
+        wx:for="{{categories}}"
+        wx:key="code"
+        class="category-tab {{currentCategory === item.code ? 'active' : ''}}"
+        bindtap="onCategoryTap"
+        data-code="{{item.code}}">
+        <text>{{item.shortName}}</text>
+        <text class="tab-count">{{item.productCount}}</text>
+      </view>
+    </view>
+  </scroll-view>
+
+  <!-- 产品列表 -->
+  <view class="product-list">
+    <view
+      wx:for="{{products}}"
+      wx:key="id"
+      class="product-card"
+      bindtap="onProductTap"
+      data-id="{{item.id}}">
+      <!-- 产品图片 -->
+      <view class="card-image-wrap">
+        <image
+          wx:if="{{item.image}}"
+          class="card-image"
+          src="{{item.image}}"
+          mode="aspectFill"
+          lazy-load />
+        <view wx:else class="card-image-placeholder">
+          <text class="placeholder-icon">&#x1F4E6;</text>
         </view>
-    </scroll-view>
-    <!-- 产品列表 -->
-    <view class="product-list">
-        <block wx:if="{{loading}}">
-            <view class="loading">
-                <text>加载中...</text>
-            </view>
-        </block>
-        <block wx:elif="{{products.length === 0}}">
-            <view class="empty-state">
-                <image class="empty-icon" src="/assets/icons/empty.png" mode="aspectFit"></image>
-                <text class="empty-text">暂无产品数据</text>
-            </view>
-        </block>
-        <block wx:else>
-            <view wx:for="{{products}}" wx:key="id" class="product-card" bindtap="goToProduct" data-id="{{item.id}}">
-                <image class="product-image" src="{{item.imageUrl || item.image || '/assets/images/placeholder.png'}}" mode="aspectFill" lazy-load></image>
-                <view class="product-info">
-                    <text class="product-name">{{item.name}}</text>
-                    <text class="product-spec" wx:if="{{item.spec}}">{{item.spec}}</text>
-                    <view class="product-meta">
-                        <text class="product-brand" wx:if="{{item.brandName}}">
-                            {{item.brandName}}
-                        </text>
-                        <text class="product-price" wx:if="{{item.price}}">¥{{item.price}}</text>
-                    </view>
-                </view>
-            </view>
-        </block>
+      </view>
+      <!-- 产品信息 -->
+      <view class="card-info">
+        <text class="card-name">{{item.name}}</text>
+        <text class="card-spec">{{item.spec}}</text>
+        <view class="card-meta">
+          <text class="card-brand">{{item.brandShort}}</text>
+          <text class="card-category">{{item.categoryShort}}</text>
+        </view>
+      </view>
     </view>
-    <!-- 加载更多 -->
-    <view class="load-more" wx:if="{{hasMore && !loading}}">
-        <text bindtap="loadMore">加载更多</text>
-    </view>
+  </view>
+
+  <!-- 加载状态 -->
+  <view wx:if="{{loading}}" class="loading">
+    <text>加载中...</text>
+  </view>
+  <view wx:elif="{{!hasMore && products.length > 0}}" class="load-end">
+    <text>- 已显示全部 {{products.length}} 个产品 -</text>
+  </view>
+  <view wx:elif="{{products.length === 0 && !loading}}" class="empty-state">
+    <text class="empty-icon-text">&#x1F4AD;</text>
+    <text class="empty-text">暂无产品</text>
+  </view>
 </view>

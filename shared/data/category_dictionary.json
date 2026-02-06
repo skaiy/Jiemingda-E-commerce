@@ -1,168 +1,136 @@
 {
   "categoryDictionary": {
     "description": "产品品类数据字典 - 3位数字编码",
-    "version": "1.0",
-    "lastUpdated": "2025-09-28",
+    "version": "2.0",
+    "lastUpdated": "2026-02-06",
     "categories": [
       {
         "code": "001",
-        "id": "frozen-pastries-semi-finished",
-        "name": "冷冻点心/速冻半成品",
-        "shortName": "冷冻半成品",
-        "slug": "frozen-pastries-semi-finished",
-        "description": "冷冻糕点和速冻半成品"
+        "id": "cream-dairy",
+        "name": "奶油/乳制品",
+        "shortName": "奶油/乳制",
+        "slug": "cream-dairy",
+        "description": "奶油/乳制品"
       },
       {
-        "code": "002", 
-        "id": "sauces-salad-dressing",
-        "name": "调味酱/沙拉酱",
-        "shortName": "调味/沙拉",
-        "slug": "sauces-salad-dressing",
-        "description": "各类调味酱和沙拉酱"
+        "code": "002",
+        "id": "chocolate-cocoa",
+        "name": "巧克力/可可",
+        "shortName": "巧克力/可可",
+        "slug": "chocolate-cocoa",
+        "description": "巧克力/可可"
       },
       {
         "code": "003",
-        "id": "whipping-cream",
-        "name": "奶油/淡稀奶油", 
-        "shortName": "奶油",
-        "slug": "whipping-cream",
-        "description": "奶油类产品"
+        "id": "fruit-filling-ingredients",
+        "name": "果馅/果料",
+        "shortName": "果馅/果料",
+        "slug": "fruit-filling-ingredients",
+        "description": "果馅/果料"
       },
       {
         "code": "004",
-        "id": "chocolate-cocoa",
-        "name": "巧克力/可可",
-        "shortName": "巧克力",
-        "slug": "chocolate-cocoa", 
-        "description": "巧克力和可可制品"
+        "id": "sugars-sweeteners",
+        "name": "糖类/甜味剂",
+        "shortName": "糖/甜味剂",
+        "slug": "sugars-sweeteners",
+        "description": "糖类/甜味剂"
       },
       {
         "code": "005",
-        "id": "cheese-mozzarella",
-        "name": "干酪/芝士/马苏里拉",
-        "shortName": "干酪/芝士",
-        "slug": "cheese-mozzarella",
-        "description": "各类干酪和芝士产品"
+        "id": "canned-fruits-vegetables",
+        "name": "罐头/果蔬制品",
+        "shortName": "罐头/果蔬",
+        "slug": "canned-fruits-vegetables",
+        "description": "罐头/果蔬制品"
       },
       {
         "code": "006",
-        "id": "fruit-filling-puree-jam",
-        "name": "果馅/果干/果酱",
-        "shortName": "果馅/果酱", 
-        "slug": "fruit-filling-puree-jam",
-        "description": "水果制品和果酱"
-      },
-      {
-        "code": "007",
-        "id": "milk-dairy-drinks",
-        "name": "牛奶/乳饮",
-        "shortName": "乳饮",
-        "slug": "milk-dairy-drinks",
-        "description": "牛奶和乳制饮品"
-      },
-      {
-        "code": "008",
-        "id": "sugars-sweeteners",
-        "name": "糖类/甜味剂",
-        "shortName": "糖/甜味",
-        "slug": "sugars-sweeteners",
-        "description": "各类糖和甜味剂"
-      },
-      {
-        "code": "009",
-        "id": "canned-preserves",
-        "name": "罐头/蜜饯",
-        "shortName": "罐头/蜜饯",
-        "slug": "canned-preserves",
-        "description": "罐头食品和蜜饯"
-      },
-      {
-        "code": "010",
-        "id": "meat-sausage-bacon", 
-        "name": "肉制品/香肠/培根",
+        "id": "meat-products",
+        "name": "肉类制品",
         "shortName": "肉制品",
-        "slug": "meat-sausage-bacon",
+        "slug": "meat-products",
         "description": "肉类制品"
       },
       {
+        "code": "007",
+        "id": "cheese",
+        "name": "芝士/干酪",
+        "shortName": "芝士/干酪",
+        "slug": "cheese",
+        "description": "芝士/干酪"
+      },
+      {
+        "code": "008",
+        "id": "cakes-desserts",
+        "name": "蛋糕/甜品",
+        "shortName": "蛋糕/甜品",
+        "slug": "cakes-desserts",
+        "description": "蛋糕/甜品"
+      },
+      {
+        "code": "009",
+        "id": "decorations-toppers",
+        "name": "装饰/插件",
+        "shortName": "装饰/插件",
+        "slug": "decorations-toppers",
+        "description": "装饰/插件"
+      },
+      {
+        "code": "010",
+        "id": "sauces-dressings",
+        "name": "调味酱/沙拉酱",
+        "shortName": "调味/沙拉",
+        "slug": "sauces-dressings",
+        "description": "调味酱/沙拉酱"
+      },
+      {
         "code": "011",
-        "id": "decorations-toppers-fondant",
-        "name": "装饰/插件/翻糖",
-        "shortName": "装饰/翻糖",
-        "slug": "decorations-toppers-fondant",
-        "description": "烘焙装饰材料"
+        "id": "alcoholic-beverages",
+        "name": "酒类/调味酒饮",
+        "shortName": "酒类/酒饮",
+        "slug": "alcoholic-beverages",
+        "description": "酒类/调味酒饮"
       },
       {
         "code": "012",
-        "id": "additives",
-        "name": "辅料/添加剂",
-        "shortName": "辅料/添加",
-        "slug": "additives",
-        "description": "食品添加剂和辅料"
+        "id": "yeast-additives",
+        "name": "酵母/添加剂",
+        "shortName": "酵母/添加",
+        "slug": "yeast-additives",
+        "description": "酵母/添加剂"
       },
       {
         "code": "013",
-        "id": "alcoholic-beverages-liqueurs",
-        "name": "酒饮/风味酒",
-        "shortName": "酒饮",
-        "slug": "alcoholic-beverages-liqueurs",
-        "description": "酒类饮品"
+        "id": "flour-powders",
+        "name": "面粉/粉类",
+        "shortName": "面粉/粉类",
+        "slug": "flour-powders",
+        "description": "面粉/粉类"
       },
       {
         "code": "014",
-        "id": "yeast",
-        "name": "酵母",
-        "shortName": "酵母",
-        "slug": "yeast",
-        "description": "各类酵母产品"
+        "id": "biscuits-snacks",
+        "name": "饼干/零食",
+        "shortName": "饼干/零食",
+        "slug": "biscuits-snacks",
+        "description": "饼干/零食"
       },
       {
         "code": "015",
-        "id": "flour-grain-flours",
-        "name": "面粉/谷物粉",
-        "shortName": "面/谷粉",
-        "slug": "flour-grain-flours",
-        "description": "面粉和谷物粉类"
+        "id": "fillings-bean-paste",
+        "name": "馅料/豆沙类",
+        "shortName": "馅料/豆沙",
+        "slug": "fillings-bean-paste",
+        "description": "馅料/豆沙类"
       },
       {
         "code": "016",
-        "id": "premix",
-        "name": "预拌粉/预混粉",
-        "shortName": "预拌粉",
-        "slug": "premix",
-        "description": "预制混合粉类"
-      },
-      {
-        "code": "017",
-        "id": "biscuits-oreo",
-        "name": "饼干/奥利奥",
-        "shortName": "饼干",
-        "slug": "biscuits-oreo",
-        "description": "饼干类产品"
-      },
-      {
-        "code": "018",
-        "id": "butter-dairy-fats",
-        "name": "黄油/乳制油脂",
-        "shortName": "黄油/乳脂",
-        "slug": "butter-dairy-fats",
-        "description": "黄油和乳制油脂"
-      },
-      {
-        "code": "019",
-        "id": "filling-custard",
-        "name": "馅料/卡仕达",
-        "shortName": "馅料/卡仕达",
-        "slug": "filling-custard",
-        "description": "各类馅料"
-      },
-      {
-        "code": "020",
-        "id": "edible-plant-shortening-oils",
-        "name": "食用油/植物油/起酥油",
-        "shortName": "食用油/起酥油", 
-        "slug": "edible-plant-shortening-oils",
-        "description": "食用油和起酥油"
+        "id": "butter-oils",
+        "name": "黄油/油脂",
+        "shortName": "黄油/油脂",
+        "slug": "butter-oils",
+        "description": "黄油/油脂"
       },
       {
         "code": "099",
