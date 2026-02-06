@@ -1,58 +1,26 @@
 {
-  "name": "products",
-  "description": "产品集合",
-  "fields": [
-    {
-      "name": "name",
-      "type": "String",
-      "description": "产品名称",
-      "required": true
-    },
-    {
-      "name": "specification",
-      "type": "String",
-      "description": "规格型号"
-    },
-    {
-      "name": "unit",
-      "type": "String",
-      "description": "单位"
-    },
-    {
-      "name": "brand",
-      "type": "String",
-      "description": "品牌"
-    },
-    {
-      "name": "description",
-      "type": "String",
-      "description": "产品描述"
-    },
-    {
-      "name": "price",
-      "type": "Number",
-      "description": "价格"
-    },
-    {
-      "name": "image",
-      "type": "String",
-      "description": "产品图片路径"
-    },
-    {
-      "name": "category",
-      "type": "String",
-      "description": "产品分类",
-      "required": true
-    },
-    {
-      "name": "createdAt",
-      "type": "DateTime",
-      "description": "创建时间"
-    },
-    {
-      "name": "updatedAt",
-      "type": "DateTime",
-      "description": "更新时间"
-    }
-  ]
+  "description": "产品数据集合",
+  "documentId": "catalog-data",
+  "structure": {
+    "categories": [
+      {
+        "name": "分类名称",
+        "items": [
+          {
+            "id": "产品编码 (9位: 分类3位+品牌3位+序号3位)",
+            "productCode": "同 id",
+            "name": "产品名称",
+            "spec": "规格",
+            "unit": "计量单位",
+            "brand": "品牌全称",
+            "brandCode": "品牌编码 (3位)",
+            "categoryCode": "分类编码 (3位)",
+            "description": "产品描述",
+            "price": "价格",
+            "image": "图片URL"
+          }
+        ]
+      }
+    ]
+  }
 }

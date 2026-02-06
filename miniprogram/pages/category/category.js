@@ -1,47 +1,54 @@
-// pages/category/category.js - 分类页逻辑
+// pages/category/category.js - 分类浏览页
 const app = getApp();
 
 Page({
   data: {
-    loading: true,
-    categories: []
+    categories: [],
+    currentIndex: 0,
+    currentCode: '',
+    products: [],
+    scrollTop: 0
   },
 
   onLoad() {
-    this.loadCategories();
-  },
+    const ds = app.globalData.dataService;
+    const categories = ds.getCategories();
 
-  async loadCategories() {
-    this.setData({ loading: true });
-    
-    try {
-      // 优先使用全局缓存
-      if (app.globalData.categories.length > 0) {
-        this.setData({ 
-          categories: app.globalData.categories,
-          loading: false 
-        });
-        return;
-      }
-
-      const res = await app.callCloudFunction('mysqlQuery', { action: 'categories' });
-      if (res && res.ok) {
-        const categories = res.data?.categoryDictionary?.categories || [];
-        this.setData({ categories });
-        app.globalData.categories = categories;
-      }
-    } catch (error) {
-      console.error('加载分类失败:', error);
-      wx.showToast({ title: '加载失败', icon: 'none' });
-    } finally {
-      this.setData({ loading: false });
+    if (categories.length > 0) {
+      this.setData({
+        categories,
+        currentIndex: 0,
+        currentCode: categories[0].code
+      });
+      this.loadCategoryProducts(categories[0].code);
     }
   },
 
-  selectCategory(e) {
-    const { id, name } = e.currentTarget.dataset;
-    wx.navigateTo({
-      url: `/pages/index/index?categoryId=${id}&categoryName=${encodeURIComponent(name)}`
+  // 切换分类
+  onCategoryTap(e) {
+    const index = e.currentTarget.dataset.index;
+    const cat = this.data.categories[index];
+    if (!cat || index === this.data.currentIndex) return;
+
+    this.setData({
+      currentIndex: index,
+      currentCode: cat.code,
+      scrollTop: 0
     });
+    this.loadCategoryProducts(cat.code);
+  },
+
+  // 加载分类产品
+  loadCategoryProducts(categoryCode) {
+    const ds = app.globalData.dataService;
+    // 加载该分类全部产品（分类页不分页）
+    const result = ds.getProductsByCategory(categoryCode, 1, 999);
+    this.setData({ products: result.list });
+  },
+
+  // 跳转产品详情
+  onProductTap(e) {
+    const id = e.currentTarget.dataset.id;
+    wx.navigateTo({ url: `/pages/product/product?id=${id}` });
   }
 });

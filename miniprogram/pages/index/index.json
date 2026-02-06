@@ -1,5 +1,4 @@
 {
-    "usingComponents": {},
-    "enablePullDownRefresh": true,
-    "backgroundTextStyle": "dark"
+  "navigationBarTitleText": "捷明达产品目录",
+  "enablePullDownRefresh": true
 }

@@ -32,6 +32,9 @@ shared/data/photos/**
 shared/data/banners/**
 miniprogram/static/images/**
 
+# Keep miniprogram icons tracked
+!miniprogram/assets/icons/**
+
 # Generated or backups
 **/*.bak
 **/*.backup

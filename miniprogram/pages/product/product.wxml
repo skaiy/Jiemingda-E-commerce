@@ -1,64 +1,96 @@
-<!-- pages/product/product.wxml - 产品详情页 -->
-<view class="container" wx:if="{{!loading}}">
-    <!-- 产品图片 -->
-    <view class="product-gallery">
-        <image class="product-main-image" src="{{product.imageUrl || product.image || '/assets/images/placeholder.png'}}" mode="aspectFit" bindtap="previewImage"></image>
+<!--pages/product/product.wxml - 产品详情页-->
+<view class="page" wx:if="{{product}}">
+  <!-- 产品图片 -->
+  <view class="hero-section">
+    <image
+      wx:if="{{product.image}}"
+      class="hero-image"
+      src="{{product.image}}"
+      mode="aspectFill" />
+    <view wx:else class="hero-placeholder">
+      <text class="hero-icon">&#x1F4E6;</text>
+      <text class="hero-text">暂无图片</text>
     </view>
-    <!-- 产品信息 -->
-    <view class="product-header">
-        <text class="product-name">{{product.name}}</text>
-        <text class="product-code" wx:if="{{product.productCode}}">
-            编码: {{product.productCode}}
-        </text>
+  </view>
+
+  <!-- 产品基本信息 -->
+  <view class="info-section">
+    <text class="product-name">{{product.name}}</text>
+    <view class="tag-row">
+      <text class="tag tag-category">{{product.categoryShort}}</text>
+      <text class="tag tag-brand">{{product.brandShort}}</text>
     </view>
-    <!-- 价格信息 -->
-    <view class="price-section" wx:if="{{product.price}}">
-        <text class="price-label">价格</text>
-        <text class="price-value">¥{{product.price}}</text>
-        <text class="price-unit" wx:if="{{product.unit}}">/ {{product.unit}}</text>
+  </view>
+
+  <!-- 详情卡片 -->
+  <view class="detail-card">
+    <view class="detail-row">
+      <text class="detail-label">规格</text>
+      <text class="detail-value">{{product.spec || '未标注'}}</text>
     </view>
-    <!-- 规格信息 -->
-    <view class="info-card">
-        <view class="info-title">产品规格</view>
-        <view class="info-item" wx:if="{{product.spec}}">
-            <text class="info-label">规格型号</text>
-            <text class="info-value">{{product.spec}}</text>
+    <view class="detail-row">
+      <text class="detail-label">单位</text>
+      <text class="detail-value">{{product.unit || '未标注'}}</text>
+    </view>
+    <view class="detail-row">
+      <text class="detail-label">品牌</text>
+      <text class="detail-value">{{product.brand || '未标注'}}</text>
+    </view>
+    <view class="detail-row" bindtap="onCopyCode">
+      <text class="detail-label">产品编码</text>
+      <view class="detail-value code-value">
+        <text>{{product.productCode}}</text>
+        <text class="copy-hint">点击复制</text>
+      </view>
+    </view>
+    <view class="detail-row" wx:if="{{product.price}}">
+      <text class="detail-label">价格</text>
+      <text class="detail-value price-value">{{product.price}}</text>
+    </view>
+  </view>
+
+  <!-- 操作按钮 -->
+  <view class="action-bar">
+    <button class="action-btn share-btn" open-type="share">
+      <text>&#x1F4E4; 分享产品</text>
+    </button>
+    <button class="action-btn contact-btn" bindtap="onContact">
+      <text>&#x1F4CB; 复制信息</text>
+    </button>
+  </view>
+
+  <!-- 同分类推荐 -->
+  <view class="related-section" wx:if="{{relatedProducts.length > 0}}">
+    <text class="section-title">同类产品推荐</text>
+    <scroll-view class="related-scroll" scroll-x enhanced show-scrollbar="{{false}}">
+      <view class="related-list">
+        <view
+          wx:for="{{relatedProducts}}"
+          wx:key="id"
+          class="related-card"
+          bindtap="onRelatedTap"
+          data-id="{{item.id}}">
+          <view class="related-image-wrap">
+            <image
+              wx:if="{{item.image}}"
+              class="related-image"
+              src="{{item.image}}"
+              mode="aspectFill"
+              lazy-load />
+            <view wx:else class="related-placeholder">
+              <text>&#x1F4E6;</text>
+            </view>
+          </view>
+          <text class="related-name">{{item.name}}</text>
+          <text class="related-spec">{{item.spec}}</text>
         </view>
-        <view class="info-item" wx:if="{{product.itemNo}}">
-            <text class="info-label">货号</text>
-            <text class="info-value">{{product.itemNo}}</text>
-        </view>
-        <view class="info-item" wx:if="{{product.unit}}">
-            <text class="info-label">单位</text>
-            <text class="info-value">{{product.unit}}</text>
-        </view>
-        <view class="info-item" wx:if="{{product.brandName}}">
-            <text class="info-label">品牌</text>
-            <text class="info-value">{{product.brandName}}</text>
-        </view>
-        <view class="info-item" wx:if="{{product.categoryName}}">
-            <text class="info-label">分类</text>
-            <text class="info-value">{{product.categoryName}}</text>
-        </view>
-    </view>
-    <!-- 描述/备注 -->
-    <view class="info-card" wx:if="{{product.remark || product.description}}">
-        <view class="info-title">产品描述</view>
-        <view class="description-text">{{product.remark || product.description}}</view>
-    </view>
-    <!-- 联系咨询 -->
-    <view class="action-bar">
-        <button class="btn-contact" open-type="contact">
-            <text>在线咨询</text>
-        </button>
-        <button class="btn-share" open-type="share">
-            <text>分享产品</text>
-        </button>
-    </view>
+      </view>
+    </scroll-view>
+  </view>
 </view>
-<!-- 加载状态 -->
-<view class="loading-container" wx:if="{{loading}}">
-    <view class="loading">
-        <text>加载中...</text>
-    </view>
+
+<!-- 产品不存在 -->
+<view wx:else class="empty-state">
+  <text class="empty-icon-text">&#x1F50D;</text>
+  <text class="empty-text">产品信息加载中...</text>
 </view>
